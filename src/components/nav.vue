@@ -19,6 +19,30 @@
             <b-dropdown-item href="/swaminarayan-education">Swaminarayan Education</b-dropdown-item>
             <!-- <b-dropdown-item href="/careers">Careers</b-dropdown-item> -->
           </b-nav-item-dropdown>
+          <b-nav-item-dropdown text="Our Sampraday">
+              <b-dropdown-item href="/our-temple">Our Temple</b-dropdown-item>
+              <b-dropdown-item href="/history">History</b-dropdown-item>
+              <b-dropdown-item href="/murtis">Murtis</b-dropdown-item>
+              <b-dropdown-item href="/weekly-activities">Weekly Activities</b-dropdown-item>
+              <b-dropdown-item href="/calendar">Calendar</b-dropdown-item>
+              <b-dropdown-item href="/yuvak-mandal">Yuvak Mandal</b-dropdown-item>
+              <b-dropdown-item href="/swaminarayan-education">Swaminarayan Education</b-dropdown-item>
+              <!-- <b-dropdown-item href="/careers">Careers</b-dropdown-item> -->
+            </b-nav-item-dropdown>
+            <b-nav-item-dropdown text="Media">
+                <b-dropdown-item href="/our-temple">Our Temple</b-dropdown-item>
+                <b-dropdown-item href="/history">History</b-dropdown-item>
+                <b-dropdown-item href="/murtis">Murtis</b-dropdown-item>
+                <b-dropdown-item href="/weekly-activities">Weekly Activities</b-dropdown-item>
+                <b-dropdown-item href="/calendar">Calendar</b-dropdown-item>
+                <b-dropdown-item href="/yuvak-mandal">Yuvak Mandal</b-dropdown-item>
+                <b-dropdown-item href="/swaminarayan-education">Swaminarayan Education</b-dropdown-item>
+                <!-- <b-dropdown-item href="/careers">Careers</b-dropdown-item> -->
+              </b-nav-item-dropdown>
+              <b-nav-item href="/wedding-hall">Wedding Hall</b-nav-item>
+              <b-nav-item href="/nursery">Nursery</b-nav-item>
+              <b-nav-item href="/donation">Donation</b-nav-item>
+              <b-nav-item href="/contact-us">Contact Us</b-nav-item>
         </b-navbar-nav>
     
         <!-- Right aligned nav items -->
