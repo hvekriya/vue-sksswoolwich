@@ -1,0 +1,55 @@
+@import "pallete";
+
+@mixin respond-to($media) {
+  @if $media == handhelds {
+    @media only screen and (max-width: 768px) { @content; }
+  }
+  @else if $media == medium-screens {
+    @media only screen and (min-width: 769px) and (max-width: 1024px) { @content; }
+  }
+  @else if $media == wide-screens {
+    @media only screen and (min-width: 1024px) { @content; }
+  }
+}
+
+#clockdiv{
+  margin-top: 5px;
+	font-family: sans-serif;
+	color: white;
+	display: inline-block;
+	font-weight: 600;
+	text-align: center;
+	font-size: 36px;
+  @include respond-to(handhelds) {
+    font-size: 28px;
+  }
+}
+
+#clockdiv > div{
+  margin-left: 10px;
+	padding: 10px;
+	border-radius: 3px;
+	display: inline-block;
+  @include respond-to(handhelds) {
+    margin-left: 0;
+    padding: 8px;
+  }
+}
+
+#clockdiv div > span{
+	padding: 15px;
+	border-radius: 3px;
+	display: inline-block;
+  @include respond-to(handhelds) {
+    padding: 10px;
+  }
+}
+
+.countdown-label{
+	padding-top: 5px;
+	font-size: 16px;
+  font-weight: 100;
+  @include respond-to(handhelds) {
+    font-size: 12px;
+  }
+}
