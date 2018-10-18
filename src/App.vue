@@ -11,6 +11,11 @@ export default {
   name: 'app',
   components: {
     Nav: Nav
+  },
+  head: {
+    meta: [
+      { name: 'viewport', content: 'width=device-width, initial-scale=1'}
+    ]
   }
 }
 </script>
@@ -27,9 +32,3 @@ export default {
 <style lang="scss">
   @import "./assets/sass/main.scss";
 </style>
-
-<link rel="stylesheet" href="public/css/vendor/fullcalendar.min.css">
-<link rel="stylesheet" href="public/css/vendor/jquery.fancybox.css">
-<link rel="stylesheet" href="public/css/vendor/animate.css">
-<link rel="stylesheet" href="public/css/vendor/jquery.fb.albumbrowser.css">
-<link rel="stylesheet" href="public/css/vendor/nanogallery2.min.css"> -->

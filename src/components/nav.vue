@@ -1,10 +1,10 @@
 <template>
   <div>
-    <b-navbar type="dark" variant="info" toggleable>
+    <b-navbar type="dark" variant="info" toggleable="lg">
 
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
     
-      <b-navbar-brand href="/" class="d-sm-none d-lg-none">SKSS Woolwich</b-navbar-brand>
+      <b-navbar-brand href="/" class="d-lg-none">SKSS Woolwich</b-navbar-brand>
     
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
@@ -47,7 +47,6 @@
     
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item disabled>Follow us</b-nav-item>
           <b-nav-item href="https://www.facebook.com/WoolwichTemple/"><i class="fab fa-facebook-f"></i></b-nav-item>
           <b-nav-item href="https://www.twitter.com/WoolwichTemple/"><i class="fab fa-twitter"></i></b-nav-item>
           <b-nav-item href="https://www.instagram.com/WoolwichTemple/"><i class="fab fa-instagram"></i></b-nav-item>
