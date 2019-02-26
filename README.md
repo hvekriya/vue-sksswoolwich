@@ -1,4 +1,4 @@
-# Prismic Vue.js Starter
+# Woolwich Temple
 
 > [Vue.js](https://vuejs.org) starter project with content managed in [Prismic](https://prismic.io)
 
