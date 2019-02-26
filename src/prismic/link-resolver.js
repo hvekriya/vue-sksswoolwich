@@ -12,6 +12,10 @@ export default function (doc) {
     return '/'
   }
 
+  if (doc.type === 'blog') {
+    return '/post/' + doc.id
+  }
+
   if (doc.type === 'privacy-policy') {
     return '/page/' + doc.type
   }
