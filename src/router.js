@@ -18,11 +18,6 @@ export default new Router({
       component: NotFound
     },
     {
-      path: '/preview',
-      name: 'preview',
-      component: Preview
-    },
-    {
       path: '*',
       redirect: {
         name: 'not-found'
