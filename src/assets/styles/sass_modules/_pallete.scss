@@ -1,0 +1,62 @@
+/* Coolors Exported Palette - coolors.co/3e78b2-004ba8-ff9000-f72c25-2d1e2f */
+
+$light-blue: #3e78b2; // light dark blue
+$blue: #004ba8; //dark blue
+$orange: #ff9000; // orange
+$red: #f72c25; //red
+$brown: #2d1e2f; //dark brown
+
+$poster-yellow: #fdc222;
+$poster-red: #901846;
+
+$main-gradiant: linear-gradient(to right,#ff8a00,#da1b60);
+$main-gradiant-hover: linear-gradient(to right,#da1b60,#ff8a00);
+$secondary-gradiant: linear-gradient(to right,#eeeeee, #c7c7c7);
+
+/* GAM colors */
+
+$gam-red: #c61700;
+$gam-darkred: #9b0d02;
+$gam-yellow: #fcc71d;
+
+/* Primary and Secondary blues */
+.btn {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    border-radius: 2px;
+    cursor: pointer;
+    font-family: "Roboto", "Helvetica", arial, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .2px;
+    padding: 10px 14px 9px;
+    text-transform: uppercase;
+    transition: all .3s ease-out;
+}
+
+.btn.btn-primary {
+    background: $main-gradiant;
+    border: none;
+    color: #fff;
+}
+
+.btn.btn-primary:hover, .btn.btn-primary:focus {
+    background: $main-gradiant-hover !important;
+    color: #fff;
+    text-decoration: none;
+}
+
+.btn.btn-secondary {
+    border: 2px solid $blue;
+    color: $blue;
+}
+/* Calendar blue overrides */
+
+.fc-state-default {
+  background: $blue;
+  border: 2px solid $blue;
+  color: #fff;
+  box-shadow: none;
+  text-shadow: none;
+}
+

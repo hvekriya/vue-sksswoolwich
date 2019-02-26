@@ -1,21 +1,36 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import BootstrapVue from "bootstrap-vue"
-import VueHead from 'vue-head'
-import App from './App'
-import router from './routes'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+import PrismicVue from 'prismic-vue'
+import linkResolver from './prismic/link-resolver'
+import htmlSerializer from './prismic/html-serializer'
+import moment from 'moment'
+import App from './App.vue'
+import router from './router'
 
-Vue.use(BootstrapVue)
-Vue.use(VueHead)
+const accessToken = process.env.VUE_APP_PRISMIC
+
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  template: '<App/>',
-  components: { App }
+Vue.use(PrismicVue, {
+  endpoint: window.prismic.endpoint,
+  linkResolver,
+  htmlSerializer,
+  apiOptions: {
+    accessToken
+  }
 })
+
+Vue.filter('formatDate', function (value) {
+  if (value) {
+    return moment(String(value)).format('DD/MM/YYYY')
+  }
+})
+
+Vue.filter('readMore', function (text, length, suffix) {
+  let newText = text.map(a => a.text).filter(b => b).join(' ')
+  return newText.substring(0, length) + suffix;
+});
+
+new Vue({
+  router,
+  render: h => h(App)
+}).$mount('#app')

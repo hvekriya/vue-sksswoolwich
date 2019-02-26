@@ -1,0 +1,107 @@
+/***
+Bootstrap Line pills by @keenthemes
+A component of Metronic Theme - #1 Selling Bootstrap 3 Admin Theme in Themeforest: http://j.mp/metronictheme
+Licensed under MIT
+***/
+
+/* Default mode */
+.nav-pills {
+  border: none;
+  margin: 0px;
+}
+.nav-pills > li {
+  margin-right: 2px;
+}
+.nav-pills > li > a {
+  border: 0;
+  margin-right: 0;
+  color: #737373;
+}
+.nav-pills > li > a > i {
+  color: #a6a6a6;
+}
+.nav-pills > li.open, .nav-pills > li:hover {
+  background-color: #004ba8;
+}
+.nav-pills > li.open > a, .nav-pills > li:hover > a {
+  border: 0;
+  background: none !important;
+  color: white;
+}
+.nav-pills > li.open > a > i, .nav-pills > li:hover > a > i {
+  color: #a6a6a6;
+}
+.nav-pills > li.open .dropdown-menu, .nav-pills > li:hover .dropdown-menu {
+  margin-top: 0px;
+}
+.nav-pills > li.active {
+  position: relative;
+  background-color: #004ba8;
+}
+.nav-pills > li.active > a {
+  border: 0;
+  color: white;
+}
+.nav-pills > li.active > a > i {
+  color: #404040;
+}
+.tab-content {
+  margin-top: -3px;
+  background-color: #fff;
+  border: 0;
+  border-top: 1px solid #eee;
+  padding: 10px 0;
+}
+.portlet .tab-content {
+  padding-bottom: 0;
+}
+
+/* Below pills mode */
+
+.pills-below > .nav-pills > li {
+  border-top: 4px solid transparent;
+}
+.pills-below > .nav-pills > li > a {
+  margin-top: 0;
+}
+.pills-below > .nav-pills > li:hover {
+  border-bottom: 0;
+  border-top: 4px solid #fbcdcf;
+}
+.pills-below > .nav-pills > li.active {
+  margin-bottom: -2px;
+  border-bottom: 0;
+  border-top: 4px solid #f3565d;
+}
+.pills-below > .tab-content {
+  margin-top: -10px;
+  border-top: 0;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+.panel-default>.panel-heading {
+  color: #333;
+  background-color: #f5f5f5;
+  border-color: #ddd;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    color: white;
+    background-color: transparent;
+}
+
+.nav.nav-pills li:hover {
+  background: $main-gradiant-hover !important;
+}
+
+.nav-pills>li>a {
+    position: relative;
+    display: block;
+    padding: 10px 10px;
+}

@@ -1,21 +1,38 @@
-# vue-sksswoolwich
+# Prismic Vue.js Starter
 
-> SKSS Temple Woolwich
+> [Vue.js](https://vuejs.org) starter project with content managed in [Prismic](https://prismic.io)
 
-## Build Setup
+## How to launch this project in your local environment
 
-``` bash
-# install dependencies
+Run the following commands:
+
+```bash
 npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
+npm start
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+Then you can access it at [http://localhost:8080](http://localhost:8080).
+
+## Project setup
+
+```bash
+npm install
+```
+
+### Compiles and hot-reloads for development
+
+```bash
+npm start
+```
+
+### Compiles and minifies for production
+
+```bash
+npm run build
+```
+
+### Lints and fixes files
+
+```bash
+npm run lint
+```

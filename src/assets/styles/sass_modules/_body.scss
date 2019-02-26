@@ -1,0 +1,113 @@
+body,
+html {
+  width: 100%;
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Spectral',
+    serif;
+}
+
+body {
+  color: $brown;
+  text-decoration: none;
+}
+
+a {
+  display: inline-block;
+  position: relative;
+  color: #0087ca;
+  cursor: pointer;
+
+  &:hover {
+    color: #0087ca;
+    text-decoration: none;
+  }
+
+  &:not(.btn)::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background: $main-gradiant;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+
+  &:not(.btn):hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+}
+
+#body {
+  margin-top: 50px;
+}
+
+a:not(.btn):not(.social):focus,
+a:not(.btn):not(.social):hover {
+  background: -webkit-gradient(linear, left top, right top, from(#ff8a00), to(#da1b60));
+  background: $main-gradiant;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  text-shadow: none;
+}
+
+li.social a {
+  &:hover {
+    background: none;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: white !important;
+    border: none;
+  }
+
+  &:after {
+    background: none;
+  }
+}
+
+.btn {
+  &:hover {
+    background: -webkit-gradient(linear, left top, right top, from(#ff8a00), to(#da1b60));
+    background: $main-gradiant;
+    border: none;
+    color: white;
+  }
+}
+
+.nav.nav-pills li {
+  &:hover {
+    background: $main-gradiant;
+    color: white;
+  }
+
+  &.active {
+    background: $main-gradiant;
+    color: white;
+  }
+
+  a:after {
+    background: none;
+  }
+
+  a:hover {
+    -webkit-text-fill-color: white;
+  }
+
+  a:focus {
+    -webkit-text-fill-color: white;
+  }
+}
