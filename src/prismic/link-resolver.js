@@ -12,6 +12,10 @@ export default function (doc) {
     return '/'
   }
 
+  if (doc.type === 'article') {
+    return '/article/' + doc.id
+  }
+
   if (doc.type === 'blog') {
     return '/post/' + doc.id
   }

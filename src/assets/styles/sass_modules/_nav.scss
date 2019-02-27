@@ -33,7 +33,7 @@
 }
 
 a.router-link-exact-active.router-link-active {
-  -webkit-text-fill-color: #2d1e2f;
+  -webkit-text-fill-color: unset;
 
   &::before {
     content: '';

@@ -30,6 +30,15 @@ Vue.filter('readMore', function (text, length, suffix) {
   return newText.substring(0, length) + suffix;
 });
 
+Vue.filter('truncate', function (value) {
+  if (value.length > 20) {
+    value = value.substring(0, 17) + '...';
+  }
+  return value
+})
+
+Vue.prototype.$scrollToTop = () => window.scrollTo(0, 0)
+
 new Vue({
   router,
   render: h => h(App)

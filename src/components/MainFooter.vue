@@ -16,9 +16,6 @@
           <li class="social">
             <a itemprop="sameAs" href="https://www.youtube.com/woolwichtemple" rel="noopener"><i class="fab fa-youtube"></i></a>
           </li>
-          <li class="social">
-            <a itemprop="sameAs" href="tel:+447437001008" class="whatsapp" rel="noopener"><i class="fab fa-whatsapp"></i></a>
-          </li>
         </ul>
       </div>
     </div>
@@ -27,7 +24,9 @@
       <div id="map"></div>
       <div class="row">
         <p class="text-center" style="padding: 15px">&copy; Shree Kutch Satsang Swaminarayan Temple Woolwich {{ new Date().getFullYear() }}
-          <br> <a href="/our-temple/privacy-policy">Privacy Policy</a></p>
+          <br>
+          <router-link to="/our-temple/privacy-policy" @click.native="$scrollToTop">Privacy Policy</router-link>
+        </p>
         <img class="footerLogo" src="https://farm5.staticflickr.com/4548/38549235412_2cce16bd81_o.png" width="10%" alt="WoolwichMandirLogo">
       </div>
     </div>

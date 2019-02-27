@@ -7,18 +7,19 @@
         Misson Dharma Blog
       </h1>
     </header>
-    <div class="post" v-for="(item, index) in posts" :key="'posts-' + index">
+    <div class="post" v-for="(item, index) in articles" :key="'posts-' + index">
       <div>
         <div class="well">
           <div class="media">
             <div class="col-sm-10 col-md-10 col-lg-10">
               <h2 class="media-heading" v-for="(title, index) in item.data.title">
-                <a :href="'/post/' + item.uid">{{ title.text }}</a>
+                <a :href="'/our-sampraday/articles/' + item.uid">{{ title.text }}</a>
               </h2>
               <!-- <div class="description" v-for="(content, index) in item.data.content">
                 {{content.text}}
               </div> -->
-              <p>{{ item.data.content | readMore(200, '...')  }} <a :href="'/post/' + item.uid">Read more</a></p>
+              <p>{{ item.data.content | readMore(200, '...')  }} <a :href="'/our-sampraday/articles/' + item.uid">Read
+                  more</a></p>
               <ul class="list-inline list-unstyled">
                 <li>
                   <span>
@@ -40,22 +41,22 @@
 
 <script>
   export default {
-    name: 'Blog',
+    name: 'Articles',
     data() {
       return {
-        posts: null
+        articles: null
       }
     },
     methods: {
-      getContent() {
+      getContent(tag) {
         this.$prismic.client.query(
-            this.$prismic.Predicates.at('document.type', 'blog'), {
+            this.$prismic.Predicates.at('document.tags', [tag]), {
               orderings: '[my.blog.date desc]'
             }
           )
           .then((document) => {
             if (document) {
-              this.posts = document.results
+              this.articles = document.results
             } else {
               this.$router.push({
                 name: 'not-found'
@@ -65,10 +66,10 @@
       }
     },
     created() {
-      this.getContent()
+      this.getContent(this.$route.params.tag)
     },
     beforeRouteUpdate(to, from, next) {
-      this.getContent()
+      this.getContent(to.params.tag)
       next()
     }
   }
