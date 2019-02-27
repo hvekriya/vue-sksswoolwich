@@ -8,7 +8,7 @@
         {{ $prismic.richTextAsPlain(fields.title) }}
       </h1>
     </header>
-    <prismic-image :field="item.cover" class="img-responsive" />
+    <prismic-image :field="fields.cover" class="img-responsive" />
     <prismic-rich-text :field="fields.content" class="description" />
     <div class="cta-wrapper">
       <prismic-link :field="fields.ctaLink" class="cta">
