@@ -4,17 +4,18 @@
       <h1>Calendar</h1>
     </header>
 
-    <div class="row">
-      <div class="bs-component">
-        <div id="calendar"></div>
-      </div>
-    </div>
+    <UpcomingEvents />
   </div>
 </template>
 
 <script>
+  import UpcomingEvents from '../../components/UpcomingEvents'
+
   export default {
-    name: 'Calendar'
+    name: 'Calendar',
+    components: {
+      UpcomingEvents
+    }
   }
 
 </script>

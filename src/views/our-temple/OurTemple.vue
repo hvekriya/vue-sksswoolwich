@@ -31,8 +31,7 @@
           title: null,
           description: null,
           ctaLink: null,
-          ctaText: null,
-          cover: null
+          ctaText: null
         }
       }
     },
@@ -46,9 +45,6 @@
               this.fields.description = document.data.content
               this.fields.ctaLink = document.data.cta_link
               this.fields.ctaText = document.data.cta_text
-              if (document.data.cover.url) {
-                this.fields.cover = document.data.cover
-              }
             } else {
               this.$router.push({
                 name: 'not-found'

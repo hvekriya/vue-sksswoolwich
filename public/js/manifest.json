@@ -1,8 +1,7 @@
 {
-  "short_name": "Woolwich Temple",
+  "short_name": "SKSSWoolwich",
   "name": "Shree Kutch Satsang Swaminarayan Temple Woolwich",
-  "icons": [
-    {
+  "icons": [{
       "src": "../img/icons/36x36.png",
       "type": "image/png",
       "sizes": "36x36"
@@ -34,7 +33,7 @@
     }
   ],
   "background_color": "#FCC71D",
-  "theme_color":"#FCC71D",
+  "theme_color": "#FCC71D",
   "display": "standalone",
   "start_url": "/",
   "mobile-web-app-capable": "yes"

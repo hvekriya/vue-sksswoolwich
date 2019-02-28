@@ -5,6 +5,7 @@ import htmlSerializer from './prismic/html-serializer'
 import moment from 'moment'
 import App from './App.vue'
 import router from './router'
+import './registerServiceWorker'
 
 const accessToken = process.env.VUE_APP_PRISMIC
 
