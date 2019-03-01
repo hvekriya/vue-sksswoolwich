@@ -1,108 +1,97 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import NotFound from './views/NotFound'
-import Home from './views/Home'
-import OurTemple from './views/our-temple/OurTemple'
-import Education from './views/our-temple/Education'
-import Schedule from './views/our-temple/Schedule'
-import Calendar from './views/our-temple/Calendar'
-import Articles from './views/our-sampraday/Articles'
-import Article from './views/our-sampraday/Article'
-import DailyDarshan from './views/DailyDarshan'
-import WeddingHall from './views/WeddingHall'
-import Nursery from './views/Nursery'
-import Donation from './views/Donation'
-import ContactUs from './views/ContactUs'
-import Post from './views/Post'
-import Blog from './views/Blog'
 
 Vue.use(Router)
+
+function loadView(view) {
+  return () => import( /* webpackChunkName: "view-[request]" */ `@/views/${view}.vue`)
+}
 
 export default new Router({
   mode: 'history',
   routes: [{
       path: '/',
       name: 'Home',
-      component: Home
+      component: loadView('Home')
     },
     // Our-temple routes
     {
       path: '/our-temple/weekly-schedule',
       name: 'Schedule',
-      component: Schedule
+      component: loadView('our-temple/Schedule')
     },
     {
       path: '/our-temple/calendar',
       name: 'Calendar',
-      component: Calendar
+      component: loadView('our-temple/Calendar')
     },
     {
       path: '/our-temple/swaminarayan-education',
       name: 'Education',
-      component: Education
+      component: loadView('our-temple/Education')
     },
     { // Pages from Prismic
       path: '/our-temple/:uid',
       name: 'OurTemple',
-      component: OurTemple
+      component: loadView('our-temple/OurTemple')
     },
     // Our Sampraday
     {
       path: '/our-sampraday/:tag',
       name: 'Articles',
-      component: Articles
+      component: loadView('our-sampraday/Articles')
     },
     {
       path: '/our-sampraday/articles/:uid',
       name: 'Article',
-      component: Article
+      component: loadView('our-sampraday/Article')
     },
     // Media
     {
       path: '/daily-darshan',
       name: 'DailyDarshan',
-      component: DailyDarshan
+      component: loadView('DailyDarshan')
     },
     // Blog
     {
       path: '/blog',
       name: 'Blog',
-      component: Blog
+      component: loadView('Blog')
     },
     {
       path: '/post/:uid',
       name: 'Post',
-      component: Post
+      component: loadView('Post')
     },
     // Wedding Hall
     {
       path: '/wedding-hall',
       name: 'WeddingHall',
-      component: WeddingHall
+      component: loadView('WeddingHall')
     },
     // Nursery
     {
       path: '/nursery',
       name: 'Nursery',
-      component: Nursery
+      component: loadView('Nursery')
     },
     // Donation
     {
       path: '/donation',
       name: 'Donation',
-      component: Donation
+      component: loadView('Donation')
     },
     // Contact us
     {
       path: '/contact-us',
       name: 'ContactUs',
-      component: ContactUs
+      component: loadView('ContactUs')
     },
     // Other pages
     {
       path: '/not-found',
       name: 'not-found',
-      component: NotFound
+      component: loadView('NotFound')
     },
     {
       path: '*',

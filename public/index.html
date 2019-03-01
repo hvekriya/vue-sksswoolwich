@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
   <head>
     <meta charset="utf-8" />
@@ -35,30 +35,19 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.11/src/css/lightgallery.css" />
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-98793340-1"></script>
-    <!-- <script>
+    <script>
       window.dataLayer = window.dataLayer || [];
 
       function gtag() {
         dataLayer.push(arguments);
       }
       gtag('js', new Date());
-      gtag('config', 'UA-98793340-1');
-      (function (w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({
-          'gtm.start': new Date().getTime(),
-          event: 'gtm.js'
-        });
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != 'dataLayer' ? '&l=' + l : '';
-        j.async = true;
-        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, 'script', 'dataLayer', 'GTM-T2RQJD6');
 
-    </script> -->
+      gtag('config', 'UA-98793340-1');
+
+    </script>
     <script>
       window.prismic = {
         endpoint: 'https://sksswoolwich.prismic.io/api/v2'
@@ -105,7 +94,7 @@
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAShnmx7DSsXLvikNnLNzp0Z3L39ihUBwc&callback=myMap"
       defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="<%= BASE_URL %>js/vendor/moment.js"></script>
     <script src="<%= BASE_URL %>js/vendor/fullcalendar.min.js"></script>
@@ -115,6 +104,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.6/js/lightslider.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.11/dist/js/lightgallery-all.min.js" defer></script>
     <script src="<%= BASE_URL %>js/main.js" defer></script>
+    <script>
+      // Passive listener
+      if ('ontouchstart' in document.documentElement) {
+        passive: true
+      }
+
+    </script>
 
   </body>
 
