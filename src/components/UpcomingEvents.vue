@@ -6,7 +6,34 @@
 
 <script>
   export default {
-    name: 'UpcomingEvents'
+    name: 'UpcomingEvents',
+    mounted() {
+      var calendar = {
+        googleCalendarApiKey: 'AIzaSyAOtGp2YIkqzbPW5-yonk--Go9lf89m8OQ',
+        events: {
+          googleCalendarId: 'admin@bhujdham.org'
+        },
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'listMonth,month'
+        },
+        eventRender: function (event, element, view) {
+          var eventEnd = moment(event.end);
+          var NOW = moment();
+          if (eventEnd.diff(NOW, 'seconds') <= 0) {
+            return false;
+          }
+        }
+      }
+      // Mobile defaults
+      if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        calendar.defaultView = 'listMonth'
+      } else {
+        calendar.defaultView = 'listMonth'
+      }
+      $('#calendar').fullCalendar(calendar);
+    }
   }
 
 </script>
