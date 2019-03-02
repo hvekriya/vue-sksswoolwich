@@ -18,6 +18,7 @@
       </div>
     </div>
   </main>
+  </transition>
 </template>
 
 <script>

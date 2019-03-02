@@ -1,4 +1,4 @@
-# Woolwich Temple
+# Woolwich Temple [![Netlify Status](https://api.netlify.com/api/v1/badges/fb91273d-f91e-41f2-90ad-8e7f34f6c37a/deploy-status)](https://app.netlify.com/sites/sksswoolwich/deploys)
 
 > [Vue.js](https://vuejs.org) starter project with content managed in [Prismic](https://prismic.io)
 
