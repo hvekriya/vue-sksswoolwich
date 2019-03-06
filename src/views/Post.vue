@@ -48,7 +48,7 @@
               this.fields.ctaLink = document.data.cta_link
               this.fields.ctaText = document.data.cta_text
               this.fields.postedDate = document.first_publication_date
-              if (document.data.cover.url) {
+              if (document.data.cover) {
                 this.fields.cover = document.data.cover
               }
             } else {
