@@ -89,6 +89,13 @@ export default new Router({
     },
     // Other pages
     {
+      path: '/admin',
+      beforeEnter(to, from, next) {
+        // Put the full page url including the protocol http(s) below
+        window.location = 'https://sksswoolwich.prismic.io'
+      }
+    },
+    {
       path: '/not-found',
       name: 'not-found',
       component: loadView('NotFound')
