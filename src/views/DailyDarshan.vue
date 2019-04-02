@@ -22,8 +22,8 @@
     name: 'DailyDarshan',
     data() {
       return {
-        access_token: '549270098.1677ed0.9f232fea9d4f4540a86093cc2496df4b',
-        insta_api: 'https://api.instagram.com/v1/users/self/media/recent/',
+        access_token: process.env.INSTA_TOKEN,
+        insta_api: process.env.INSTA_API,
         dailydarshan: null
       }
     },
