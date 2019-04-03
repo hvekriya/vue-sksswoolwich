@@ -22,8 +22,8 @@
     name: 'DailyDarshan',
     data() {
       return {
-        access_token: process.env.INSTA_TOKEN,
-        insta_api: process.env.INSTA_API,
+        access_token: process.env.VUE_APP_INSTA_TOKEN,
+        insta_api: process.env.VUE_APP_INSTA_API,
         dailydarshan: null
       }
     },
