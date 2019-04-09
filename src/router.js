@@ -71,7 +71,7 @@ export default new Router({
     },
     // Nursery
     {
-      path: '/nursery',
+      path: '/our-temple/nursery',
       name: 'Nursery',
       component: loadView('Nursery')
     },

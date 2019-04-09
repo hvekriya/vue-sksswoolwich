@@ -36,9 +36,9 @@
                 <router-link to="/our-temple/swaminarayan-education" @click.native="$scrollToTop">Swaminarayan
                   Education</router-link>
               </li>
-              <li>
+              <!-- <li>
                 <router-link to="/our-temple/careers" @click.native="$scrollToTop">Careers</router-link>
-              </li>
+              </li> -->
             </ul>
           </li>
           <li class="dropdown">
@@ -76,7 +76,7 @@
             <router-link to="/wedding-hall" @click.native="$scrollToTop">Wedding Hall</router-link>
           </li>
           <li>
-            <router-link to="/nursery" @click.native="$scrollToTop">Nursery</router-link>
+            <router-link to="/our-temple/nursery" @click.native="$scrollToTop">Nursery</router-link>
           </li>
           <li>
             <router-link to="/donation" @click.native="$scrollToTop">Donation</router-link>

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "hooper": "^0.1.2",
     "moment": "^2.24.0",
     "nprogress": "^0.2.0",
     "prismic-dom": "^2.1.0",
