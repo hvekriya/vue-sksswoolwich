@@ -10,7 +10,7 @@
           <legend>
             <center>Upcoming Events</center>
           </legend>
-          <UpcomingEvents />
+          <UpcomingEvents class="fc-calendar" />
         </div>
       </div>
       <div class="row">
