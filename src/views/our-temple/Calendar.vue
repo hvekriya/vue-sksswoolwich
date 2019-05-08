@@ -4,18 +4,19 @@
       <h1>Calendar</h1>
     </header>
 
-    <UpcomingEvents />
+    <UpcomingEvents/>
+    <br>
+    <br>
   </div>
 </template>
 
 <script>
-  import UpcomingEvents from '../../components/UpcomingEvents'
+import UpcomingEvents from "../../components/UpcomingEvents";
 
-  export default {
-    name: 'Calendar',
-    components: {
-      UpcomingEvents
-    }
+export default {
+  name: "Calendar",
+  components: {
+    UpcomingEvents
   }
-
+};
 </script>

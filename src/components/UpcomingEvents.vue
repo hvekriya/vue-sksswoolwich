@@ -1,39 +1,51 @@
 <template>
   <div>
-    <div id="calendar"></div>
+    <!-- <div id="calendar"></div> -->
+    <FullCalendar
+      ref="fullCalendar"
+      defaultView="listMonth"
+      :header="header"
+      :plugins="calendarPlugins"
+      :events="events"
+      :visibleRange="visibleRange"
+    />
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'UpcomingEvents',
-    mounted() {
-      var calendar = {
-        googleCalendarApiKey: 'AIzaSyAOtGp2YIkqzbPW5-yonk--Go9lf89m8OQ',
-        events: {
-          googleCalendarId: 'admin@bhujdham.org'
-        },
-        header: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'listMonth,month'
-        },
-        eventRender: function (event, element, view) {
-          var eventEnd = moment(event.end);
-          var NOW = moment();
-          if (eventEnd.diff(NOW, 'seconds') <= 0) {
-            return false;
-          }
-        }
-      }
-      // Mobile defaults
-      if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        calendar.defaultView = 'listMonth'
-      } else {
-        calendar.defaultView = 'listMonth'
-      }
-      $('#calendar').fullCalendar(calendar);
-    }
-  }
+import FullCalendar from "@fullcalendar/vue";
+import listPlugin from "@fullcalendar/list";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import googleCalendarPlugin from "@fullcalendar/google-calendar";
+import moment from "moment";
 
+export default {
+  components: {
+    FullCalendar
+  },
+  data() {
+    return {
+      calendarPlugins: [listPlugin, dayGridPlugin, googleCalendarPlugin],
+      events: {
+        googleCalendarId: "admin@bhujdham.org",
+        googleCalendarApiKey: process.env.VUE_APP_GOOGLE_API_KEY
+      },
+      visibleRange: function(currentDate) {
+        return {
+          start: currentDate.clone().subtract(1, "days"),
+          end: currentDate.clone().add(3, "days") // exclusive end, so 3
+        };
+      },
+      header: {
+        left: "listMonth, dayGridMonth",
+        center: "title",
+        right: "prev, next today"
+      }
+    };
+  },
+  mounted() {
+    let calendarApi = this.$refs.fullCalendar.getApi();
+    console.log(calendarApi);
+  }
+};
 </script>
