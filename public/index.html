@@ -87,39 +87,7 @@
       >
     </noscript>
     <div id="app"></div>
-    <!-- built files will be auto injected -->
-    <script>
-      function myMap() {
-        var myCenter = new google.maps.LatLng(51.4830237, 0.07533420000004298);
-        var mapCanvas = document.getElementById("map");
-        var mapOptions = {
-          center: myCenter,
-          zoom: 16
-        };
-        var map = new google.maps.Map(mapCanvas, mapOptions);
-        var marker = new google.maps.Marker({
-          position: myCenter
-        });
-        marker.setMap(map);
-        google.maps.event.addListener(marker, "click", function() {
-          var infowindow = new google.maps.InfoWindow({
-            content:
-              '<p class="text-center" style="color: black"> <strong>Woolwich Temple</strong><br>St. Margarets Grove<br>London<br>SE18 7RL<br>UK<br>' +
-              '<a href="https://www.google.co.uk/maps/place/Woolwich+Temple/@51.4830237,0.0731455,17z/data=!4m5!3m4!1s0x0:0x7f680ca13d5a3426!8m2!3d51.483024!4d0.0753339">View on Google Maps</a></p>'
-          });
-          infowindow.open(map, marker);
-        });
-        google.maps.event.addDomListener(window, "resize", function() {
-          var center = map.getCenter();
-          google.maps.event.trigger(map, "resize");
-          map.setCenter(center);
-        });
-      }
-    </script>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAShnmx7DSsXLvikNnLNzp0Z3L39ihUBwc&callback=myMap"
-      defer
-    ></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script

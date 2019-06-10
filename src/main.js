@@ -1,15 +1,16 @@
-import Vue from 'vue'
-import PrismicVue from 'prismic-vue'
-import linkResolver from './prismic/link-resolver'
-import htmlSerializer from './prismic/html-serializer'
-import moment from 'moment'
-import App from './App.vue'
-import router from './router'
-import './registerServiceWorker'
+import Vue from "vue";
+import PrismicVue from "prismic-vue";
+import linkResolver from "./prismic/link-resolver";
+import htmlSerializer from "./prismic/html-serializer";
+import moment from "moment";
+import App from "./App.vue";
+import router from "./router";
+import * as VueGoogleMaps from "vue2-google-maps";
+import "./registerServiceWorker";
 
-const accessToken = process.env.VUE_APP_PRISMIC
+const accessToken = process.env.VUE_APP_PRISMIC;
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 Vue.use(PrismicVue, {
   endpoint: window.prismic.endpoint,
@@ -18,29 +19,38 @@ Vue.use(PrismicVue, {
   apiOptions: {
     accessToken
   }
-})
+});
 
-Vue.filter('formatDate', function (value) {
-  if (value) {
-    return moment(String(value)).format('DD/MM/YYYY')
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: process.env.VUE_APP_GOOGLE_MAP_API
   }
-})
+});
 
-Vue.filter('readMore', function (text, length, suffix) {
-  let newText = text.map(a => a.text).filter(b => b).join(' ')
+Vue.filter("formatDate", function(value) {
+  if (value) {
+    return moment(String(value)).format("DD/MM/YYYY");
+  }
+});
+
+Vue.filter("readMore", function(text, length, suffix) {
+  let newText = text
+    .map(a => a.text)
+    .filter(b => b)
+    .join(" ");
   return newText.substring(0, length) + suffix;
 });
 
-Vue.filter('truncate', function (value) {
+Vue.filter("truncate", function(value) {
   if (value.length > 20) {
-    value = value.substring(0, 17) + '...';
+    value = value.substring(0, 17) + "...";
   }
-  return value
-})
+  return value;
+});
 
-Vue.prototype.$scrollToTop = () => window.scrollTo(0, 0)
+Vue.prototype.$scrollToTop = () => window.scrollTo(0, 0);
 
 new Vue({
   router,
   render: h => h(App)
-}).$mount('#app')
+}).$mount("#app");
