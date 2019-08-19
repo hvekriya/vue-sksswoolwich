@@ -72,15 +72,6 @@ export default new Router({
       name: "WeddingHall",
       component: loadView("WeddingHall")
     },
-    // Nursery
-    {
-      path: "/our-temple/nursery",
-      name: "Nursery",
-      beforeEnter(to, from, next) {
-        // Put the full page url including the protocol http(s) below
-        window.location = "https://balkrishna.org";
-      }
-    },
     // Donation
     {
       path: "/donation",
