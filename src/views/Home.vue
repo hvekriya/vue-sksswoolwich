@@ -1,6 +1,7 @@
 <template>
   <main id="content" role="main">
     <SlideShow />
+    <LiveStream :fields="fields" />
     <div class="wrapper container">
       <br />
       <div class="row">
@@ -38,6 +39,7 @@ import DailyDarshan from "../components/DailyDarshan";
 import OpeningTimes from "../components/OpeningTimes";
 import UpcomingEvents from "../components/UpcomingEvents";
 import WeeklySchedule from "../components/WeeklySchedule";
+import LiveStream from "../components/LiveStream";
 
 export default {
   name: "Home",
@@ -46,7 +48,8 @@ export default {
     DailyDarshan,
     OpeningTimes,
     UpcomingEvents,
-    WeeklySchedule
+    WeeklySchedule,
+    LiveStream
   },
   data() {
     return {

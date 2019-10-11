@@ -48,6 +48,10 @@ Vue.filter("truncate", function(value) {
   return value;
 });
 
+Vue.filter("replace", function(currentText, text, newText) {
+  return currentText.replace(text, newText);
+});
+
 Vue.prototype.$scrollToTop = () => window.scrollTo(0, 0);
 
 new Vue({
