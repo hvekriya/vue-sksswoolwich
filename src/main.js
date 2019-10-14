@@ -1,3 +1,4 @@
+import "babel-polyfill";
 import Vue from "vue";
 import PrismicVue from "prismic-vue";
 import linkResolver from "./prismic/link-resolver";
