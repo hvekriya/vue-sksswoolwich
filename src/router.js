@@ -55,6 +55,16 @@ export default new Router({
       name: "DailyDarshan",
       component: loadView("DailyDarshan")
     },
+    {
+      path: "/gallery",
+      name: "Gallery",
+      component: loadView("Gallery")
+    },
+    {
+      path: "/gallery/:id",
+      name: "Album",
+      component: loadView("Album")
+    },
     // Blog
     {
       path: "/blog",

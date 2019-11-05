@@ -8,6 +8,10 @@ import App from "./App.vue";
 import router from "./router";
 import * as VueGoogleMaps from "vue2-google-maps";
 import "./registerServiceWorker";
+import axios from "axios";
+import VueAxios from "vue-axios";
+
+Vue.use(VueAxios, axios);
 
 const accessToken = process.env.VUE_APP_PRISMIC;
 

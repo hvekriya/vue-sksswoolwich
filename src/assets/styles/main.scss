@@ -1,5 +1,5 @@
-@import 'prismic-edit-button';
-@import 'resetr';
+@import "prismic-edit-button";
+@import "resetr";
 @import "sass_modules/pallete";
 @import "sass_modules/countdown";
 @import "sass_modules/body";
@@ -9,23 +9,18 @@
 @import "sass_modules/calendar";
 @import "sass_modules/timeline";
 @import "sass_modules/scrollBar";
-
-@import url('https://fonts.googleapis.com/css?family=Spectral');
+@import url("https://fonts.googleapis.com/css?family=Spectral");
 
 @mixin respond-to($media) {
   @if $media==handhelds {
     @media only screen and (max-width: 768px) {
       @content;
     }
-  }
-
-  @else if $media==medium-screens {
+  } @else if $media==medium-screens {
     @media only screen and (min-width: 769px) and (max-width: 1024px) {
       @content;
     }
-  }
-
-  @else if $media==wide-screens {
+  } @else if $media==wide-screens {
     @media only screen and (min-width: 1024px) {
       @content;
     }
@@ -33,7 +28,7 @@
 }
 
 // Custom scroll bar
-@include scrollbars(.5em, $orange);
+@include scrollbars(0.5em, $orange);
 
 .lead {
   font-size: 18px;
@@ -137,7 +132,7 @@
     @include respond-to(handhelds) {
       margin-top: 3%;
       margin-left: 0%;
-      width: 100%
+      width: 100%;
     }
   }
 }
@@ -150,7 +145,7 @@
 
   @include respond-to(handhelds) {
     left: 0;
-    width: 100%
+    width: 100%;
   }
 }
 
@@ -233,7 +228,7 @@ img.img-responsive.poster {
   .col-md-3 {
     width: 10%;
 
-    @include respond-to (handhelds) {
+    @include respond-to(handhelds) {
       width: 50%;
     }
   }
@@ -241,12 +236,12 @@ img.img-responsive.poster {
 
 .socialbar {
   .social {
-    @include respond-to (handhelds) {
+    @include respond-to(handhelds) {
       float: left;
     }
   }
 
-  @include respond-to (handhelds) {
+  @include respond-to(handhelds) {
     background-color: #eee;
   }
 }
@@ -311,7 +306,6 @@ img.img-responsive.poster {
 }
 
 @include respond-to(handhelds) {
-
   .no,
   .yes {
     margin-top: 3%;
@@ -393,11 +387,12 @@ div.contact {
   text-align: center;
   background-color: $poster-yellow;
   background:
-    /* top, transparent red, faked with gradient */
-    linear-gradient(rgba(255, 166, 0, 0.45),
-    rgba(245, 166, 146, 0.45)),
+    /* top, transparent red, faked with gradient */ linear-gradient(
+      rgba(255, 166, 0, 0.45),
+      rgba(245, 166, 146, 0.45)
+    ),
     /* bottom, image */
-    url(https://lh3.googleusercontent.com/DStma82llOnsy5XDivLroyMKhTY4jY_HHjYkTQyguz3VReTd4l6bCVjCLUPDadZdIo0M_btcIEgOfKocwCaVRYsFOERfFBDlONgt6ME_I4LDptvVpRcUmEXuT_Jh5S0V06roQrLvu6XoOK9c4JfXirQaAIDc_zGZXDs1tIHA9jFixJJJOST-K8HFIA_8uPn3FQGNwtfRtrbqIkb9aWELcgIr-1ZgdBPi9-etfSIU0IE7poAgMnX3TcXv3t6WRaKPkliP_0J18dIgKMZN1ab7CrSQyO0uvTYi1eXKJVvso6rOxODYYaPIzwj2OKzkzYqhOy2meKjnQbUP2XekbVnnRTPaYN3vrJauMg7aDMgtbWwSRgec3DCp3q9OEwd1aV_HpIXnNWHsUYfZC1107zEaLYCAHyTYnZ7CubQ1hWqyuW5aIjU6slZd4k5eHcj25vSsqgcsDXuELo5sE8nuaW3AWt6grj-Fk_1KhKA4rKusRtN3gNYU53Ypln2-Z5FPxxYLzYB8S5MwjZWjK4bEt-eoI74BdnbIvoD3JFHnZ_WWjwlQllddXEFw3yZd6HmVH__E-LeNFxDsgm3d_RDh8J9FIjq-ycXsCm1C9l1s9Ax3cnL8zKZ_2ghUMS5ZpO9RIlTEhTYr3i0NW1UFi_mho7ZI_23nrqizvlhrTk9WUTtpbhqmn-A9mA1rlsVaD61Z5kjHppy74Bo4NrsCReraBg=w1452-h1450-no);
+      url(https://lh3.googleusercontent.com/DStma82llOnsy5XDivLroyMKhTY4jY_HHjYkTQyguz3VReTd4l6bCVjCLUPDadZdIo0M_btcIEgOfKocwCaVRYsFOERfFBDlONgt6ME_I4LDptvVpRcUmEXuT_Jh5S0V06roQrLvu6XoOK9c4JfXirQaAIDc_zGZXDs1tIHA9jFixJJJOST-K8HFIA_8uPn3FQGNwtfRtrbqIkb9aWELcgIr-1ZgdBPi9-etfSIU0IE7poAgMnX3TcXv3t6WRaKPkliP_0J18dIgKMZN1ab7CrSQyO0uvTYi1eXKJVvso6rOxODYYaPIzwj2OKzkzYqhOy2meKjnQbUP2XekbVnnRTPaYN3vrJauMg7aDMgtbWwSRgec3DCp3q9OEwd1aV_HpIXnNWHsUYfZC1107zEaLYCAHyTYnZ7CubQ1hWqyuW5aIjU6slZd4k5eHcj25vSsqgcsDXuELo5sE8nuaW3AWt6grj-Fk_1KhKA4rKusRtN3gNYU53Ypln2-Z5FPxxYLzYB8S5MwjZWjK4bEt-eoI74BdnbIvoD3JFHnZ_WWjwlQllddXEFw3yZd6HmVH__E-LeNFxDsgm3d_RDh8J9FIjq-ycXsCm1C9l1s9Ax3cnL8zKZ_2ghUMS5ZpO9RIlTEhTYr3i0NW1UFi_mho7ZI_23nrqizvlhrTk9WUTtpbhqmn-A9mA1rlsVaD61Z5kjHppy74Bo4NrsCReraBg=w1452-h1450-no);
   background-position: center;
   background-position-x: 52%;
 }
@@ -492,11 +487,11 @@ footer {
   text-align: left;
 }
 
-.nav-tabs li.bv-tab-success>a {
+.nav-tabs li.bv-tab-success > a {
   color: #3c763d;
 }
 
-.nav-tabs li.bv-tab-error>a {
+.nav-tabs li.bv-tab-error > a {
   color: #a94442;
 }
 
@@ -534,11 +529,11 @@ footer {
   margin-bottom: 30px;
 }
 
-.carousel-inner>.item>a>img,
-.carousel-inner>.item>img,
+.carousel-inner > .item > a > img,
+.carousel-inner > .item > img,
 .img-responsive,
-.thumbnail>img,
-.thumbnail a>img {
+.thumbnail > img,
+.thumbnail a > img {
   display: block;
   width: 100%;
   height: auto;
@@ -546,7 +541,7 @@ footer {
 
 /* ------------------- Carousel Styling ------------------- */
 .carousel-caption {
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
   left: 0;
   right: 0;
@@ -616,7 +611,7 @@ footer {
   display: none;
 }
 
-@include respond-to (handhelds) {
+@include respond-to(handhelds) {
   // .carousel-caption {
   //     padding-left: 25%;
   // }
@@ -631,7 +626,6 @@ footer {
 }
 
 @media (min-width: 768px) {
-
   /* Bump up size of carousel content */
   .carousel-caption p {
     margin-bottom: 20px;
@@ -678,6 +672,6 @@ footer {
   background: $secondary-gradiant;
 }
 
-.table-striped>tbody>tr:nth-of-type(odd) {
+.table-striped > tbody > tr:nth-of-type(odd) {
   background-color: white;
 }

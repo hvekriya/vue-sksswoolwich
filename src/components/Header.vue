@@ -101,9 +101,7 @@
                 <router-link to="/daily-darshan" @click.native="$scrollToTop">Daily Darshan</router-link>
               </li>
               <li>
-                <a
-                  href="https://www.facebook.com/pg/WoolwichTemple/photos/?tab=albums"
-                >Photo Gallery</a>
+                <a href="/gallery">Photo Gallery</a>
               </li>
               <li>
                 <a href="http://listen.bhujmandir.org/" target="_blank" rel="noopener">Music Player</a>
