@@ -12,8 +12,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Spectral',
-    serif;
+  font-family: "Spectral", serif;
 }
 
 body {
@@ -22,9 +21,11 @@ body {
 }
 
 @font-face {
-  font-family: 'Arvo';
+  font-family: "Arvo";
   font-display: auto;
-  src: local('Arvo'), url(https://fonts.gstatic.com/s/arvo/v9/rC7kKhY-eUDY-ucISTIf5PesZW2xOQ-xsNqO47m55DA.woff2) format('woff2');
+  src: local("Arvo"),
+    url(https://fonts.gstatic.com/s/arvo/v9/rC7kKhY-eUDY-ucISTIf5PesZW2xOQ-xsNqO47m55DA.woff2)
+      format("woff2");
 }
 
 a {
@@ -39,7 +40,7 @@ a {
   }
 
   &:not(.btn)::after {
-    content: '';
+    content: "";
     position: absolute;
     width: 100%;
     transform: scaleX(0);
@@ -63,10 +64,15 @@ a {
 
 a:not(.btn):not(.social):focus,
 a:not(.btn):not(.social):hover {
-  background: -webkit-gradient(linear, left top, right top, from(#ff8a00), to(#da1b60));
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#ff8a00),
+    to(#da1b60)
+  );
   background: $main-gradiant;
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   text-shadow: none;
@@ -87,7 +93,13 @@ li.social a {
 
 .btn {
   &:hover {
-    background: -webkit-gradient(linear, left top, right top, from(#ff8a00), to(#da1b60));
+    background: -webkit-gradient(
+      linear,
+      left top,
+      right top,
+      from(#ff8a00),
+      to(#da1b60)
+    );
     background: $main-gradiant;
     border: none;
     color: white;

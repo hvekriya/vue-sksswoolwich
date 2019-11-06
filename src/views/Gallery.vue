@@ -3,17 +3,21 @@
     <header class="page-header">
       <h1>Gallery</h1>
     </header>
-
     <div class="row">
-      <div v-for="(item, index) in albums" :key="'album-' + index">
-        <img :src="item.cover_photo" />
-        <div>
-          <h3>{{item.name}}</h3>
-          <div>
-            <p>{{item.date}}</p>
+      <div
+        class="cold-xs-12 col-sm-4 col-md-2 col-lg-2"
+        v-for="(item, index) in albums"
+        :key="'album-' + index"
+      >
+        <a :href="item.link">
+          <div class="imgbox">
+            <img :src="item.cover_photo" class="category-banner img-responsive" />
+            <span class="imgbox-desc">
+              {{item.name}}
+              <span class="imgbox-meta">{{item.date}}</span>
+            </span>
           </div>
-          <a :href="item.link">View</a>
-        </div>
+        </a>
       </div>
     </div>
   </div>
@@ -47,7 +51,9 @@ export default {
               return this.albums.push({
                 link: `/gallery/${item.id}`,
                 name: item.name,
-                date: item.cover_photo.created_time,
+                date: moment(item.cover_photo.created_time).format(
+                  "DD/MM/YYYY"
+                ),
                 cover_photo: response.data.picture
               });
             });
