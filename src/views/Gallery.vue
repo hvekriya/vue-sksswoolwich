@@ -38,7 +38,7 @@ export default {
   created() {
     axios
       .get(
-        `https://graph.facebook.com/v5.0/216354315082607?fields=albums%7Bcover_photo%2Cname%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
+        `https://graph.facebook.com/v5.0/216354315082607?fields=albums.limit(500)%7Bcover_photo%2Cname%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
       )
       .then(response => {
         this.fb_albums = response.data.albums.data;

@@ -33,7 +33,7 @@ export default {
     getFbAlbum(id) {
       axios
         .get(
-          `https://graph.facebook.com/v5.0/${id}?fields=photos%7Bimages%2Calbum%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
+          `https://graph.facebook.com/v5.0/${id}?fields=photos.limit(400)%7Bimages%2Calbum%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
         )
         .then(response => {
           this.album_name = response.data.photos.data[0].album.name;
