@@ -6,6 +6,13 @@
   width: 185px;
   height: 200px;
   overflow: hidden;
+  -moz-box-shadow: 2px 2px 6px 0px #000;
+  -webkit-box-shadow: 2px 2px 6px 0px #000;
+  box-shadow: 2px 2px 6px 0px #000;
+
+  @include respond-to(handhelds) {
+    width: 350px;
+  }
 
   img {
     opacity: 0.6;
@@ -40,6 +47,6 @@
     transform: scale(1.5);
   }
   &:hover .imgbox-desc {
-    padding-bottom: 10%;
+    padding-bottom: 16%;
   }
 }

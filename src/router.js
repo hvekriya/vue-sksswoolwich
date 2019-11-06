@@ -61,7 +61,7 @@ export default new Router({
       component: loadView("Gallery")
     },
     {
-      path: "/gallery/:id",
+      path: "/gallery/album/:id",
       name: "Album",
       component: loadView("Album")
     },

@@ -39,7 +39,7 @@ a {
     text-decoration: none;
   }
 
-  &:not(.btn)::after {
+  &:not(.btn):not(.lg-download)::after {
     content: "";
     position: absolute;
     width: 100%;
@@ -52,7 +52,7 @@ a {
     transition: transform 0.25s ease-out;
   }
 
-  &:not(.btn):hover::after {
+  &:not(.btn):not(.lg-download):not(.lSPrev):not(.lSNext):hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
   }
@@ -63,7 +63,7 @@ a {
 }
 
 a:not(.btn):not(.social):focus,
-a:not(.btn):not(.social):hover {
+a:not(.btn):not(.social):not(.lg-download):not(.lSPrev):not(.lSNext):hover {
   background: -webkit-gradient(
     linear,
     left top,

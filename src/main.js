@@ -10,8 +10,12 @@ import * as VueGoogleMaps from "vue2-google-maps";
 import "./registerServiceWorker";
 import axios from "axios";
 import VueAxios from "vue-axios";
-
 Vue.use(VueAxios, axios);
+
+// Loading component
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
+Vue.component("loading", Loading);
 
 const accessToken = process.env.VUE_APP_PRISMIC;
 
