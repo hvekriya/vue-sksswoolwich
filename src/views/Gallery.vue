@@ -5,7 +5,7 @@
     </header>
     <div class="row">
       <div
-        class="col-xs-12 col-sm-4 col-md-2 col-lg-2"
+        class="col-xs-6 col-sm-4 col-md-2 col-lg-2"
         v-for="(item, index) in sortedAlbums"
         :key="'album-' + index"
       >
@@ -25,7 +25,14 @@
     <br />
     <br />
     <div class="row">
-      <button class="btn btn-primary" @click="loadMoreAlbums" v-if="loadNext != undefined">Load more</button>
+      <center>
+        <button
+          class="btn btn-primary"
+          @click="loadMoreAlbums"
+          v-if="loadNext != undefined"
+          style="width: 30%"
+        >Load more</button>
+      </center>
     </div>
     <br />
     <br />
@@ -48,6 +55,7 @@ export default {
   },
   methods: {
     loadMoreAlbums: function() {
+      this.isLoading = true;
       if (this.loadNext != undefined) {
         axios.get(this.loadNext).then(response => {
           this.loadNext = response.data.paging.next;
@@ -69,7 +77,7 @@ export default {
                   this.isLoading = false;
 
                   return this.albums.push({
-                    link: `/gallery/album/${item.id}`,
+                    link: `/media/gallery/album/${item.id}`,
                     name: item.name,
                     date: item.cover_photo.created_time,
                     cover_photo: thumbnails[0][0].source
@@ -124,7 +132,7 @@ export default {
                 this.isLoading = false;
 
                 return this.albums.push({
-                  link: `/gallery/album/${item.id}`,
+                  link: `/media/gallery/album/${item.id}`,
                   name: item.name,
                   date: item.cover_photo.created_time,
                   cover_photo: thumbnails[0][0].source

@@ -16,6 +16,15 @@
         </div>
       </div>
     </div>
+    <br />
+    <br />
+    <div class="row">
+      <center>
+        <a class="btn btn-primary" href="/media/gallery" style="width: 30%">See the gallery for more</a>
+      </center>
+    </div>
+    <br />
+    <br />
   </div>
 </template>
 

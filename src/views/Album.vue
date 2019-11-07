@@ -5,27 +5,39 @@
     </header>
     <ol class="breadcrumb">
       <li>
-        <a href="/gallery">Gallery</a>
+        <a href="/media/gallery">Gallery</a>
       </li>
       <li class="active">Album</li>
     </ol>
     <div class="row">
       <div id="album">
-        <template v-for="(photo, index) in photos">
-          <div v-for="(item, index) in photo" class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-            <a :href="item.source">
-              <div class="imgbox">
-                <img :src="item.source" class="category-banner img-responsive" />
-              </div>
+        <div v-for="(photo, index) in photos" class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+          <div class="imgbox">
+            <a :href="photo[0].source">
+              <img :src="photo[0].source" class="category-banner img-responsive" />
             </a>
           </div>
-        </template>
+        </div>
       </div>
     </div>
+    <br />
+    <br />
+    <div class="row">
+      <center>
+        <button
+          class="btn btn-primary"
+          @click="loadMoreAlbums"
+          v-if="loadNext != undefined"
+          style="width: 30%"
+        >Load more</button>
+      </center>
+    </div>
+    <br />
+    <br />
     <div class="row">
       <ol class="breadcrumb">
         <li>
-          <a href="/gallery">Gallery</a>
+          <a href="/media/gallery">Gallery</a>
         </li>
         <li class="active">Album</li>
       </ol>
@@ -45,17 +57,19 @@ export default {
       album: null,
       photos: [],
       album_name: null,
-      isLoading: true
+      isLoading: true,
+      loadNext: null
     };
   },
   methods: {
     getFbAlbum(id) {
       axios
         .get(
-          `https://graph.facebook.com/v5.0/${id}?fields=photos.limit(500)%7Bimages%2Calbum%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
+          `https://graph.facebook.com/v5.0/${id}?fields=photos%7Bimages%2Calbum%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
         )
         .then(response => {
-          this.isLoading = false;
+          console.log(response);
+          this.loadNext = response.data.photos.paging.next;
           this.album_name = response.data.photos.data[0].album.name;
           this.album = response.data.photos.data.map(items => {
             return items.images;
@@ -63,12 +77,35 @@ export default {
           this.photos = this.album.map(nested =>
             nested.map(element => element).filter(photo => photo.width >= 1080)
           );
+          this.isLoading = false;
         })
         .catch(err => {
           if (err.msg) {
             this.loading = false;
           }
         });
+    },
+    loadMoreAlbums: function() {
+      if (this.loadNext != undefined) {
+        this.isLoading = true;
+        axios
+          .get(this.loadNext)
+          .then(response => {
+            response.data.data
+              .map(item => item)
+              .map(item => {
+                return this.photos.push(item.images);
+              });
+            this.loadNext = response.data.paging.next;
+
+            this.isLoading = false;
+          })
+          .catch(err => {
+            if (err.msg) {
+              this.loading = false;
+            }
+          });
+      }
     }
   },
   created() {

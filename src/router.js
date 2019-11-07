@@ -51,17 +51,17 @@ export default new Router({
     },
     // Media
     {
-      path: "/daily-darshan",
+      path: "/media/daily-darshan",
       name: "DailyDarshan",
       component: loadView("DailyDarshan")
     },
     {
-      path: "/gallery",
+      path: "/media/gallery",
       name: "Gallery",
       component: loadView("Gallery")
     },
     {
-      path: "/gallery/album/:id",
+      path: "/media/gallery/album/:id",
       name: "Album",
       component: loadView("Album")
     },

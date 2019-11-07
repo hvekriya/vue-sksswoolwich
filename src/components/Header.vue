@@ -7,6 +7,8 @@
           class="navbar-toggle collapsed"
           data-toggle="collapse"
           data-target="#bs-example-navbar-collapse-1"
+          v-bind:class="{ 'is-active': menuIsActive }"
+          v-on:click="toggleNav"
         >
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar top-bar"></span>
@@ -21,7 +23,13 @@
             <router-link to="/" @click.native="$scrollToTop">Home</router-link>
           </li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <a
+              href="#"
+              class="dropdown-toggle"
+              data-toggle="dropdown"
+              aria-expanded="false"
+              :class="{'router-link-exact-active':subIsActive('/our-temple')}"
+            >
               Our Temple
               <i class="fa fa-angle-down"></i>
             </a>
@@ -57,7 +65,12 @@
             </ul>
           </li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <a
+              href="#"
+              class="dropdown-toggle"
+              data-toggle="dropdown"
+              :class="{'router-link-exact-active':subIsActive('/our-sampraday')}"
+            >
               Our Sampraday
               <i class="fa fa-angle-down"></i>
             </a>
@@ -92,16 +105,21 @@
             </ul>
           </li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <a
+              href="#"
+              class="dropdown-toggle"
+              data-toggle="dropdown"
+              :class="{'router-link-exact-active':subIsActive('/media')}"
+            >
               Media
               <i class="fa fa-angle-down"></i>
             </a>
             <ul class="dropdown-menu" role="menu">
               <li>
-                <router-link to="/daily-darshan" @click.native="$scrollToTop">Daily Darshan</router-link>
+                <router-link to="/media/daily-darshan" @click.native="$scrollToTop">Daily Darshan</router-link>
               </li>
               <li>
-                <a href="/gallery">Photo Gallery</a>
+                <a href="/media/gallery">Photo Gallery</a>
               </li>
               <li>
                 <a href="http://listen.bhujmandir.org/" target="_blank" rel="noopener">Music Player</a>
@@ -163,6 +181,23 @@
 
 <script>
 export default {
-  name: "Header"
+  name: "Header",
+  data() {
+    return {
+      menuIsActive: false
+    };
+  },
+  methods: {
+    toggleNav() {
+      this.menuIsActive = !this.menuIsActive;
+    },
+    subIsActive(input) {
+      console.log(input);
+      const paths = Array.isArray(input) ? input : [input];
+      return paths.some(path => {
+        return this.$route.path.indexOf(path) === 0;
+      });
+    }
+  }
 };
 </script>
