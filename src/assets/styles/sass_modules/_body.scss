@@ -63,7 +63,7 @@ a {
 }
 
 a:not(.btn):not(.social):focus,
-a:not(.btn):not(.social):not(.lg-download):not(.lSPrev):not(.lSNext):hover {
+a:not(.btn):not(.social):not(.lg-download):not(.lSPrev):not(.lSNext):not(.dropdown-toggle):hover {
   background: -webkit-gradient(
     linear,
     left top,

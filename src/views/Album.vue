@@ -52,7 +52,7 @@ export default {
     getFbAlbum(id) {
       axios
         .get(
-          `https://graph.facebook.com/v5.0/${id}?fields=photos.limit(400)%7Bimages%2Calbum%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
+          `https://graph.facebook.com/v5.0/${id}?fields=photos.limit(500)%7Bimages%2Calbum%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
         )
         .then(response => {
           this.isLoading = false;

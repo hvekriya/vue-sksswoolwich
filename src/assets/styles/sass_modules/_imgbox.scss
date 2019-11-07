@@ -11,7 +11,7 @@
   box-shadow: 2px 2px 6px 0px #000;
 
   @include respond-to(handhelds) {
-    width: 350px;
+    width: 150px;
   }
 
   img {

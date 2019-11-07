@@ -19,7 +19,13 @@
           </div>
         </a>
       </div>
+
       <loading :active.sync="isLoading"></loading>
+    </div>
+    <br />
+    <br />
+    <div class="row">
+      <button class="btn btn-primary" @click="loadMoreAlbums" v-if="loadNext != undefined">Load more</button>
     </div>
     <br />
     <br />
@@ -36,10 +42,49 @@ export default {
     return {
       fb_albums: null,
       albums: [],
-      isLoading: true
+      isLoading: true,
+      loadNext: null
     };
   },
-  methods: {},
+  methods: {
+    loadMoreAlbums: function() {
+      if (this.loadNext != undefined) {
+        axios.get(this.loadNext).then(response => {
+          this.loadNext = response.data.paging.next;
+          this.fb_albums.push(response.data.data);
+          response.data.data
+            .map(item => item)
+            .map(item => {
+              axios
+                .get(
+                  `https://graph.facebook.com/v5.0/${item.id}?fields=photos.limit(4000)%7Bimages%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
+                )
+                .then(response => {
+                  const all_albums = response.data.photos.data.map(items => {
+                    return items.images;
+                  });
+                  const thumbnails = all_albums.map(nested =>
+                    nested.map(element => element)
+                  );
+                  this.isLoading = false;
+
+                  return this.albums.push({
+                    link: `/gallery/album/${item.id}`,
+                    name: item.name,
+                    date: item.cover_photo.created_time,
+                    cover_photo: thumbnails[0][0].source
+                  });
+                })
+                .catch(err => {
+                  if (err.msg) {
+                    this.loading = false;
+                  }
+                });
+            });
+        });
+      }
+    }
+  },
   computed: {
     sortedAlbums: function() {
       return this.albums
@@ -50,30 +95,31 @@ export default {
   created() {
     axios
       .get(
-        `https://graph.facebook.com/v5.0/216354315082607?fields=albums.limit(500)%7Bcover_photo%2Cname%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
+        `https://graph.facebook.com/v5.0/216354315082607?fields=albums%7Bcover_photo%2Cname%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
       )
       .then(response => {
+        this.loadNext = response.data.albums.paging.next;
         this.fb_albums = response.data.albums.data;
         this.fb_albums
           .map(item => item)
           .filter(item => {
             return (
-              item.name !== "Timeline Photos" && item.name !== "Mobile Uploads"
+              item.name !== "Timeline Photos" &&
+              item.name !== "Mobile Uploads" &&
+              item.name !== "Profile pictures"
             );
           })
           .map(item => {
             axios
               .get(
-                `https://graph.facebook.com/v5.0/${item.id}?fields=photos.limit(400)%7Bimages%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
+                `https://graph.facebook.com/v5.0/${item.id}?fields=photos.limit(4000)%7Bimages%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
               )
               .then(response => {
                 const all_albums = response.data.photos.data.map(items => {
                   return items.images;
                 });
-                const cover_photo = all_albums.map(nested =>
-                  nested
-                    .map(element => element)
-                    .filter(photo => photo.width === 720)
+                const thumbnails = all_albums.map(nested =>
+                  nested.map(element => element)
                 );
                 this.isLoading = false;
 
@@ -81,7 +127,7 @@ export default {
                   link: `/gallery/album/${item.id}`,
                   name: item.name,
                   date: item.cover_photo.created_time,
-                  cover_photo: cover_photo[0][0].source
+                  cover_photo: thumbnails[0][0].source
                 });
               })
               .catch(err => {

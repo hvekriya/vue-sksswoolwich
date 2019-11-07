@@ -6,7 +6,7 @@
 
     <div class="row">
       <div id="dailydarshan-all">
-        <div v-for="(dd, index) in dailydarshan" class="col-xs-12 col-sm-4 col-md-2 col-lg-2">
+        <div v-for="(dd, index) in dailydarshan" class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
           <a :href="dd.images.standard_resolution.url">
             <div class="imgbox">
               <img :src="dd.images.thumbnail.url" class="category-banner img-responsive" />
