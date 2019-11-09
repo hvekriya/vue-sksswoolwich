@@ -1,22 +1,19 @@
 <template>
   <div class="wrapper container">
     <header class="page-header">
-      <h1>Calendar</h1>
+      <h1>Photo Gallery</h1>
     </header>
-
-    <Calendar />
-    <br />
-    <br />
+    <Gallery />
   </div>
 </template>
 
 <script>
-import UpcomingEvents from "../../components/Calendar";
+import Gallery from "../components/Gallery";
 
 export default {
-  name: "Calendar",
+  name: "PhotoGallery",
   components: {
-    Calendar
+    Gallery
   }
 };
 </script>

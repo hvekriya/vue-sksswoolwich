@@ -1,9 +1,6 @@
 <template>
-  <div class="wrapper container">
-    <header class="page-header">
-      <h1>Gallery</h1>
-    </header>
-    <div class="row">
+  <div>
+    <div class="row" style="margin-left: -20px;">
       <div
         class="col-xs-6 col-sm-4 col-md-2 col-lg-2"
         v-for="(item, index) in sortedAlbums"
@@ -19,17 +16,14 @@
           </div>
         </a>
       </div>
-
-      <loading :active.sync="isLoading"></loading>
     </div>
-    <br />
-    <br />
+    <loading :active.sync="isLoading"></loading>
     <div class="row">
       <center>
         <button
           class="btn btn-primary"
           @click="loadMoreAlbums"
-          v-if="loadNext != undefined"
+          v-if="loadNext != undefined && limit === undefined"
           style="width: 30%"
         >Load more</button>
       </center>
@@ -53,7 +47,48 @@ export default {
       loadNext: null
     };
   },
+  props: ["limit"],
   methods: {
+    loadAlbums: function() {
+      axios
+        .get(
+          `https://graph.facebook.com/v5.0/216354315082607?fields=albums%7Bcover_photo%2Cname%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
+        )
+        .then(response => {
+          this.loadNext = response.data.albums.paging.next;
+          this.fb_albums = response.data.albums.data;
+          this.fb_albums
+            .map(item => item)
+            .filter(item => {
+              return (
+                item.name !== "Timeline Photos" &&
+                item.name !== "Mobile Uploads" &&
+                item.name !== "Profile pictures"
+              );
+            })
+            .map(item => {
+              axios
+                .get(
+                  `https://graph.facebook.com/v5.0/${item.id}?fields=photos.limit(4000)%7Bimages%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
+                )
+                .then(response => {
+                  const all_albums = response.data.photos.data.map(items => {
+                    return items.images;
+                  });
+                  const thumbnails = all_albums.map(nested =>
+                    nested.map(element => element)
+                  );
+                  this.isLoading = false;
+                  this.albums.push({
+                    link: `/media/gallery/album/${item.id}`,
+                    name: item.name,
+                    date: item.cover_photo.created_time,
+                    cover_photo: thumbnails[0][0].source
+                  });
+                });
+            });
+        });
+    },
     loadMoreAlbums: function() {
       this.isLoading = true;
       if (this.loadNext != undefined) {
@@ -75,18 +110,12 @@ export default {
                     nested.map(element => element)
                   );
                   this.isLoading = false;
-
                   return this.albums.push({
                     link: `/media/gallery/album/${item.id}`,
                     name: item.name,
                     date: item.cover_photo.created_time,
                     cover_photo: thumbnails[0][0].source
                   });
-                })
-                .catch(err => {
-                  if (err.msg) {
-                    this.loading = false;
-                  }
                 });
             });
         });
@@ -97,54 +126,12 @@ export default {
     sortedAlbums: function() {
       return this.albums
         .sort((a, b) => new Date(a.date) - new Date(b.date))
-        .reverse();
+        .reverse()
+        .slice(0, this.limit || this.albums.length); // Limit the albums for home page
     }
   },
   created() {
-    axios
-      .get(
-        `https://graph.facebook.com/v5.0/216354315082607?fields=albums%7Bcover_photo%2Cname%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
-      )
-      .then(response => {
-        this.loadNext = response.data.albums.paging.next;
-        this.fb_albums = response.data.albums.data;
-        this.fb_albums
-          .map(item => item)
-          .filter(item => {
-            return (
-              item.name !== "Timeline Photos" &&
-              item.name !== "Mobile Uploads" &&
-              item.name !== "Profile pictures"
-            );
-          })
-          .map(item => {
-            axios
-              .get(
-                `https://graph.facebook.com/v5.0/${item.id}?fields=photos.limit(4000)%7Bimages%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
-              )
-              .then(response => {
-                const all_albums = response.data.photos.data.map(items => {
-                  return items.images;
-                });
-                const thumbnails = all_albums.map(nested =>
-                  nested.map(element => element)
-                );
-                this.isLoading = false;
-
-                return this.albums.push({
-                  link: `/media/gallery/album/${item.id}`,
-                  name: item.name,
-                  date: item.cover_photo.created_time,
-                  cover_photo: thumbnails[0][0].source
-                });
-              })
-              .catch(err => {
-                if (err.msg) {
-                  this.loading = false;
-                }
-              });
-          });
-      });
+    this.loadAlbums();
   }
 };
 </script>

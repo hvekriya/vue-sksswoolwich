@@ -11,7 +11,7 @@
           <legend>
             <center>Upcoming Events</center>
           </legend>
-          <UpcomingEvents class="fc-calendar" />
+          <Calendar class="fc-calendar" />
           <br />
           <a href="/our-temple/calendar">Full page view</a>
         </div>
@@ -19,11 +19,22 @@
       <div class="row">
         <WeeklySchedule :fields="fields" />
       </div>
+      <header class="page-header">
+        <h2>Gallery</h2>
+      </header>
+      <div class="row">
+        <Gallery :limit="galleryLimit" />
+        <center>
+          <a href="/media/gallery" class="btn btn-primary" style="width: 30%">Load more</a>
+        </center>
+        <br />
+        <br />
+      </div>
     </div>
   </main>
 </template>
 
-<style>
+<style scoped>
 .fc-toolbar .fc-left {
   display: none;
 }
@@ -37,9 +48,11 @@
 import SlideShow from "../components/SlideShow";
 import DailyDarshan from "../components/DailyDarshan";
 import OpeningTimes from "../components/OpeningTimes";
-import UpcomingEvents from "../components/UpcomingEvents";
+import Calendar from "../components/Calendar";
+// import UpcomingEvents from "../components/UpcomingEvents";
 import WeeklySchedule from "../components/WeeklySchedule";
 import LiveStream from "../components/LiveStream";
+import Gallery from "../components/Gallery";
 
 export default {
   name: "Home",
@@ -47,15 +60,17 @@ export default {
     SlideShow,
     DailyDarshan,
     OpeningTimes,
-    UpcomingEvents,
+    Calendar,
     WeeklySchedule,
-    LiveStream
+    LiveStream,
+    Gallery
   },
   data() {
     return {
       fields: {
         slices: []
-      }
+      },
+      galleryLimit: 6
     };
   },
   methods: {
