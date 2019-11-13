@@ -25,7 +25,7 @@ export default new Router({
     {
       path: "/our-temple/calendar",
       name: "Calendar",
-      component: loadView("our-temple/Calendar")
+      component: loadView("our-temple/CalendarFull")
     },
     {
       path: "/our-temple/swaminarayan-education",

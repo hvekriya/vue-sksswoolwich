@@ -11,12 +11,12 @@
 </template>
 
 <script>
-import UpcomingEvents from "../../components/Calendar";
+import Calendar from "../../components/Calendar";
 
 export default {
-  name: "Calendar",
+  name: "CalendarFull",
   components: {
     Calendar
-  }
+  },
 };
 </script>

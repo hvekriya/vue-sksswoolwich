@@ -9,7 +9,7 @@
       </li>
       <li class="active">Album</li>
     </ol>
-    <div class="row">
+    <div class="row gallery-row">
       <div id="album">
         <div v-for="(photo, index) in photos" class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
           <div class="imgbox">

@@ -3,11 +3,13 @@
     <!-- <div id="calendar"></div> -->
     <FullCalendar
       ref="fullCalendar"
-      defaultView="listMonth"
+      :defaultView="defaultView"
       :header="header"
+      :footer="footer"
       :plugins="calendarPlugins"
       :events="events"
       :visibleRange="visibleRange"
+      :custom-buttons="customButtons"
     />
   </div>
 </template>
@@ -26,6 +28,7 @@ export default {
   },
   data() {
     return {
+      defaultView: "listMonth",
       calendarPlugins: [listPlugin, dayGridPlugin, googleCalendarPlugin],
       events: {
         googleCalendarId: "admin@bhujdham.org",
@@ -37,10 +40,21 @@ export default {
           end: currentDate.clone().add(3, "days") // exclusive end, so 3
         };
       },
+      customButtons: {
+        myCustomButton: {
+          text: "Full page",
+          click: () => this.$router.push({ name: "Calendar" })
+        }
+      },
       header: {
-        left: "listMonth, dayGridMonth",
+        left: "prev",
         center: "title",
-        right: "prev, next today"
+        right: "next"
+      },
+      footer: {
+        left: "today, listMonth, dayGridMonth",
+        center: "",
+        right: "myCustomButton"
       }
     };
   },

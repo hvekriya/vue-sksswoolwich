@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="row" style="margin-left: -20px;">
+    <div class="row gallery-row">
       <div
         class="col-xs-6 col-sm-4 col-md-2 col-lg-2"
         v-for="(item, index) in sortedAlbums"

@@ -51,3 +51,10 @@
     padding-bottom: 16%;
   }
 }
+
+.gallery-row {
+  margin-left: -20px !important;
+  @include respond-to(handhelds) {
+    margin-left: -5px !important;
+  }
+}

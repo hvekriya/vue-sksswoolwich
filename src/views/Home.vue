@@ -12,8 +12,6 @@
             <center>Upcoming Events</center>
           </legend>
           <Calendar class="fc-calendar" />
-          <br />
-          <a href="/our-temple/calendar">Full page view</a>
         </div>
       </div>
       <div class="row">
