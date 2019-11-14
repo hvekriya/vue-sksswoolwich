@@ -1,6 +1,6 @@
 <template>
   <main id="content" role="main">
-    <SlideShow />
+    <ImageSlider :fields="fields" />
     <LiveStream :fields="fields" />
     <div class="wrapper container">
       <br />
@@ -43,7 +43,6 @@
 
 
 <script>
-import SlideShow from "../components/SlideShow";
 import DailyDarshan from "../components/DailyDarshan";
 import OpeningTimes from "../components/OpeningTimes";
 import Calendar from "../components/Calendar";
@@ -51,17 +50,18 @@ import Calendar from "../components/Calendar";
 import WeeklySchedule from "../components/WeeklySchedule";
 import LiveStream from "../components/LiveStream";
 import Gallery from "../components/Gallery";
+import ImageSlider from "../components/ImageSlider";
 
 export default {
   name: "Home",
   components: {
-    SlideShow,
     DailyDarshan,
     OpeningTimes,
     Calendar,
     WeeklySchedule,
     LiveStream,
-    Gallery
+    Gallery,
+    ImageSlider
   },
   data() {
     return {
