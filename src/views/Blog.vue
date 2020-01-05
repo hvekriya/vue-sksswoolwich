@@ -6,7 +6,6 @@
       <h1 class="title">
         Misson Dharma Blog
       </h1>
-      <p>by Nilkanth class</p>
     </header>
     <div class="post" v-for="(item, index) in posts" :key="'posts-' + index">
       <div class="well">

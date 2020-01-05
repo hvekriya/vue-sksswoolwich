@@ -29,19 +29,19 @@
     </div>
 
     <div class="copy-right">
-      <Map/>
+      <Map />
       <div class="row">
         <p class="text-center" style="padding: 15px">
           &copy; Shree Kutch Satsang Swaminarayan Temple Woolwich {{ new Date().getFullYear() }}
-          <br>
+          <br />
           <router-link to="/our-temple/privacy-policy" @click.native="$scrollToTop">Privacy Policy</router-link>
         </p>
         <img
           class="footerLogo"
-          src="https://farm5.staticflickr.com/4548/38549235412_2cce16bd81_o.png"
+          src="/img/WoolwichMandirLogo.png"
           width="10%"
           alt="WoolwichMandirLogo"
-        >
+        />
       </div>
     </div>
   </footer>
