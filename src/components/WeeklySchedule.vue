@@ -21,7 +21,7 @@
                     :src="item.event_poster.url"
                     :alt="item.event_poster.alt"
                     class="img-responsive"
-                    style="  border: 1px solid #ddd; border-radius: 4px; padding: 5px;"
+                    style="  border: none; padding: 5px;"
                   />
                 </div>
               </div>
