@@ -127,7 +127,7 @@
             </ul>
           </li>
           <li>
-            <router-link to="/blog" @click.native="$scrollToTop">Mission Dharma Blog</router-link>
+            <router-link to="/blog" @click.native="$scrollToTop">Blog</router-link>
           </li>
           <li>
             <router-link to="/wedding-hall" @click.native="$scrollToTop">Wedding Hall</router-link>

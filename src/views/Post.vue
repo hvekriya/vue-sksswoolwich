@@ -15,7 +15,7 @@
       >{{ $prismic.richTextAsPlain(fields.ctaText) }}</prismic-link>
     </div>
     <hr />
-    <h5>Posted on {{fields.postedDate | formatDate }} by Nilkanth class</h5>
+    <h5>Posted on {{fields.postedDate | formatDate }} by {{fields.postedBy}}</h5>
     <hr />
 
     <div class="sharethis-inline-reaction-buttons"></div>
@@ -37,7 +37,8 @@ export default {
         ctaLink: null,
         ctaText: null,
         postedDate: null,
-        cover: null
+        cover: null,
+        postedBy: null
       }
     };
   },
@@ -51,6 +52,7 @@ export default {
           this.fields.ctaLink = document.data.cta_link;
           this.fields.ctaText = document.data.cta_text;
           this.fields.postedDate = document.first_publication_date;
+          this.fields.postedBy = document.data.posted_by;
           if (document.data.cover.url) {
             this.fields.cover = document.data.cover;
           }
@@ -62,14 +64,6 @@ export default {
       });
     }
   },
-  // mounted() {
-  //   let shareThisScript = document.createElement("script");
-  //   shareThisScript.setAttribute(
-  //     "src",
-  //     "https://platform-api.sharethis.com/js/sharethis.js#property=5de6a7f0617c910012a0156b&product=sticky-share-buttons&cms=sop"
-  //   );
-  //   document.head.appendChild(shareThisScript);
-  // },
   created() {
     this.getContent(this.$route.params.uid);
   },

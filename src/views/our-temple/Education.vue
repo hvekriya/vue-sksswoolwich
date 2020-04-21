@@ -18,7 +18,7 @@
 
     <!-- Form -->
 
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-8">
         <iframe
           src="https://docs.google.com/forms/d/e/1FAIpQLSe8dPqlVQR04KZAuk-K3_FOusWqrYSC7xaB_a_yz3PUM-He0g/viewform?embedded=true"
@@ -28,27 +28,25 @@
           marginheight="0"
           marginwidth="0"
         >Loading...</iframe>
-        <!-- </div> -->
-      </div>
+    </div>-->
 
-      <div class="col-md-4">
-        <legend>
-          <span class="glyphicon glyphicon-map-marker"></span> Our Location
-        </legend>
-        <address>
-          <strong>SKSS Temple Woolwich</strong>
-          <br />St. Margarets Grove,
-          <br />London, SE18 7RL
-          <br />
-          <abbr title="Phone">P:</abbr>
-          <a href="tel:+442088540823">+442088540823</a>
-        </address>
-        <address>
-          <strong>Admin</strong>
-          <br />
-          <a href="mailto:info@sksswoolwich.org">info@sksswoolwich.org</a>
-        </address>
-      </div>
+    <div class="col-md-4">
+      <legend>
+        <span class="glyphicon glyphicon-map-marker"></span> Our Location
+      </legend>
+      <address>
+        <strong>SKSS Temple Woolwich</strong>
+        <br />St. Margarets Grove,
+        <br />London, SE18 7RL
+        <br />
+        <abbr title="Phone">P:</abbr>
+        <a href="tel:+442088540823">+442088540823</a>
+      </address>
+      <address>
+        <strong>Admin</strong>
+        <br />
+        <a href="mailto:info@sksswoolwich.org">info@sksswoolwich.org</a>
+      </address>
     </div>
   </div>
 </template>

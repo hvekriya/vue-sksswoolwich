@@ -71,7 +71,7 @@
           order to
           be setup
           <h3>Via Online Banking:</h3>
-          <br><br>Use the Temple’s Bank Details on your own Online Banking website:
+          Use the Temple’s Bank Details on your own Online Banking website:
           <br><br>Account Number: <code>80813745</code> Sort-Code: <code>20-98-57</code>
           <br><br>Please quote your reference as: DOOR NUMBER_POSTCODE_FIRSTNAME
           <br><br><code>Important:</code> Ensure you complete the Gift Aid Form still as will help us as well.
@@ -128,7 +128,18 @@
 
 <script>
   export default {
-    name: 'Donation'
+    name: 'Donation',
+      data() {
+    return {
+      copySucceeded: null,
+      thingToCopy: `A string that's not all that long or important. Sorry to disappoint.`
+    }
+  },
+  methods: {
+    handleCopyStatus(status) {
+      this.copySucceeded = status
+    }
+  }
   }
 
 </script>
