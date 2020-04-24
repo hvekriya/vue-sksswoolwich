@@ -5,6 +5,9 @@
     <div class="wrapper container">
       <br />
       <div class="row">
+        <Alert :fields="fields" />
+      </div>
+      <div class="row">
         <DailyDarshan />
         <OpeningTimes />
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
@@ -51,6 +54,7 @@ import WeeklySchedule from "../components/WeeklySchedule";
 import LiveStream from "../components/LiveStream";
 import Gallery from "../components/Gallery";
 import ImageSlider from "../components/ImageSlider";
+import Alert from "../components/Alert";
 
 export default {
   name: "Home",
@@ -61,7 +65,8 @@ export default {
     WeeklySchedule,
     LiveStream,
     Gallery,
-    ImageSlider
+    ImageSlider,
+    Alert
   },
   data() {
     return {
