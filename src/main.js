@@ -7,6 +7,7 @@ import htmlSerializer from "./prismic/html-serializer";
 import moment from "moment";
 import App from "./App.vue";
 import router from "./router";
+import store from './store'
 import * as VueGoogleMaps from "vue2-google-maps";
 import "./registerServiceWorker";
 import axios from "axios";
@@ -44,6 +45,7 @@ Vue.filter("formatDate", function(value) {
 });
 
 Vue.filter("readMore", function(text, length, suffix) {
+    console.log(text)
     let newText = text
         .map(a => a.text)
         .filter(b => b)
@@ -64,7 +66,14 @@ Vue.filter("replace", function(currentText, text, newText) {
 
 Vue.prototype.$scrollToTop = () => window.scrollTo(0, 0);
 
+// Mount the APP
+
 new Vue({
     router,
+    store,
     render: h => h(App)
 }).$mount("#app");
+
+store.dispatch('init').then(() => {
+    initialize();
+});
