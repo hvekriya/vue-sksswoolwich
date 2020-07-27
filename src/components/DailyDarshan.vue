@@ -31,25 +31,33 @@ export default {
       return value.replace("#DailyDarshan", "");
     }
   },
-  updated() {
-    $("#dailydarshan").lightSlider({
-      gallery: true,
-      item: 1,
-      loop: true,
-      mode: "slide",
-      useCSS: true,
-      cssEasing: "ease", //'cubic-bezier(0.25, 0, 0.25, 1)',//
-      easing: "linear", //'for jquery animation',////
-      speed: 600, //ms'
-      auto: true,
-      slideEndAnimation: true,
-      pause: 2000,
-      onSliderLoad: function(el) {
-        el.lightGallery({
-          selector: "#dailydarshan .lslide"
-        });
-      }
-    });
+  methods: {
+    slider: () => {
+      $("#dailydarshan").lightSlider({
+        gallery: true,
+        item: 1,
+        loop: true,
+        mode: "slide",
+        useCSS: true,
+        cssEasing: "ease", //'cubic-bezier(0.25, 0, 0.25, 1)',//
+        easing: "linear", //'for jquery animation',////
+        speed: 600, //ms'
+        auto: true,
+        slideEndAnimation: true,
+        pause: 2000,
+        onSliderLoad: function(el) {
+          el.lightGallery({
+            selector: "#dailydarshan .lslide"
+          });
+        }
+      });
+    }
+  },
+  mounted() {
+    this.slider();
+  },
+  beforeUpdate() {
+    this.slider();
   }
 };
 </script>
