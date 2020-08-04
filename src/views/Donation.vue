@@ -8,8 +8,8 @@
       <li class="active">
         <a href="#1" data-toggle="tab">Bank Transfer</a>
       </li>
-      <li><a href="#2" data-toggle="tab">Online Donation</a>
-      </li>
+      <!-- <li><a href="#2" data-toggle="tab">Online Donation</a> -->
+      <!-- </li> -->
       <li><a href="#3" data-toggle="tab">Standing Order</a>
       </li>
       <li><a href="#4" data-toggle="tab">Cheque & Cash</a>
@@ -38,7 +38,7 @@
           <code>Your Full name </code>
         </p>
       </div>
-      <div class="tab-pane" id="2">
+      <!-- <div class="tab-pane" id="2">
         <h3>Online Donation</h3>
         <p>
           Make a secure online donation at any time, either one off donations or regular monthly donation by
@@ -54,7 +54,7 @@
           <h3><a class="btn btn-primary" href="https://mydonate.bt.com/charities/shreekutchsatsangswaminarayantemple-southeastlondon">Donate
               now</a></h3>
         </p>
-      </div>
+      </div> -->
       <div class="tab-pane" id="3">
         <h3>Standing Order</h3>
         <p>
