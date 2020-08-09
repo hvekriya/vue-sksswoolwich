@@ -1,61 +1,95 @@
 /* Coolors Exported Palette - coolors.co/3e78b2-004ba8-ff9000-f72c25-2d1e2f */
 
+
+/* Bootstrap defaults */
+
+$white: #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #868e96 !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black: #000 !default;
+$blue: #007bff !default;
+$indigo: #6610f2 !default;
+$purple: #7e2778 !default;
+$pink: #e83e8c !default;
+$red: #dc3545 !default;
+$orange: #fd7e14 !default;
+$yellow: #ffc107 !default;
+$green: #28a745 !default;
+$teal: #0085a1 !default;
+$cyan: #22b4aa !default;
+$primary: $purple !default;
+$secondary: $cyan !default;
+$success: $green !default;
+$info: $teal !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$light: $gray-100 !default;
+$dark: $gray-800 !default;
 $light-blue: #3e78b2; // light dark blue
 $blue: #004ba8; //dark blue
 $orange: #ff9000; // orange
 $red: #f72c25; //red
 $brown: #2d1e2f; //dark brown
-
 $poster-yellow: #fdc222;
 $poster-red: #901846;
-
 $main-gradiant: linear-gradient(to right, #ff8a00, #da1b60);
 $main-gradiant-hover: linear-gradient(to right, #da1b60, #ff8a00);
 $secondary-gradiant: linear-gradient(to right, #eeeeee, #c7c7c7);
 
 /* GAM colors */
+
 $gam-red: #c61700;
 $gam-darkred: #9b0d02;
 $gam-yellow: #fcc71d;
 
 /* Primary and Secondary blues */
+
 .btn {
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  border-radius: 2px;
-  cursor: pointer;
-  font-family: "Roboto", "Helvetica", arial, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.2px;
-  padding: 10px 14px 9px;
-  text-transform: uppercase;
-  transition: all 0.3s ease-out;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    border-radius: 2px;
+    cursor: pointer;
+    font-family: "Roboto", "Helvetica", arial, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    padding: 10px 14px 9px;
+    text-transform: uppercase;
+    transition: all 0.3s ease-out;
 }
 
 .btn.btn-primary {
-  background: $main-gradiant;
-  border: none;
-  color: #fff;
+    background: $main-gradiant;
+    border: none;
+    color: #fff;
 }
 
 .btn.btn-primary:hover,
 .btn.btn-primary:focus {
-  background: $main-gradiant-hover !important;
-  color: #fff;
-  text-decoration: none;
+    background: $main-gradiant-hover !important;
+    color: #fff;
+    text-decoration: none;
 }
 
 .btn.btn-secondary {
-  border: 2px solid $blue;
-  color: $blue;
+    border: 2px solid $blue;
+    color: $blue;
 }
+
+
 /* Calendar blue overrides */
 
 .fc-state-default {
-  background: $blue;
-  border: 2px solid $blue;
-  color: #fff;
-  box-shadow: none;
-  text-shadow: none;
+    background: $blue;
+    border: 2px solid $blue;
+    color: #fff;
+    box-shadow: none;
+    text-shadow: none;
 }

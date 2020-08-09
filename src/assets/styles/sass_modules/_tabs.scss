@@ -50,12 +50,12 @@ Licensed under MIT
 
 .nav-pills>li.active {
     position: relative;
-    background-color: #004ba8;
+    background-color: transparent;
 }
 
 .nav-pills>li.active>a {
     border: 0;
-    color: white;
+    color: #3a3a3a;
 }
 
 .nav-pills>li.active>a>i {
@@ -118,7 +118,7 @@ Licensed under MIT
 .nav-pills>li.active>a,
 .nav-pills>li.active>a:focus,
 .nav-pills>li.active>a:hover {
-    color: white;
+    color: #404040 !important;
     background-color: transparent;
 }
 

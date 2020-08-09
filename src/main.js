@@ -12,6 +12,7 @@ import * as VueGoogleMaps from "vue2-google-maps";
 import "./registerServiceWorker";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import LoadScript from 'vue-plugin-load-script';
 Vue.use(VueAxios, axios);
 
 // Loading component
@@ -74,6 +75,6 @@ new Vue({
     render: h => h(App)
 }).$mount("#app");
 
-store.dispatch('init').then(() => {
-    initialize();
-});
+// store.dispatch('init').then(() => {
+//     initialize();
+// });

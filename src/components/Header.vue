@@ -136,15 +136,18 @@
             <a href="https://balkrishna.org">Nursery</a>
           </li>
           <li>
-            <router-link to="/donation" @click.native="$scrollToTop">Donation</router-link>
-          </li>
-          <li>
             <router-link to="/contact-us" @click.native="$scrollToTop">Contact Us</router-link>
           </li>
         </ul>
 
         <ul class="hidden-md nav navbar-nav navbar-right socialbar">
           <li>
+            <router-link to="/donate" @click.native="$scrollToTop">
+              Donate
+              <i class="fas fa-heart"></i>
+            </router-link>
+          </li>
+          <!-- <li>
             <a class="social">
               <span class="network-name">Follow Us</span>
             </a>
@@ -152,27 +155,23 @@
           <li>
             <a href="https://www.facebook.com/WoolwichTemple/" class="social">
               <i class="fab fa-facebook-f"></i>
-              <!-- <span class="network-name">Facebook</span> -->
             </a>
           </li>
           <li>
             <a href="https://www.twitter.com/WoolwichTemple/" class="social">
               <i class="fab fa-twitter"></i>
-              <!-- <span class="network-name">Twitter</span> -->
             </a>
           </li>
           <li>
             <a href="https://www.instagram.com/WoolwichTemple/" class="social">
               <i class="fab fa-instagram"></i>
-              <!-- <span class="network-name">Instagram</span> -->
             </a>
           </li>
           <li>
             <a href="https://www.youtube.com/woolwichtemple" class="social">
               <i class="fab fa-youtube"></i>
-              <!-- <span class="network-name">YouTube</span>-->
             </a>
-          </li>
+          </li>-->
         </ul>
       </div>
     </div>
@@ -184,7 +183,7 @@ export default {
   name: "Header",
   data() {
     return {
-      menuIsActive: false
+      menuIsActive: false,
     };
   },
   methods: {
@@ -194,10 +193,10 @@ export default {
     subIsActive(input) {
       console.log(input);
       const paths = Array.isArray(input) ? input : [input];
-      return paths.some(path => {
+      return paths.some((path) => {
         return this.$route.path.indexOf(path) === 0;
       });
-    }
-  }
+    },
+  },
 };
 </script>
