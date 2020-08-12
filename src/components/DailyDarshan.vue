@@ -8,7 +8,7 @@
         <li :data-thumb="dd.media_url" :data-src="dd.media_url">
           <img :src="dd.media_url" style="width:100%" :alt="dd.caption | replace()" />
           <div class="dd-caption">
-            <span>{{ dd.caption | replace() }}</span>
+            <span>{{ dd.caption | truncate() }}</span>
           </div>
         </li>
       </template>

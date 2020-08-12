@@ -55,10 +55,16 @@ Vue.filter("readMore", function(text, length, suffix) {
 });
 
 Vue.filter("truncate", function(value) {
-    if (value.length > 20) {
-        value = value.substring(0, 17) + "...";
+
+    var newText = ""
+
+    if (value.length > 50) {
+        newText = value.substring(0, 200) + " ...";
+    } else {
+        console.log(value)
+        return value;
     }
-    return value;
+    return newText;
 });
 
 Vue.filter("replace", function(currentText, text, newText) {
