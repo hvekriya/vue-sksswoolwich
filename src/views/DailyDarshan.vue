@@ -7,10 +7,10 @@
     <div class="row">
       <div id="dailydarshan-all">
         <div v-for="(dd, index) in dailydarshan" class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
-          <a :href="dd.images.standard_resolution.url">
+          <a :href="dd.media_url">
             <div class="imgbox">
-              <img :src="dd.images.thumbnail.url" class="category-banner img-responsive" />
-              <span class="imgbox-desc">{{dd.caption.text}}</span>
+              <img :src="dd.media_url" class="category-banner img-responsive" />
+              <span class="imgbox-desc">{{dd.caption | replace()}}</span>
             </div>
           </a>
         </div>
@@ -36,37 +36,36 @@ export default {
     return {
       access_token: process.env.VUE_APP_INSTA_TOKEN,
       insta_api: process.env.VUE_APP_INSTA_API,
-      dailydarshan: null
+      dailydarshan: null,
     };
   },
   methods: {
     getInsta() {
       axios
-        .get(this.insta_api + "?access_token=" + this.access_token)
-        .then(({ data }) => {
-          this.dailydarshan = data.data
-            .map(posts => posts)
-            .filter(image => image.tags.includes("dailydarshan"));
-        })
-        .catch(function(error) {
-          console.log(error);
-          this.error = true;
+        .get(
+          `https://graph.facebook.com/v5.0/17841400662948582/media?fields=media_url%2Ctimestamp%2Cthumbnail_url%2Ccaption&access_token=${process.env.VUE_APP_FB_ACCESS}`
+        )
+        .then((response) => {
+          console.log(response);
+          this.dailydarshan = response.data.data.filter((item) => {
+            return item.caption.includes("Daily Darshan");
+          });
         });
-    }
+    },
   },
   created() {
     this.getInsta();
   },
   filters: {
-    replace: function(value) {
+    replace: function (value) {
       return value.replace("#DailyDarshan", "");
-    }
+    },
   },
   updated() {
     $("#dailydarshan-all").lightGallery({
       gallery: true,
-      selector: "a"
+      selector: "a",
     });
-  }
+  },
 };
 </script>
