@@ -1,7 +1,7 @@
 <template>
   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
     <legend>
-      <center>Insta Feed</center>
+      <center>Daily Darshan</center>
     </legend>
     <ul id="dailydarshan">
       <template v-for="(dd, index) in dailydarshan">
@@ -32,7 +32,10 @@ export default {
           `https://graph.facebook.com/v5.0/17841400662948582/media?fields=media_url%2Ctimestamp%2Cthumbnail_url%2Ccaption&access_token=${process.env.VUE_APP_FB_ACCESS}`
         )
         .then((response) => {
-          this.dailydarshan = response.data.data;
+          console.log(response);
+          this.dailydarshan = response.data.data.filter((item) => {
+            return item.caption.includes("Daily Darshan");
+          });
         });
     },
   },
