@@ -77,10 +77,6 @@ Vue.prototype.$scrollToTop = () => window.scrollTo(0, 0);
 
 new Vue({
     router,
-    // store,
+    store,
     render: h => h(App)
 }).$mount("#app");
-
-// store.dispatch('init').then(() => {
-//     initialize();
-// });

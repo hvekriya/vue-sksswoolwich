@@ -66,28 +66,28 @@ export default {
     LiveStream,
     Gallery,
     ImageSlider,
-    Alert
+    Alert,
   },
   data() {
     return {
       fields: {
-        slices: []
+        slices: [],
       },
-      galleryLimit: 6
+      galleryLimit: 6,
     };
   },
   methods: {
     getContent(uid) {
-      this.$prismic.client.getSingle("home").then(document => {
+      this.$prismic.client.getSingle("home").then((document) => {
         if (document) {
           this.fields.slices = document.data.body;
         } else {
           this.$router.push({
-            name: "not-found"
+            name: "not-found",
           });
         }
       });
-    }
+    },
   },
   created() {
     this.getContent(this.$route.params.uid);
@@ -95,6 +95,6 @@ export default {
   beforeRouteUpdate(to, from, next) {
     this.getContent(to.params.uid);
     next();
-  }
+  },
 };
 </script>
