@@ -26,7 +26,9 @@
       <div class="row">
         <Gallery :limit="galleryLimit" />
         <center>
-          <a href="/media/gallery" class="btn btn-primary" style="width: 30%">Load more</a>
+          <a href="/media/gallery" class="btn btn-primary" style="width: 30%"
+            >Load more</a
+          >
         </center>
         <br />
         <br />

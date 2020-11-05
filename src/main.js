@@ -13,6 +13,12 @@ import "./registerServiceWorker";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import LoadScript from 'vue-plugin-load-script';
+import VueToast from 'vue-toast-notification';
+// Import one of available themes
+import 'vue-toast-notification/dist/theme-default.css';
+import 'vue-toast-notification/dist/theme-sugar.css';
+
+Vue.use(VueToast);
 Vue.use(VueAxios, axios);
 
 // Loading component

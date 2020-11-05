@@ -13,6 +13,23 @@
 <script>
 export default {
   name: "Alert",
-  props: ["fields"]
+  props: ["fields"],
+  data() {
+    return {
+      toast_message: "",
+    };
+  },
+  updated() {
+    this.toast_message = this.fields.slices.filter((slice) => {
+      return slice.slice_label === "toast";
+    });
+    this.$toast.open({
+      message: this.toast_message[0].primary.alert_message[0].text,
+      type: "info",
+      duration: 80000,
+      dismissible: true,
+    });
+  },
+  created() {},
 };
 </script>
