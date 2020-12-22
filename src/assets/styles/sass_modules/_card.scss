@@ -1,0 +1,28 @@
+.media-object {
+    width: 10%;
+    @include respond-to(handhelds) {
+        width: 100%;
+    }
+}
+
+// For images on the page
+.img-10 {
+    width: 10% !important;
+    @include respond-to(handhelds) {
+        width: 100% !important;
+    }
+}
+
+.img-25 {
+    width: 25% !important;
+    @include respond-to(handhelds) {
+        width: 100% !important;
+    }
+}
+
+.img-50 {
+    width: 50% !important;
+    @include respond-to(handhelds) {
+        width: 100% !important;
+    }
+}

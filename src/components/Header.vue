@@ -1,5 +1,9 @@
 <template>
-  <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation" id="header">
+  <nav
+    class="navbar navbar-default navbar-fixed-top topnav"
+    role="navigation"
+    id="header"
+  >
     <div class="container-fluid topnav">
       <div class="navbar-header animated fadeInDown">
         <button
@@ -15,9 +19,14 @@
           <span class="icon-bar middle-bar"></span>
           <span class="icon-bar bottom-bar"></span>
         </button>
-        <a class="navbar-brand topnav hidden-md hidden-lg" href="/">SKSS Temple Woolwich</a>
+        <a class="navbar-brand topnav hidden-md hidden-lg" href="/"
+          >SKSS Temple Woolwich</a
+        >
       </div>
-      <div class="collapse navbar-collapse animated fadeInDown" id="bs-example-navbar-collapse-1">
+      <div
+        class="collapse navbar-collapse animated fadeInDown"
+        id="bs-example-navbar-collapse-1"
+      >
         <ul class="nav navbar-nav navbar-left">
           <li>
             <router-link to="/" @click.native="$scrollToTop">Home</router-link>
@@ -28,35 +37,52 @@
               class="dropdown-toggle"
               data-toggle="dropdown"
               aria-expanded="false"
-              :class="{'router-link-exact-active':subIsActive('/our-temple')}"
+              :class="{
+                'router-link-exact-active': subIsActive('/our-temple'),
+              }"
             >
               Our Temple
               <i class="fa fa-angle-down"></i>
             </a>
             <ul class="dropdown-menu multi-level" role="menu">
               <li>
-                <router-link to="/our-temple/our-temple" @click.native="$scrollToTop">About</router-link>
+                <router-link
+                  to="/our-temple/our-temple"
+                  @click.native="$scrollToTop"
+                  >About</router-link
+                >
               </li>
               <!-- <li><a href="/our-temple/past-events">History</a></li> -->
               <li>
-                <router-link to="/our-temple/murtis" @click.native="$scrollToTop">Murtis</router-link>
+                <router-link
+                  to="/our-temple/murtis"
+                  @click.native="$scrollToTop"
+                  >Murtis</router-link
+                >
               </li>
               <li>
                 <router-link
                   to="/our-temple/weekly-schedule"
                   @click.native="$scrollToTop"
-                >Weekly Schedule</router-link>
+                  >Weekly Schedule</router-link
+                >
               </li>
               <li>
                 <a href="/our-temple/calendar">Calendar</a>
               </li>
               <li>
-                <router-link to="/our-temple/yuvak-mandal" @click.native="$scrollToTop">Yuvak Mandal</router-link>
+                <router-link
+                  to="/our-temple/yuvak-mandal"
+                  @click.native="$scrollToTop"
+                  >Yuvak Mandal</router-link
+                >
               </li>
               <li>
-                <router-link to="/our-temple/swaminarayan-education" @click.native="$scrollToTop">
-                  Swaminarayan
-                  Education
+                <router-link
+                  to="/our-temple/swaminarayan-education"
+                  @click.native="$scrollToTop"
+                >
+                  Swaminarayan Education
                 </router-link>
               </li>
               <!-- <li>
@@ -69,7 +95,9 @@
               href="#"
               class="dropdown-toggle"
               data-toggle="dropdown"
-              :class="{'router-link-exact-active':subIsActive('/our-sampraday')}"
+              :class="{
+                'router-link-exact-active': subIsActive('/our-sampraday'),
+              }"
             >
               Our Sampraday
               <i class="fa fa-angle-down"></i>
@@ -80,27 +108,36 @@
                   to="/our-sampraday/articles/swaminarayan-sampraday"
                   @click.native="$scrollToTop"
                 >
-                  Swaminarayan
-                  Sampraday
+                  Swaminarayan Sampraday
                 </router-link>
               </li>
               <li>
                 <router-link
                   to="/our-sampraday/lord-swaminarayan"
                   @click.native="$scrollToTop"
-                >Lord Swaminarayan</router-link>
+                  >Lord Swaminarayan</router-link
+                >
               </li>
               <li>
                 <router-link
                   to="/our-sampraday/satsang-philosophy"
                   @click.native="$scrollToTop"
-                >Satsang Philosophy</router-link>
+                  >Satsang Philosophy</router-link
+                >
               </li>
               <li>
                 <router-link
                   to="/our-sampraday/nand-santos"
                   @click.native="$scrollToTop"
-                >Nand Santos</router-link>
+                  >Nand Santos</router-link
+                >
+              </li>
+              <li>
+                <router-link
+                  to="/our-sampraday/devotees"
+                  @click.native="$scrollToTop"
+                  >Great Devotees</router-link
+                >
               </li>
             </ul>
           </li>
@@ -109,34 +146,49 @@
               href="#"
               class="dropdown-toggle"
               data-toggle="dropdown"
-              :class="{'router-link-exact-active':subIsActive('/media')}"
+              :class="{ 'router-link-exact-active': subIsActive('/media') }"
             >
               Media
               <i class="fa fa-angle-down"></i>
             </a>
             <ul class="dropdown-menu" role="menu">
               <li>
-                <router-link to="/media/daily-darshan" @click.native="$scrollToTop">Daily Darshan</router-link>
+                <router-link
+                  to="/media/daily-darshan"
+                  @click.native="$scrollToTop"
+                  >Daily Darshan</router-link
+                >
               </li>
               <li>
                 <a href="/media/gallery">Photo Gallery</a>
               </li>
               <li>
-                <a href="http://listen.bhujmandir.org/" target="_blank" rel="noopener">Music Player</a>
+                <a
+                  href="http://listen.bhujmandir.org/"
+                  target="_blank"
+                  rel="noopener"
+                  >Music Player</a
+                >
               </li>
             </ul>
           </li>
           <li>
-            <router-link to="/blog" @click.native="$scrollToTop">Blog</router-link>
+            <router-link to="/blog" @click.native="$scrollToTop"
+              >Blog</router-link
+            >
           </li>
           <li>
-            <router-link to="/wedding-hall" @click.native="$scrollToTop">Wedding Hall</router-link>
+            <router-link to="/wedding-hall" @click.native="$scrollToTop"
+              >Wedding Hall</router-link
+            >
           </li>
           <li>
             <a href="https://balkrishna.org">Nursery</a>
           </li>
           <li>
-            <router-link to="/contact-us" @click.native="$scrollToTop">Contact Us</router-link>
+            <router-link to="/contact-us" @click.native="$scrollToTop"
+              >Contact Us</router-link
+            >
           </li>
         </ul>
 

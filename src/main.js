@@ -52,7 +52,6 @@ Vue.filter("formatDate", function(value) {
 });
 
 Vue.filter("readMore", function(text, length, suffix) {
-    console.log(text)
     let newText = text
         .map(a => a.text)
         .filter(b => b)
