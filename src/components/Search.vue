@@ -22,11 +22,19 @@ export default {
   },
   methods: {
     search: function () {
-      this.$router.push({
-        path: "/search",
-        query: { search: this.search_query },
-      });
-      window.location.reload(); // So we can search from results page
+      console.log("current route is: " + this.$route.path);
+      if (this.$route.path !== "/search") {
+        this.$router.push({
+          path: "/search",
+          query: { search: this.search_query },
+        });
+      } else {
+        this.$router.push({
+          path: "/search",
+          query: { search: this.search_query },
+        });
+        window.location.reload();
+      }
     },
   },
 };
