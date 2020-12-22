@@ -19,9 +19,9 @@
           <span class="icon-bar middle-bar"></span>
           <span class="icon-bar bottom-bar"></span>
         </button>
-        <a class="navbar-brand topnav hidden-md hidden-lg" href="/"
-          >SKSS Temple Woolwich</a
-        >
+        <a class="navbar-brand topnav" href="/">
+          <img alt="Brand" class="brand" src="/img/WoolwichMandirLogo.png" />
+        </a>
       </div>
       <div
         class="collapse navbar-collapse animated fadeInDown"
