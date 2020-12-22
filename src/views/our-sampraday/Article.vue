@@ -19,9 +19,9 @@
         {{ $prismic.richTextAsPlain(fields.ctaText) }}
       </prismic-link>
     </div>
-    <hr />
+    <!-- <hr />
     <h5>Posted on {{ fields.postedDate | formatDate }}</h5>
-    <hr />
+    <hr /> -->
   </div>
 </template>
 
