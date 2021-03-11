@@ -48,7 +48,7 @@ export default {
                             .map((item) => {
                                 axios
                                     .get(
-                                        `https://graph.facebook.com/v5.0/${item.id}?fields=photos.limit(4000)%7Bimages%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
+                                        `https://graph.facebook.com/v10.0/${item.id}?fields=photos.limit(4000)%7Bimages%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
                                     )
                                     .then((response) => {
                                         const all_albums = response.data.photos.data.map((items) => {
