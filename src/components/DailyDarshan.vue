@@ -29,7 +29,7 @@ export default {
     getInsta() {
       axios
         .get(
-          `https://graph.facebook.com/v5.0/17841400662948582/media?fields=media_url%2Ctimestamp%2Cthumbnail_url%2Ccaption&access_token=${process.env.VUE_APP_FB_ACCESS}`
+          `https://graph.facebook.com/v10.0/17841400662948582/media?fields=media_url%2Ctimestamp%2Cthumbnail_url%2Ccaption&access_token=${process.env.VUE_APP_FB_ACCESS}`
         )
         .then((response) => {
           console.log(response);
