@@ -37,7 +37,7 @@ export default {
                 var album = null
                 axios
                     .get(
-                        `https://graph.facebook.com/v5.0/${id}?fields=photos%7Bimages%2Calbum%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
+                        `https://graph.facebook.com/v10.0/${id}?fields=photos%7Bimages%2Calbum%7D&access_token=${process.env.VUE_APP_FB_ACCESS}`
                     )
                     .then((response) => {
                         commit('setNextSetOfPhotos', response.data.photos.paging.next)
