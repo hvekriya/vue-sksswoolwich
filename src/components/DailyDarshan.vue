@@ -39,7 +39,7 @@ export default {
         });
     },
     getDD() {
-      axios.get("http://dd.swaminarayan.faith/api").then((response) => {
+      axios.get("https://dd.swaminarayan.faith/api").then((response) => {
         console.log(response);
         this.dailydarshan = response.data.data
           .filter((id) => {
