@@ -66,7 +66,7 @@ export default {
     Calendar,
     WeeklySchedule,
     LiveStream,
-    Gallery,
+    // Gallery,
     ImageSlider,
     Alert,
   },
