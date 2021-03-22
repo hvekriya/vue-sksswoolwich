@@ -141,7 +141,7 @@
               </li>
             </ul>
           </li>
-          <li class="dropdown">
+          <!-- <li class="dropdown">
             <a
               href="#"
               class="dropdown-toggle"
@@ -171,7 +171,7 @@
                 >
               </li>
             </ul>
-          </li>
+          </li> -->
           <li>
             <router-link to="/blog" @click.native="$scrollToTop"
               >Blog</router-link

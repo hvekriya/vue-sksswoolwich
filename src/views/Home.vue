@@ -20,7 +20,7 @@
       <div class="row">
         <WeeklySchedule :fields="fields" />
       </div>
-      <header class="page-header">
+      <!-- <header class="page-header">
         <h2>Gallery</h2>
       </header>
       <div class="row">
@@ -32,7 +32,7 @@
         </center>
         <br />
         <br />
-      </div>
+      </div> -->
     </div>
   </main>
 </template>
@@ -54,7 +54,7 @@ import Calendar from "../components/Calendar";
 // import UpcomingEvents from "../components/UpcomingEvents";
 import WeeklySchedule from "../components/WeeklySchedule";
 import LiveStream from "../components/LiveStream";
-import Gallery from "../components/Gallery";
+// import Gallery from "../components/Gallery";
 import ImageSlider from "../components/ImageSlider";
 import Alert from "../components/Alert";
 
