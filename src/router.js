@@ -48,6 +48,13 @@ export default new Router({
             name: "Article",
             component: loadView("our-sampraday/Article")
         },
+        // Stories
+        {
+            path: "/our-sampraday/stories/:uid",
+            name: "Stories",
+            component: loadView("our-sampraday/Stories")
+        },
+
         // Search results
         {
             path: "/search",
