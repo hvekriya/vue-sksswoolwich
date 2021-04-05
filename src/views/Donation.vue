@@ -62,9 +62,13 @@
           in at MyDonate)
           <h3>Via Own Bank Branch:</h3>
           Please download and complete the
-          <a href="/files/standing_order.pdf"> Standing Order Form </a> using
-          the reference field as your own: DOOR NUMBER_POSTCODE_FIRSTNAME and
-          send a copy to us at
+          <a
+            href="https://prismic-io.s3.amazonaws.com/sksswoolwich/3fb4e9de-49a3-43b6-9696-35db02c3fc28_standing_order.pdf"
+          >
+            Standing Order Form
+          </a>
+          using the reference field as your own: DOOR NUMBER_POSTCODE_FIRSTNAME
+          and send a copy to us at
           <code>
             <a href="mailto:donations@sksswoolwich.org"
               >donations@sksswoolwich.org</a
@@ -104,7 +108,10 @@
       <div class="tab-pane" id="5">
         <h3>Gift Aid</h3>
         If you are a tax payer, please complete the
-        <a href="/files/gift_aid.pdf">Gift Aid Form</a>
+        <a
+          href="https://prismic-io.s3.amazonaws.com/sksswoolwich/6d09add3-0a93-407c-8514-b4a8caa7f4ef_gift_aid.pdf"
+          >Gift Aid Form</a
+        >
         and send it to
         <code>
           <a href="mailto:donations@sksswoolwich.org"
@@ -114,7 +121,11 @@
         <br />
         <br />If you’re contact details or circumstances changes for tax
         purposes, please complete the
-        <a href="/files/gift_aid_alteration.pdf"> Gift Aid Alteration Form </a>
+        <a
+          href="https://prismic-io.s3.amazonaws.com/sksswoolwich/918414fd-6427-457d-a838-89ad118633f4_gift_aid_alteration.pdf"
+        >
+          Gift Aid Alteration Form
+        </a>
         and send it to
         <code>
           <a href="mailto:donations@sksswoolwich.org"
@@ -128,7 +139,9 @@
         <br />Each has different requirements in order to qualify for tax relief
         under the Gift Aid Scheme, so please take a moment to take a look at our
         Tax Benefits of
-        <a href="/files/charitable_donations_tax_benefits.pdf">
+        <a
+          href="https://prismic-io.s3.amazonaws.com/sksswoolwich/f6a46186-d4ae-44de-9545-6c391587f1be_charitable_donations_tax_benefits.pdf"
+        >
           Charitable Giving Leaflet
         </a>
         prepared specially for us by McBrides Chartered Accountants.
