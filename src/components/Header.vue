@@ -85,9 +85,9 @@
                   Swaminarayan Education
                 </router-link>
               </li>
-              <!-- <li>
+              <li>
                 <router-link to="/our-temple/careers" @click.native="$scrollToTop">Careers</router-link>
-              </li>-->
+              </li>
             </ul>
           </li>
           <li class="dropdown">
