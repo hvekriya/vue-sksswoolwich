@@ -8,17 +8,13 @@
         {{ $prismic.richTextAsPlain(fields.title) }}
       </h1>
     </header>
-    <prismic-image
-      v-if="fields.cover"
-      :field="fields.cover"
-      class="img-responsive img-25"
-    />
     <prismic-rich-text :field="fields.content" class="description" />
     <div class="cta-wrapper">
       <prismic-link :field="fields.ctaLink" class="cta">
         {{ $prismic.richTextAsPlain(fields.ctaText) }}
       </prismic-link>
     </div>
+    <GroupedLinks :fields="fields" />
     <!-- <hr />
     <h5>Posted on {{ fields.postedDate | formatDate }}</h5>
     <hr /> -->
@@ -26,8 +22,12 @@
 </template>
 
 <script>
+import GroupedLinks from "../../components/GroupedLinks";
 export default {
   name: "Stories",
+  components: {
+    GroupedLinks,
+  },
   data() {
     return {
       documentId: "",
@@ -37,7 +37,7 @@ export default {
         ctaLink: null,
         ctaText: null,
         postedDate: null,
-        cover: "",
+        slices: "",
       },
     };
   },
@@ -51,10 +51,7 @@ export default {
           this.fields.ctaLink = document.data.cta_link;
           this.fields.ctaText = document.data.cta_text;
           this.fields.postedDate = document.first_publication_date;
-
-          if (Object.entries(document.data.cover).length !== 0) {
-            this.fields.cover = document.data.cover;
-          }
+          this.fields.slices = document.data.body;
         } else {
           this.$router.push({
             name: "not-found",
