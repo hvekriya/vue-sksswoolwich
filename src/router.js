@@ -15,6 +15,14 @@ export default new Router({
             name: "Home",
             component: loadView("Home")
         },
+
+        // Premras mahotsav
+            {
+            path: "/premras-mahotsav",
+            name: "Premras",
+            component: loadView("premras-mahotsav/Premras")
+        },    
+
         // Our-temple routes
         {
             path: "/our-temple/weekly-schedule",

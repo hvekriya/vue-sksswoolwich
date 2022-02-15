@@ -2,6 +2,7 @@
   <main id="content" role="main">
     <ImageSlider :fields="fields" />
     <LiveStream :fields="fields" />
+    <CallToAction />
     <div class="wrapper container">
       <br />
       <div class="row">
@@ -57,6 +58,7 @@ import LiveStream from "../components/LiveStream";
 // import Gallery from "../components/Gallery";
 import ImageSlider from "../components/ImageSlider";
 import Alert from "../components/Alert";
+import CallToAction from "../components/CallToAction.vue";
 
 export default {
   name: "Home",
@@ -69,6 +71,7 @@ export default {
     // Gallery,
     ImageSlider,
     Alert,
+    CallToAction,
   },
   data() {
     return {
