@@ -2,7 +2,7 @@
   <div>
     <div>
       <img
-        src="https://images.prismic.io/sksswoolwich/2fed2556-54e5-4eb0-a36a-035d721875fd_PGPM+Banner.png?auto=compress,format"
+        src="https://images.prismic.io/sksswoolwich/438225dd-fd4b-46cb-85ad-e15a9d4ecf62_PGPM+Banner.png?auto=compress,format"
         alt="Premras Ghanshyam Mahotsav Woolwich"
         copyright="Woolwich Temple"
         class="img-responsive"
