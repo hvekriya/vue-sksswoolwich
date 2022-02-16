@@ -53,6 +53,7 @@
         <p class="text-center" style="padding: 15px">
           &copy; Shree Kutch Satsang Swaminarayan Temple Woolwich
           {{ new Date().getFullYear() }}
+          | Registered Charity 292934
           <br />
           <router-link
             to="/our-temple/privacy-policy"
