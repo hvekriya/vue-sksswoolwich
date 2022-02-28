@@ -67,6 +67,20 @@
 
   </script>
 
+  <!-- One signal -->
+  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+  <script>
+    window.OneSignal = window.OneSignal || [];
+    OneSignal.push(function() {
+      OneSignal.init({
+        appId: "0e2db1a5-1b05-4c32-bbc3-bd2de2f2b2c4",
+        safari_web_id: "",
+        notifyButton: {
+          enable: true,
+        },
+      });
+    });
+  </script>
   <script>
     window.prismic = {
       endpoint: "https://sksswoolwich.prismic.io/api/v2"
