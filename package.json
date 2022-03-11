@@ -1,7 +1,8 @@
 {
-  "name": "nuxt-sksswoolwich",
-  "version": "1.0.0",
-  "private": true,
+  "name": "woolwich-temple",
+  "version": "2.0.0",
+  "description": "Vue.js project with content managed in Prismic",
+  "author": "hvekriya",
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
