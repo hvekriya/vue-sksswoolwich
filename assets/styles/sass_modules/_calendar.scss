@@ -1,0 +1,51 @@
+.fc--button {
+  display: none;
+}
+
+
+.fc-icon-chevron-left:before,
+.fc-icon-chevron-right:before {
+  position: relative;
+  top: -20%;
+}
+
+.fc-list-day tr {
+  border-top: 1px solid;
+  border-color: #ddd;
+}
+
+.fc-list-day th {
+  background: $secondary-gradiant !important;
+}
+
+.fc td.fc-today {
+  border-style: none;
+  color: white;
+}
+
+.fc-direction-ltr .fc-list-day-text,
+.fc-direction-rtl .fc-list-day-side-text {
+  color: $gray-900;
+  font-weight: bold;
+}
+
+.fc-direction-ltr .fc-list-day-side-text,
+.fc-direction-rtl .fc-list-day-text {
+  color: $gray-900;
+  font-weight: bold;
+}
+
+.fc .fc-list-event-dot {
+  border: 5px solid $orange !important;
+  background-color: $orange !important;
+}
+
+.fc .fc-list-event-title a:hover {
+  text-decoration: none !important;
+}
+
+@include respond-to(handhelds) {
+  .fc-toolbar .fc-center {
+    margin-top: 10px;
+  }
+}

@@ -1,0 +1,25 @@
+input.search {
+  width: 250px !important;
+  margin-right: 10px;
+
+  @include respond-to(handhelds) {
+    width: 100% !important;
+  }
+}
+
+button.search {
+  width: 100px;
+
+  @include respond-to(handhelds) {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+#search.navbar-form {
+  padding: 0;
+
+  @include respond-to(handhelds) {
+    padding: 10px 15px;
+  }
+}

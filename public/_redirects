@@ -1,4 +1,0 @@
-/*    /index.html   200
-
-# Redirect default Netlify subdomain to primary domain
-https://sksswoolwich.netlify.com/* https://www.sksswoolwich.org/:splat 301!

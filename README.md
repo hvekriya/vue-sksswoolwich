@@ -8,10 +8,10 @@ Run the following commands:
 
 ```bash
 npm install
-npm start
+npm run dev
 ```
 
-Then you can access it at [http://localhost:8080](http://localhost:8080).
+Then you can access it at [http://localhost:3000](http://localhost:3000).
 
 ## Project setup
 
@@ -22,7 +22,7 @@ npm install
 ### Compiles and hot-reloads for development
 
 ```bash
-npm start
+npm run dev
 ```
 
 ### Compiles and minifies for production
