@@ -197,7 +197,8 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile: /@fullcalendar.*/,
+    analyze: true,
+    // transpile: /@fullcalendar.*/,
     /*
      ** You can extend webpack config here
      */
