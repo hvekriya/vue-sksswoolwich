@@ -141,6 +141,12 @@
               </li>
             </ul>
           </li>
+          <li>
+            <NuxtLink to="/donate" @click.native="$scrollToTop">
+              Donate
+              <i class="fas fa-heart"></i>
+            </NuxtLink>
+          </li>
           <!-- <li class="dropdown">
             <a
               href="#"
@@ -190,39 +196,14 @@
           </li>
         </ul>
 
-        <ul class="hidden-md nav navbar-nav navbar-right socialbar">
+        <!-- <ul class="hidden-md nav navbar-nav navbar-right socialbar">
           <li>
             <NuxtLink to="/donate" @click.native="$scrollToTop">
               Donate
               <i class="fas fa-heart"></i>
             </NuxtLink>
           </li>
-          <!-- <li>
-            <a class="social">
-              <span class="network-name">Follow Us</span>
-            </a>
-          </li>
-          <li>
-            <a href="https://www.facebook.com/WoolwichTemple/" class="social">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-          </li>
-          <li>
-            <a href="https://www.twitter.com/WoolwichTemple/" class="social">
-              <i class="fab fa-twitter"></i>
-            </a>
-          </li>
-          <li>
-            <a href="https://www.instagram.com/WoolwichTemple/" class="social">
-              <i class="fab fa-instagram"></i>
-            </a>
-          </li>
-          <li>
-            <a href="https://www.youtube.com/woolwichtemple" class="social">
-              <i class="fab fa-youtube"></i>
-            </a>
-          </li>-->
-        </ul>
+        </ul> -->
       </div>
     </div>
   </nav>

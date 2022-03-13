@@ -109,7 +109,7 @@
         <h3>Gift Aid</h3>
         If you are a tax payer, please complete the
         <a
-          href="https://prismic-io.s3.amazonaws.com/sksswoolwich/6d09add3-0a93-407c-8514-b4a8caa7f4ef_gift_aid.pdf"
+          href="https://prismic-io.s3.amazonaws.com/sksswoolwich/c4961f65-b640-4a81-ab64-0ace552c3c39_Gift+Aid+Form_v5.pdf"
           >Gift Aid Form</a
         >
         and send it to
@@ -122,7 +122,7 @@
         <br />If you’re contact details or circumstances changes for tax
         purposes, please complete the
         <a
-          href="https://prismic-io.s3.amazonaws.com/sksswoolwich/918414fd-6427-457d-a838-89ad118633f4_gift_aid_alteration.pdf"
+          href="https://prismic-io.s3.amazonaws.com/sksswoolwich/2e151f79-804f-42c8-8e44-722926e1f1e0_Gift+Aid+Alteration+Form.pdf"
         >
           Gift Aid Alteration Form
         </a>
