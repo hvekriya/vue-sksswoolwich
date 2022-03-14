@@ -142,6 +142,12 @@
             </ul>
           </li>
           <li>
+            <NuxtLink to="/events" @click.native="$scrollToTop">
+              Events
+              <i class="fas fa-calendar-alt"></i>
+            </NuxtLink>
+          </li>
+          <li>
             <NuxtLink to="/donate" @click.native="$scrollToTop">
               Donate
               <i class="fas fa-heart"></i>

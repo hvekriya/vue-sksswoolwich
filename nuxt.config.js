@@ -35,7 +35,6 @@ export default {
       { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css'},
       { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css'},
       { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.6/css/lightslider.min.css'},
-      { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.12/css/lightgallery.min.css'},
       // Font
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Spectral' }
     ],
@@ -55,11 +54,6 @@ export default {
         defer: true
       },
       {
-        src: "https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.12/js/lightgallery-all.min.js",
-        body: true,
-        defer: true
-      },
-      {
         src:"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
         body: true
       },
@@ -73,7 +67,10 @@ export default {
 
   // Environment variable
   env: {
-    google_api_key: process.env.GOOGLE_API_KEY
+    google_api_key: process.env.GOOGLE_API_KEY,
+    flickrApiKey: process.env.flickrApiKey,
+    flickrUserId: process.env.flickrUserId,
+    flickrUrl: process.env.flickrUrl
   },
 
   /*
@@ -92,7 +89,7 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [{ src: "~/plugins/prismicLinks", ssr: false },
-  '~plugins/filters.js'],
+  '~plugins/filters.js',  { src: '~/plugins/lightgallery.client.js', ssr: false  }],
 
   /*
    ** Nuxt.js modules

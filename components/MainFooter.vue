@@ -60,16 +60,12 @@
             >Privacy Policy</router-link
           >
         </p>
-        <a
-          href="https://www.sksswoolwich.org/our-sampraday/stories/story-clues"
-        >
-          <img
-            class="footerLogo"
-            src="/img/WoolwichMandirLogo.png"
-            width="10%"
-            alt="WoolwichMandirLogo"
-          />
-        </a>
+        <img
+          class="footerLogo"
+          src="/img/WoolwichMandirLogo.png"
+          width="10%"
+          alt="WoolwichMandirLogo"
+        />
       </div>
     </div>
   </footer>

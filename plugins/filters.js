@@ -16,6 +16,10 @@ Vue.filter("readMore", function(text, length, suffix) {
     return newText.substring(0, length) + suffix;
 });
 
+Vue.filter("moment", function(date) {
+    return moment(date).format("Do MMMM YYYY");
+})
+
 Vue.filter("truncate", function(value) {
 
     var newText = ""

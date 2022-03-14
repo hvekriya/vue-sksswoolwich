@@ -1,8 +1,8 @@
 body,
 html {
-    width: 100%;
-    height: 100%;
-    -webkit-overflow-scrolling: touch;
+  width: 100%;
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
 }
 
 body,
@@ -12,123 +12,131 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: "Spectral", serif;
+  font-family: "Spectral", serif;
 }
 
 body {
-    color: $brown;
-    text-decoration: none;
+  color: $brown;
+  text-decoration: none;
 }
 
 @font-face {
-    font-family: "Arvo";
-    font-display: auto;
-    src: local("Arvo"), url(https://fonts.gstatic.com/s/arvo/v9/rC7kKhY-eUDY-ucISTIf5PesZW2xOQ-xsNqO47m55DA.woff2) format("woff2");
+  font-family: "Arvo";
+  font-display: auto;
+  src: local("Arvo"), url(https://fonts.gstatic.com/s/arvo/v9/rC7kKhY-eUDY-ucISTIf5PesZW2xOQ-xsNqO47m55DA.woff2) format("woff2");
 }
 
 a {
-    display: inline-block;
-    position: relative;
+  display: inline-block;
+  position: relative;
+  color: #0087ca;
+  cursor: pointer;
+
+  &:hover {
     color: #0087ca;
-    cursor: pointer;
-    &:hover {
-        color: #0087ca;
-        text-decoration: none;
-    }
-    &:not(.btn):not(.lg-download)::after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        transform: scaleX(0);
-        height: 2px;
-        bottom: 0;
-        left: 0;
-        background: $main-gradiant;
-        transform-origin: bottom right;
-        transition: transform 0.25s ease-out;
-    }
-    &:not(.btn):not(.lg-download):not(.lSPrev):not(.lSNext):hover::after {
-        transform: scaleX(1);
-        transform-origin: bottom left;
-    }
+    text-decoration: none;
+  }
+
+  &:not(.btn):not(.lg-download)::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background: $main-gradiant;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+
+  &:not(.btn):not(.lg-download):not(.lSPrev):not(.lSNext):hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
 }
 
 #body {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 a:not(.btn):not(.social):focus:not(.lg-download):not(.lSPrev):not(.lSNext):not(.dropdown-toggle),
 a:not(.btn):not(.social):not(.lg-download):not(.lSPrev):not(.lSNext):not(.dropdown-toggle):hover {
-    background: -webkit-gradient(linear, left top, right top, from(#ff8a00), to(#da1b60));
-    background: $main-gradiant;
-    -webkit-background-clip: text;
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
-    text-shadow: none;
+  background: -webkit-gradient(linear, left top, right top, from(#ff8a00), to(#da1b60));
+  background: $main-gradiant;
+  -webkit-background-clip: text;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  text-shadow: none;
 }
 
 li.social a {
-    &:hover {
-        background: none;
-        -webkit-background-clip: unset !important;
-        -webkit-text-fill-color: white !important;
-        border: none;
-    }
-    &:after {
-        background: none;
-    }
+  &:hover {
+    background: none;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: white !important;
+    border: none;
+  }
+
+  &:after {
+    background: none;
+  }
 }
 
 .btn {
-    &:hover {
-        background: -webkit-gradient(linear, left top, right top, from(#ff8a00), to(#da1b60));
-        background: $main-gradiant;
-        border: none;
-        color: white;
-    }
+  &:hover {
+    background: -webkit-gradient(linear, left top, right top, from(#ff8a00), to(#da1b60));
+    background: $main-gradiant;
+    border: none;
+    color: white;
+  }
 }
 
-.nav.nav-pills li {
-    &.active {
-        -webkit-text-fill-color: unset;
-        background-color: transparent;
-        &::before {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background: $main-gradiant;
-            transform-origin: bottom right;
-        }
+.navbar-default .navbar-nav>li>a {
+  &.nuxt-link-exact-active {
+    -webkit-text-fill-color: unset;
+    background-color: transparent;
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background: $main-gradiant;
+      transform-origin: bottom right;
     }
-    a:after {
-        background: none;
-    }
-    a:hover {
-        -webkit-text-fill-color: white;
-    }
-    a:focus {
-        color: $gray-900 !important;
-    }
+  }
+
+  a:after {
+    background: none;
+  }
+
+  a:hover {
+    -webkit-text-fill-color: white;
+  }
+
+  a:focus {
+    color: $gray-900 !important;
+  }
 }
 
 ul {
-    margin-left: 30px;
+  margin-left: 30px;
 }
 
 pre {
-    border: 1px solid $light-blue;
-    color: $blue;
-    white-space: pre-wrap;
-    /* css-3 */
-    white-space: -moz-pre-wrap;
-    /* Mozilla, since 1999 */
-    white-space: -pre-wrap;
-    /* Opera 4-6 */
-    white-space: -o-pre-wrap;
-    /* Opera 7 */
-    word-wrap: break-word;
-    /* Internet Explorer 5.5+ */
+  border: 1px solid $light-blue;
+  color: $blue;
+  white-space: pre-wrap;
+  /* css-3 */
+  white-space: -moz-pre-wrap;
+  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;
+  /* Opera 4-6 */
+  white-space: -o-pre-wrap;
+  /* Opera 7 */
+  word-wrap: break-word;
+  /* Internet Explorer 5.5+ */
 }
