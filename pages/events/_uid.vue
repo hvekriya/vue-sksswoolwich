@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: "Album",
+  name: "Event",
   async asyncData({ $axios, params }) {
     const flickrConfig = {
       api_key: process.env.flickrApiKey,
