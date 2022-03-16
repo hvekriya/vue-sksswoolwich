@@ -13,7 +13,7 @@
         <OpeningTimes />
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
           <legend>
-            <center>Upcoming Events</center>
+            <center>Events calendar</center>
           </legend>
           <Calendar class="fc-calendar" />
         </div>

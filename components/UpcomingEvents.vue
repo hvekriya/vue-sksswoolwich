@@ -1,7 +1,9 @@
 <template>
   <div class="upcoming-events">
     <header class="page-header">
-      <h2 class="title">Join us to celebrate</h2>
+      <h2 class="title">
+        <i class="fas fa-calendar-alt"></i> Join us to celebrate
+      </h2>
     </header>
     <div class="row">
       <ul class="event-list">
