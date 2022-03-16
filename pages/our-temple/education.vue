@@ -52,42 +52,25 @@
 <script>
 export default {
   name: "Education",
-  data() {
-    return {
-      documentId: "",
-      fields: {
-        title: null,
-        description: null,
-        ctaLink: null,
-        ctaText: null,
-      },
-    };
-  },
-  methods: {
-    getContent(uid) {
-      this.$prismic.api
-        .getByUID("our-temple", "swaminarayan-education")
-        .then((document) => {
-          if (document) {
-            this.documentId = document.id;
-            this.fields.title = document.data.title;
-            this.fields.description = document.data.content;
-            this.fields.ctaLink = document.data.cta_link;
-            this.fields.ctaText = document.data.cta_text;
-          } else {
-            this.$router.push({
-              name: "not-found",
-            });
-          }
-        });
-    },
-  },
-  created() {
-    this.getContent(this.$route.params.uid);
-  },
-  beforeRouteUpdate(to, from, next) {
-    this.getContent(to.params.uid);
-    next();
+  async asyncData({ $prismic, params }) {
+    try {
+      const document = await $prismic.api.getByUID(
+        "our-temple",
+        "swaminarayan-education"
+      );
+      return {
+        documentId: document.id,
+        fields: {
+          title: document.data.title,
+          description: document.data.content,
+          ctaLink: document.data.cta_link,
+          ctaText: document.data.cta_text,
+        },
+      };
+    } catch (e) {
+      console.log(e);
+      error({ statusCode: 404, message: "Page not found" });
+    }
   },
 };
 </script>

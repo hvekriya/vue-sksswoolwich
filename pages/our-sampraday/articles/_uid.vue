@@ -23,14 +23,16 @@
           />
           <div class="col-sm-10 col-md-10 col-lg-10">
             <h2 class="media-heading" v-for="(title, index) in item.data.title">
-              <a :href="'/our-sampraday/' + item.uid">{{ title.text }}</a>
+              <NuxtLink :to="`/our-sampraday/${item.uid}`"
+                >{{ title.text }}
+              </NuxtLink>
             </h2>
             <!-- <div class="description" v-for="(content, index) in item.data.content">
                 {{content.text}}
               </div> -->
             <p>
               {{ item.data.content | readMore(300, "...") }}
-              <a :href="'/our-sampraday/' + item.uid">Read more</a>
+              <NuxtLink :to="`/our-sampraday/${item.uid}`">Read more</NuxtLink>
             </p>
             <!-- <ul class="list-inline list-unstyled">
               <li>

@@ -22,19 +22,10 @@ export default {
   },
   methods: {
     search: function () {
-      console.log("current route is: " + this.$route.path);
-      if (this.$route.path !== "/search_results") {
-        this.$router.push({
-          path: "/search_results",
-          query: { search: this.search_query },
-        });
-      } else {
-        this.$router.push({
-          path: "/search_results",
-          query: { search: this.search_query },
-        });
-        window.location.reload();
-      }
+      this.$router.push({
+        path: "/search_results",
+        query: { search: this.search_query },
+      });
     },
   },
 };

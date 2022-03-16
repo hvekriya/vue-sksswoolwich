@@ -9,7 +9,19 @@
           <h1 class="title">Search results</h1>
         </div>
         <div class="col-md-4">
-          <Search />
+          <div class="navbar-form" id="search">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control search"
+                placeholder="Search"
+                v-model="search_query"
+              />
+            </div>
+            <button class="btn btn-primary search" v-on:click="newSearch">
+              Search
+            </button>
+          </div>
         </div>
       </div>
     </header>
@@ -35,13 +47,18 @@
                 class="media-heading"
                 v-for="(title, index) in item.data.title"
               >
-                <a :href="'/our-sampraday/' + item.uid">{{ title.text }}</a>
+                <NuxtLink :to="`/our-sampraday/${item.uid}`"
+                  >{{ title.text }}
+                </NuxtLink>
               </h2>
               <!-- <div class="description" v-for="(content, index) in item.data.content">
                 {{content.text}}
               </div> -->
               <p>
                 {{ item.data.content | readMore(300, "...") }}
+                <NuxtLink :to="`/our-sampraday/${item.uid}`"
+                  >Read more
+                </NuxtLink>
                 <a :href="'/our-sampraday/' + item.uid">Read more</a>
               </p>
               <!-- <ul class="list-inline list-unstyled">
@@ -80,9 +97,10 @@ export default {
       search_query: "",
     };
   },
+
   methods: {
-    getContent(search_query) {
-      this.$prismic.api
+    async getContent(search_query) {
+      await this.$prismic.api
         .query([
           this.$prismic.predicates.at("document.type", "article"),
           this.$prismic.predicates.fulltext("document", search_query),
@@ -90,6 +108,9 @@ export default {
         .then((response) => {
           this.articles = response.results;
         });
+    },
+    newSearch() {
+      this.getContent(this.search_query);
     },
   },
 

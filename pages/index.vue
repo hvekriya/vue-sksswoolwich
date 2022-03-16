@@ -27,6 +27,8 @@
           View events we have celebrated recently. See if you can spot yourself
           or someone you know in the pictures!
         </p>
+        <RecentUploads :recentUploads="recentUploads" />
+        <br />
         <a href="/events" class="btn btn-primary"> View all events</a>
       </div>
       <div class="row">
@@ -51,6 +53,7 @@ import DailyDarshan from "../components/DailyDarshan";
 import OpeningTimes from "../components/OpeningTimes";
 import Calendar from "../components/Calendar";
 import UpcomingEvents from "../components/UpcomingEvents";
+import RecentUploads from "../components/RecentUploads";
 import WeeklySchedule from "../components/WeeklySchedule";
 import LiveStream from "../components/LiveStream";
 import ImageSlider from "../components/ImageSlider";
@@ -70,12 +73,12 @@ export default {
     Alert,
     CallToAction,
     UpcomingEvents,
+    RecentUploads,
   },
-  async asyncData({ $prismic, params, error }) {
+  async asyncData({ $prismic, params, error, $axios }) {
     try {
-      const document = await $prismic.api.getSingle("home");
-
       // Get event data from Prismic
+      const document = await $prismic.api.getSingle("home");
       const eventsFromPrismic = await $prismic.api.query(
         $prismic.predicates.at("document.type", "events")
       );
@@ -86,9 +89,32 @@ export default {
       const upcomingEvents = events.filter((event) => {
         return moment(event.data.event_date).isAfter(today);
       });
+      var d = new Date();
+      const recentUploadTime = d.getDate() - 5; // Last 30 days
+      const unixTimeStamp = Math.floor(Date.now() / 1000);
+
+      // Get recent uploads data
+      const flickrConfig = {
+        api_key: process.env.flickrApiKey,
+        user_id: process.env.flickrUserId,
+        format: "json",
+        nojsoncallback: 1,
+      };
+      const flickrUrl = process.env.flickrUrl;
+      const set = await $axios.get(flickrUrl, {
+        params: {
+          ...flickrConfig,
+          method: "flickr.photos.search",
+          min_date_upload: unixTimeStamp,
+          per_page: 6,
+          extras: "url_n, url_o",
+        },
+      });
+      const recentUploads = set.data.photos.photo;
 
       return {
         upcomingEvents,
+        recentUploads,
         fields: {
           slices: document.data.body,
         },
