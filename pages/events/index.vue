@@ -6,85 +6,21 @@
       <h1 class="title">Events</h1>
     </header>
     <!-- Upcoming events -->
-    <header class="page-header">
-      <h2 class="title">Upcoming events</h2>
-    </header>
-    <div class="row">
-      <ul class="event-list">
-        <li
-          class="important"
-          v-for="(event, index) in futureEvents"
-          :key="'event-' + index"
-        >
-          <time>
-            <span class="month">{{ event.data.event_date | moment }}</span>
-          </time>
-          <div class="info">
-            <div class="col-lg-8">
-              <prismic-rich-text :field="event.data.event_title" />
-              <prismic-rich-text :field="event.data.event_description" />
-            </div>
-            <div class="col-lg-2"></div>
-            <div id="lightgallery" class="col-lg-2" style="padding: 0">
-              <a :href="event.data.poster.url">
-                <img
-                  :src="event.data.poster.url"
-                  :alt="event.data.poster.alt"
-                  class="img-responsive"
-                  style="border: none; padding: 5px"
-                />
-              </a>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <header class="page-header">
-      <h2 class="title">Past events</h2>
-    </header>
-    <div class="row">
-      <ul class="event-list">
-        <li
-          class="important"
-          v-for="(event, index) in pastEvents"
-          :key="'event-' + index"
-        >
-          <time>
-            <span class="month">{{ event.data.event_date | moment }}</span>
-          </time>
-          <div class="info">
-            <div class="col-lg-8">
-              <prismic-rich-text :field="event.data.event_title" />
-              <prismic-rich-text :field="event.data.event_description" />
-            </div>
-            <div class="col-lg-2"></div>
-            <div id="lightgallery" class="col-lg-2" style="padding: 0">
-              <a :href="event.data.poster.url">
-                <img
-                  :src="event.data.poster.url"
-                  :alt="event.data.poster.alt"
-                  class="img-responsive"
-                  style="border: none; padding: 5px"
-                />
-              </a>
-              <NuxtLink
-                :to="'/events/' + event.data.flicker_album_id"
-                class="btn btn-secondary"
-                style="width: 100%"
-                >View pictures</NuxtLink
-              >
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
+    <UpcomingEvents :upcomingEvents="upcomingEvents" />
+    <PastEvents :pastEvents="pastEvents" />
   </div>
 </template>
 
 <script>
 import moment from "moment";
+import UpcomingEvents from "../../components/UpcomingEvents";
+import PastEvents from "../../components/PastEvents";
 export default {
   name: "Events",
+  components: {
+    UpcomingEvents,
+    PastEvents,
+  },
   async asyncData({ $prismic, $axios, error }) {
     try {
       // Get event data from Prismic
@@ -98,12 +34,11 @@ export default {
       const pastEvents = events.filter((event) => {
         return moment(event.data.event_date).isBefore(today);
       });
-      const futureEvents = events.filter((event) => {
+      const upcomingEvents = events.filter((event) => {
         return moment(event.data.event_date).isAfter(today);
       });
-      console.log(futureEvents);
       return {
-        futureEvents,
+        upcomingEvents,
         pastEvents,
       };
     } catch (e) {
@@ -139,16 +74,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-@media (min-width: 768px) {
-  .event-list > li > img,
-  .event-list > li > time {
-    width: 80px;
-    height: 110px;
-    padding: 0;
-    margin: 0;
-  }
-}
-</style>
- 

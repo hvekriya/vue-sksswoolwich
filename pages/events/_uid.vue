@@ -19,7 +19,7 @@
         >
           <div class="imgbox">
             <a :href="photo.url_o">
-              <img :src="photo.url_o" class="category-banner img-responsive" />
+              <img :src="photo.url_n" class="category-banner img-responsive" />
             </a>
           </div>
         </div>
