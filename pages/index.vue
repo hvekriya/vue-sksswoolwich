@@ -87,7 +87,7 @@ export default {
 
       // Filter the events based on past and future
       const upcomingEvents = events.filter((event) => {
-        return moment(event.data.event_date).isAfter(today);
+        return moment(event.data.event_date).isSameOrAfter(today);
       });
       var d = new Date();
       const recentUploadTime = d.getDate() - 5; // Last 30 days

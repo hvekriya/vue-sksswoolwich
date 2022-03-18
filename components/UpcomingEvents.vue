@@ -49,7 +49,7 @@ export default {
 @media (min-width: 768px) {
   .event-list > li > img,
   .event-list > li > time {
-    width: 80px;
+    width: 106x;
     height: 110px;
     padding: 0;
     margin: 0;

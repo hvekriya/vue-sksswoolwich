@@ -34,8 +34,21 @@ export default {
       const pastEvents = events.filter((event) => {
         return moment(event.data.event_date).isBefore(today);
       });
+      pastEvents.sort(function (a, b) {
+        a = new Date(a.data.event_date);
+        b = new Date(b.data.event_date);
+        var results = a > b ? -1 : a < b ? 1 : 0;
+        return results * 1;
+      });
+
       const upcomingEvents = events.filter((event) => {
-        return moment(event.data.event_date).isAfter(today);
+        return moment(event.data.event_date).isSameOrAfter(today);
+      });
+      upcomingEvents.sort(function (a, b) {
+        a = new Date(a.data.event_date);
+        b = new Date(b.data.event_date);
+        var results = a > b ? -1 : a < b ? 1 : 0;
+        return results * -1;
       });
       return {
         upcomingEvents,
@@ -68,6 +81,7 @@ export default {
     //   albums,
     // };
   },
+
   mounted() {
     const el = document.getElementById("lightgallery");
     window.lightGallery(el, { selector: "a" });

@@ -7,11 +7,6 @@
         {{ $prismic.asText(fields.title) }}
       </h1>
     </header>
-    <prismic-image
-      v-if="fields.cover"
-      :field="fields.cover"
-      class="img-responsive img-25"
-    />
     <ol class="breadcrumb">
       <li>
         <NuxtLink to="/our-sampraday/articles/lord-swaminarayan"
@@ -20,6 +15,11 @@
       </li>
       <li class="active">{{ $prismic.asText(fields.title) }}</li>
     </ol>
+    <prismic-image
+      v-if="fields.cover"
+      :field="fields.cover"
+      class="img-responsive img-25"
+    />
     <prismic-rich-text :field="fields.content" class="description" />
     <div class="cta-wrapper">
       <prismic-link :field="fields.ctaLink" class="cta">

@@ -91,6 +91,10 @@ export default {
   plugins: [{ src: "~/plugins/prismicLinks", ssr: false },
   '~plugins/filters.js',  { src: '~/plugins/lightgallery.client.js', ssr: false  }],
 
+  serverMiddleware: [
+  '~plugins/redirects.js'
+],
+
   /*
    ** Nuxt.js modules
    */
