@@ -21,7 +21,7 @@
               <prismic-rich-text :field="event.data.event_description" />
             </div>
             <div class="col-lg-2"></div>
-            <div id="lightgallery" class="col-lg-2" style="padding: 0">
+            <div class="col-lg-2" style="padding: 0">
               <a :href="event.data.poster.url">
                 <img
                   :src="event.data.poster.url"

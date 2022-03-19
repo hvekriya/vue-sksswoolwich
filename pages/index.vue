@@ -106,7 +106,7 @@ export default {
           ...flickrConfig,
           method: "flickr.photos.search",
           min_date_upload: unixTimeStamp,
-          per_page: 6,
+          per_page: 14,
           extras: "url_n, url_o",
         },
       });

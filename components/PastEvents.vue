@@ -19,7 +19,7 @@
               <prismic-rich-text :field="event.data.event_description" />
             </div>
             <div class="col-lg-2"></div>
-            <div id="lightgallery" class="col-lg-2" style="padding: 0">
+            <div class="col-lg-2" style="padding: 0">
               <a :href="event.data.poster.url">
                 <img
                   :src="event.data.poster.url"
@@ -29,7 +29,7 @@
                 />
               </a>
               <NuxtLink
-                :to="'/events/' + event.data.flicker_album_id"
+                :to="`/events/${event.data.flicker_album_id}`"
                 class="btn btn-secondary"
                 style="width: 100%"
                 >View pictures</NuxtLink

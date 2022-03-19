@@ -11,18 +11,16 @@
       </li>
       <li class="active">{{ album.title }}</li>
     </ol>
-    <div class="row gallery-row">
+    <div class="row">
       <div id="lightgallery">
-        <div
+        <template
           v-for="(photo, index) in album.photo"
           class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
         >
-          <div class="imgbox">
-            <a :href="photo.url_o">
-              <img :src="photo.url_n" class="category-banner img-responsive" />
-            </a>
-          </div>
-        </div>
+          <a :href="photo.url_o">
+            <img :src="photo.url_n" class="category-banner img-responsive" />
+          </a>
+        </template>
       </div>
     </div>
     <br />
