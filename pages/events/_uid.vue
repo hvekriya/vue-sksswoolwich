@@ -31,34 +31,42 @@
 <script>
 export default {
   name: "Event",
-  async asyncData({ $axios, params }) {
-    const flickrConfig = {
-      api_key: process.env.flickrApiKey,
-      user_id: process.env.flickrUserId,
-      format: "json",
-      nojsoncallback: 1,
-    };
+  async asyncData({ $axios, params, query, error }) {
+    try {
+      const flickrConfig = {
+        api_key: process.env.flickrApiKey,
+        user_id: process.env.flickrUserId,
+        format: "json",
+        nojsoncallback: 1,
+      };
 
-    const flickrUrl = process.env.flickrUrl;
+      const flickrUrl = process.env.flickrUrl;
 
-    const set = await $axios.get(flickrUrl, {
-      params: {
-        ...flickrConfig,
-        method: "flickr.photosets.getPhotos",
-        photoset_id: params.uid,
-        extras: "url_n, url_o",
-      },
-    });
+      const set = await $axios.get(flickrUrl, {
+        params: {
+          ...flickrConfig,
+          method: "flickr.photosets.getPhotos",
+          photoset_id: query.event_id,
+          extras: "url_n, url_o",
+        },
+      });
 
-    const album = set.data.photoset;
+      const album = set.data.photoset;
 
-    return {
-      album,
-    };
+      return {
+        album,
+      };
+    } catch (e) {
+      error({
+        statusCode: 404,
+        message:
+          "Page not found. You need to use the full link including the event id",
+      });
+    }
   },
   mounted() {
     const el = document.getElementById("lightgallery");
-    window.lightGallery(el, { selector: "a" });
+    window.lightGallery(el);
   },
 };
 </script>

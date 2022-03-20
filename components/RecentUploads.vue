@@ -35,7 +35,7 @@ export default {
   props: ["recentUploads"],
   mounted() {
     const el = document.getElementById("recentUploads");
-    window.lightGallery(el, { selector: "a" });
+    window.lightGallery(el);
   },
 };
 </script>

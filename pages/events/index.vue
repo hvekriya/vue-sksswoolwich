@@ -81,10 +81,5 @@ export default {
     //   albums,
     // };
   },
-
-  mounted() {
-    const el = document.getElementById("lightgallery");
-    window.lightGallery(el, { selector: "a" });
-  },
 };
 </script>
