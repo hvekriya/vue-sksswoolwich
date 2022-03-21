@@ -2,29 +2,37 @@
 
 <template>
   <div class="wrapper container">
-    <header class="page-header">
-      <h1 class="title">{{ album.title }}</h1>
-    </header>
-    <ol class="breadcrumb">
-      <li>
-        <a href="/events">Events</a>
-      </li>
-      <li class="active">{{ album.title }}</li>
-    </ol>
-    <div class="row">
-      <div id="lightgallery">
-        <template
-          v-for="(photo, index) in album.photo"
-          class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
-        >
-          <a :href="photo.url_o">
-            <img :src="photo.url_n" class="category-banner img-responsive" />
-          </a>
-        </template>
+    <div v-if="album">
+      <header class="page-header">
+        <h1 class="title">{{ album.title }}</h1>
+      </header>
+      <ol class="breadcrumb">
+        <li>
+          <NuxtLink to="/events">Events </NuxtLink>
+        </li>
+        <li class="active">{{ album.title }}</li>
+      </ol>
+      <div class="row">
+        <div id="lightgallery">
+          <template
+            v-for="(photo, index) in album.photo"
+            class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
+          >
+            <a :href="photo.url_o">
+              <img :src="photo.url_n" class="category-banner img-responsive" />
+            </a>
+          </template>
+        </div>
       </div>
+      <br />
+      <br />
     </div>
-    <br />
-    <br />
+    <div v-else>
+      <h3>Photo's have not been uploaded yet. Please check again later</h3>
+      <NuxtLink to="/events">Back to events </NuxtLink>
+      <br />
+      <br />
+    </div>
   </div>
 </template>
 
@@ -57,12 +65,11 @@ export default {
         album,
       };
     } catch (e) {
-      error({
-        statusCode: 404,
-        message:
-          "Page not found. You need to use the full link including the event id",
-      });
+      console.log(error);
     }
+  },
+  errorCaptured(err, vm, info) {
+    console.log(err);
   },
   mounted() {
     const el = document.getElementById("lightgallery");

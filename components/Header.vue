@@ -53,18 +53,18 @@
                 >
               </li>
               <!-- <li><a href="/our-temple/past-events">History</a></li> -->
-              <li>
+              <!-- <li>
                 <NuxtLink to="/our-temple/murtis" @click.native="$scrollToTop"
                   >Murtis</NuxtLink
                 >
-              </li>
-              <li>
+              </li> -->
+              <!-- <li>
                 <NuxtLink
                   to="/our-temple/weekly-schedule"
                   @click.native="$scrollToTop"
                   >Weekly Schedule</NuxtLink
                 >
-              </li>
+              </li> -->
               <li>
                 <a href="/our-temple/calendar">Calendar</a>
               </li>

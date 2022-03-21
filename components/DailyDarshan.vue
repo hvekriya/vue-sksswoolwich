@@ -65,11 +65,6 @@ export default {
       slideEndAnimation: true,
       pause: 2000,
       pager: false,
-      onSliderLoad: function (el) {
-        el.lightGallery({
-          selector: "#dailydarshan .lslide",
-        });
-      },
     });
   },
 };
