@@ -29,7 +29,9 @@
                 />
               </a>
               <NuxtLink
-                :to="`/events/${event.uid}?event_id=${event.data.flicker_album_id}`"
+                :to="{
+                  path: `/events/${event.uid}/${event.data.flicker_album_id}`,
+                }"
                 class="btn btn-secondary"
                 style="width: 100%"
                 >View pictures</NuxtLink

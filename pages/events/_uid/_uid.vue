@@ -39,7 +39,7 @@
 <script>
 export default {
   name: "Event",
-  async asyncData({ $axios, params, query, error }) {
+  async asyncData({ $axios, params, error }) {
     try {
       const flickrConfig = {
         api_key: process.env.flickrApiKey,
@@ -54,7 +54,7 @@ export default {
         params: {
           ...flickrConfig,
           method: "flickr.photosets.getPhotos",
-          photoset_id: query.event_id,
+          photoset_id: params.uid,
           extras: "url_n, url_o",
         },
       });
