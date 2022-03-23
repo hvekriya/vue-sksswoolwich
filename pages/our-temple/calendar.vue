@@ -1,22 +1,64 @@
 <template>
   <div class="wrapper container">
     <header class="page-header">
-      <h1>Calendar</h1>
+      <h1 class="title">Utsavs calendar</h1>
     </header>
-
-    <Calendar />
+    <FullCalendar ref="fullCalendar" :options="calendarOptions" />
     <br />
     <br />
   </div>
 </template>
 
 <script>
-import Calendar from "../../components/Calendar";
+import FullCalendar from "@fullcalendar/vue";
+import listPlugin from "@fullcalendar/list";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import googleCalendarPlugin from "@fullcalendar/google-calendar";
 
 export default {
   name: "CalendarFull",
   components: {
-    Calendar
+    FullCalendar,
+  },
+  data() {
+    return {
+      calendarOptions: {
+        initialView: "dayGridMonth",
+        themeSystem: "bootstrap",
+        plugins: [listPlugin, dayGridPlugin, googleCalendarPlugin],
+        select: this.handleDateClick,
+        stickyHeaderDates: false,
+        events: {
+          googleCalendarApiKey: process.env.google_api_key,
+          googleCalendarId: "admin@bhujdham.org",
+        },
+        // validRange: {
+        //   start: "2017-05-01",
+        //   end: "2017-06-01",
+        // },
+        customButtons: {
+          myCustomButton: {
+            text: "Full page",
+            click: () => this.$router.push({ path: "/our-temple/calendar" }),
+          },
+        },
+        headerToolbar: {
+          left: "prev",
+          center: "title",
+          right: "next",
+        },
+        footerToolbar: {
+          left: "today listMonth dayGridMonth",
+          center: "",
+          right: "",
+        },
+      },
+    };
+  },
+  methods: {
+    handleDateClick: function (arg) {
+      console.log("date click! " + arg.dateStr);
+    },
   },
 };
 </script>

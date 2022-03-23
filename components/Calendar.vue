@@ -36,7 +36,7 @@ export default {
         customButtons: {
           myCustomButton: {
             text: "Full page",
-            click: () => this.$router.push({ name: "Calendar" }),
+            click: () => this.$router.push({ path: "/our-temple/calendar" }),
           },
         },
         headerToolbar: {
