@@ -88,8 +88,11 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [{ src: "~/plugins/prismicLinks", ssr: false },
-  '~plugins/filters.js',  { src: '~/plugins/lightgallery.client.js', ssr: false  }],
+  plugins: [
+    { src: "~/plugins/prismicLinks", ssr: false },
+  '~plugins/filters.js',  
+  { src: '~/plugins/lightgallery.client.js', ssr: false  }
+  ],
 
   serverMiddleware: [
   '~plugins/redirects.js'
