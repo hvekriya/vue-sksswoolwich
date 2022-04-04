@@ -31,7 +31,7 @@
                 />
               </a>
               <template v-if="event.data.poster_2.url">
-                <a :href="event.data.poster.url">
+                <a :href="event.data.poster_2.url">
                   <img
                     :src="event.data.poster_2.url"
                     :alt="event.data.poster_2.alt"
