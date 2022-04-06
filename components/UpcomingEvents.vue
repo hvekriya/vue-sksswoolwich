@@ -18,7 +18,16 @@
           <div class="info">
             <div class="col-lg-8">
               <prismic-rich-text :field="event.data.event_title" />
-              <prismic-rich-text :field="event.data.event_description" />
+              <prismic-rich-text :field="event.data.event_description_short" />
+              <br />
+              <NuxtLink
+                :to="{
+                  path: `/events/${event.uid}`,
+                }"
+                class="btn btn-secondary"
+                style="width: 100%"
+                >View more details</NuxtLink
+              >
             </div>
             <div class="col-lg-2"></div>
             <div class="col-lg-2" style="padding: 0">

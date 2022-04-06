@@ -28,9 +28,39 @@
       <br />
     </div>
     <div v-else>
-      <h3>Photo's have not been uploaded yet. Please check again later</h3>
-      <NuxtLink to="/events">Back to events </NuxtLink>
+      <header class="page-header">
+        <h1 class="title">{{ eventDetails.data.event_title[0].text }}</h1>
+      </header>
+      <ol class="breadcrumb">
+        <li>
+          <NuxtLink to="/events">Events</NuxtLink>
+        </li>
+        <li class="active">{{ eventDetails.data.event_title[0].text }}</li>
+      </ol>
+      <prismic-rich-text :field="eventDetails.data.event_description" />
       <br />
+      <div class="col-lg-6" style="padding: 0">
+        <a :href="eventDetails.data.poster.url">
+          <img
+            :src="eventDetails.data.poster.url"
+            :alt="eventDetails.data.poster.alt"
+            class="img-responsive"
+            style="border: none; padding: 5px"
+          />
+        </a>
+      </div>
+      <div class="col-lg-6" style="padding: 0">
+        <template v-if="eventDetails.data.poster_2.url">
+          <a :href="eventDetails.data.poster_2.url">
+            <img
+              :src="eventDetails.data.poster_2.url"
+              :alt="eventDetails.data.poster_2.alt"
+              class="img-responsive"
+              style="border: none; padding: 5px"
+            />
+          </a>
+        </template>
+      </div>
       <br />
     </div>
   </div>
@@ -39,8 +69,85 @@
 <script>
 export default {
   name: "Event",
-  async asyncData({ $axios, params, error }) {
+  head() {
+    return {
+      title: `${this.eventDetails.data.event_title[0].text} | Woolwich Temple`,
+      htmlAttrs: {
+        lang: "en",
+        amp: true,
+      },
+      meta: [
+        { charset: "utf-8" },
+        {
+          name: "viewport",
+          content: "width=device-width, initial-scale=1",
+        },
+        {
+          name: "keywords",
+          content: `${this.eventDetails.data.event_title[0].text} | Woolwich Temple`,
+        },
+        {
+          hid: "description",
+          name: "description",
+          content: this.$prismic.asText(
+            this.eventDetails.data.event_description
+          ),
+        },
+        {
+          hid: "twitter:title",
+          name: "twitter:title",
+          content: `${this.eventDetails.data.event_title[0].text} | Woolwich Temple`,
+        },
+        {
+          hid: "twitter:description",
+          name: "twitter:description",
+          content: this.$prismic.asText(
+            this.eventDetails.data.event_description
+          ),
+        },
+        {
+          hid: "twitter:image",
+          name: "twitter:image",
+          content: this.eventDetails.data.poster.url,
+        },
+        {
+          hid: "twitter:image:alt",
+          name: "twitter:image:alt",
+          content: `${this.eventDetails.data.event_title[0].text} | Woolwich Temple`,
+        },
+        { hid: "og-type", property: "og:type", content: "website" },
+        {
+          hid: "og-title",
+          property: "og:title",
+          content: `${this.eventDetails.data.event_title[0].text} | Woolwich Temple`,
+        },
+        {
+          hid: "og-desc",
+          property: "og:description",
+          content: this.$prismic.asText(
+            this.eventDetails.data.event_description
+          ),
+        },
+        {
+          hid: "og-image",
+          property: "og:image",
+          content: this.eventDetails.data.poster.url,
+        },
+        {
+          hid: "og-url",
+          property: "og:url",
+          content: `www.sksswoolwich.org/events/${this.eventDetails.uid}`,
+        },
+      ],
+    };
+  },
+  async asyncData({ $prismic, $axios, params, error }) {
     try {
+      // Event details
+
+      const eventDetails = await $prismic.api.getByUID("events", params.event);
+
+      // Event photos
       const flickrConfig = {
         api_key: process.env.flickrApiKey,
         user_id: process.env.flickrUserId,
@@ -63,6 +170,7 @@ export default {
 
       return {
         album,
+        eventDetails,
       };
     } catch (e) {
       console.log(error);
