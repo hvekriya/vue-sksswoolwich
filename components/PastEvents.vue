@@ -1,8 +1,5 @@
 <template>
   <div class="past-events">
-    <header class="page-header">
-      <h2 class="title">Past events</h2>
-    </header>
     <div class="row">
       <ul class="event-list">
         <li
@@ -36,6 +33,8 @@
                 style="width: 100%"
                 >View pictures</NuxtLink
               >
+              <br />
+              <br />
             </div>
           </div>
         </li>

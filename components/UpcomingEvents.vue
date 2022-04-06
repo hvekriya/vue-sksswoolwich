@@ -28,6 +28,8 @@
                 style="width: 100%"
                 >View more details</NuxtLink
               >
+              <br />
+              <br />
             </div>
             <div class="col-lg-2"></div>
             <div class="col-lg-2" style="padding: 0">

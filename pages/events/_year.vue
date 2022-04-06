@@ -3,20 +3,21 @@
 <template>
   <div class="wrapper container">
     <header class="page-header">
-      <h1 class="title">Events</h1>
-    </header>
-    <!-- Upcoming events -->
-    <UpcomingEvents :upcomingEvents="upcomingEvents" />
-
-    <!-- Past events -->
-    <header class="page-header">
       <div class="row">
-        <div class="col-lg-4"><h2 class="title">Past events</h2></div>
+        <div class="col-lg-4">
+          <h1 class="title">Past events {{ year }}</h1>
+        </div>
         <div class="col-lg-8">
           <PastYears />
         </div>
       </div>
     </header>
+    <ol class="breadcrumb">
+      <li>
+        <NuxtLink to="/events">Events </NuxtLink>
+      </li>
+      <li class="active">{{ year }}</li>
+    </ol>
     <!-- Filter -->
     <br />
     <PastEvents :pastEvents="pastEvents" />
@@ -35,14 +36,14 @@ export default {
     PastEvents,
     PastYears,
   },
-  async asyncData({ $prismic, $axios, error }) {
+  async asyncData({ $prismic, $axios, error, params }) {
     try {
       // Get event data from Prismic
       const currentYear = moment().year();
       const eventsFromPrismic = await $prismic.api.query([
         $prismic.predicates.year(
           "document.first_publication_date",
-          currentYear
+          params.year
         ),
         $prismic.predicates.at("document.type", "events"),
       ]);
@@ -70,6 +71,7 @@ export default {
         return results * -1;
       });
       return {
+        year: params.year,
         upcomingEvents,
         pastEvents,
       };
