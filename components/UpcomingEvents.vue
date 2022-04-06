@@ -39,16 +39,6 @@
                   style="border: none; padding: 5px"
                 />
               </a>
-              <template v-if="event.data.poster_2.url">
-                <a :href="event.data.poster_2.url">
-                  <img
-                    :src="event.data.poster_2.url"
-                    :alt="event.data.poster_2.alt"
-                    class="img-responsive"
-                    style="border: none; padding: 5px"
-                  />
-                </a>
-              </template>
             </div>
           </div>
         </li>
