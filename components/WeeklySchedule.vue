@@ -1,8 +1,5 @@
 <template>
   <div>
-    <header class="page-header">
-      <h2>Weekly schedule</h2>
-    </header>
     <template v-for="(slice, index) in fields.slices">
       <template v-if="slice.slice_type === 'events_list'">
         <div class="row">

@@ -13,6 +13,7 @@
     "lintfix": "prettier --write --list-different ."
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fullcalendar/core": "^5.10.1",
     "@fullcalendar/daygrid": "^5.10.1",
     "@fullcalendar/google-calendar": "^5.10.1",
@@ -41,6 +42,9 @@
     "vue": "^2.6.14"
   },
   "devDependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@nuxtjs/fontawesome": "^1.1.2",
     "@nuxtjs/google-analytics": "^2.4.0",
     "@nuxtjs/style-resources": "^1.2.1",
     "node-sass": "^6.0.1",

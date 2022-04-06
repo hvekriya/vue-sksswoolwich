@@ -26,9 +26,9 @@
 
 <script>
 import moment from "moment";
-import UpcomingEvents from "../../components/UpcomingEvents";
-import PastEvents from "../../components/PastEvents";
-import PastYears from "../../components/PastYears";
+import UpcomingEvents from "../../../components/UpcomingEvents";
+import PastEvents from "../../../components/PastEvents";
+import PastYears from "../../../components/PastYears";
 export default {
   name: "Events",
   components: {
@@ -41,10 +41,7 @@ export default {
       // Get event data from Prismic
       const currentYear = moment().year();
       const eventsFromPrismic = await $prismic.api.query([
-        $prismic.predicates.year(
-          "document.first_publication_date",
-          params.year
-        ),
+        $prismic.predicates.year("document.first_publication_date", params.uid),
         $prismic.predicates.at("document.type", "events"),
       ]);
       const today = moment().format("YYYY-MM-DD").toString();
@@ -71,7 +68,7 @@ export default {
         return results * -1;
       });
       return {
-        year: params.year,
+        year: params.uid,
         upcomingEvents,
         pastEvents,
       };
@@ -82,10 +79,3 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
-.dropdown {
-  float: right;
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-</style>

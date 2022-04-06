@@ -21,32 +21,23 @@
       <UpcomingEvents :upcomingEvents="upcomingEvents" />
       <div class="row">
         <header class="page-header">
-          <h2>Past events</h2>
+          <h2>Photos from our recent event</h2>
         </header>
         <p>
-          View events we have celebrated recently. See if you can spot yourself
-          or someone you know in the pictures!
+          Events we have celebrated recently. See if you can spot yourself or
+          someone you know in the pictures!
         </p>
         <RecentUploads :recentUploads="recentUploads" />
         <br />
-        <a href="/events" class="btn btn-primary"> View all events</a>
+        <NuxtLink to="/events" class="btn btn-primary view-all-events">
+          View all events</NuxtLink
+        >
       </div>
-      <div class="row">
-        <WeeklySchedule :fields="fields" />
-      </div>
+      <br />
+      <br />
     </div>
   </main>
 </template>
-
-<style scoped>
-.fc-toolbar .fc-left {
-  display: none;
-}
-.fc-scroller {
-  height: 400px !important;
-}
-</style>
-
 
 <script>
 import DailyDarshan from "../components/DailyDarshan";
@@ -54,7 +45,6 @@ import OpeningTimes from "../components/OpeningTimes";
 import Calendar from "../components/Calendar";
 import UpcomingEvents from "../components/UpcomingEvents";
 import RecentUploads from "../components/RecentUploads";
-import WeeklySchedule from "../components/WeeklySchedule";
 import LiveStream from "../components/LiveStream";
 import ImageSlider from "../components/ImageSlider";
 import Alert from "../components/Alert";
@@ -67,7 +57,6 @@ export default {
     DailyDarshan,
     OpeningTimes,
     Calendar,
-    WeeklySchedule,
     LiveStream,
     ImageSlider,
     Alert,
@@ -126,3 +115,35 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@mixin respond-to($media) {
+  @if $media==handhelds {
+    @media only screen and (max-width: 768px) {
+      @content;
+    }
+  } @else if $media==medium-screens {
+    @media only screen and (min-width: 769px) and (max-width: 1024px) {
+      @content;
+    }
+  } @else if $media==wide-screens {
+    @media only screen and (min-width: 1024px) {
+      @content;
+    }
+  }
+}
+
+.fc-toolbar .fc-left {
+  display: none;
+}
+.fc-scroller {
+  height: 400px !important;
+}
+
+.view-all-events {
+  width: 20%;
+  @include respond-to(handhelds) {
+    width: 100%;
+  }
+}
+</style>

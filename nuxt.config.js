@@ -129,8 +129,18 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     '@nuxtjs/google-analytics',
-    '@nuxtjs/prismic'
+    '@nuxtjs/prismic',
+    '@nuxtjs/fontawesome'
   ],
+
+    fontawesome: {
+        component: 'Fa',
+        suffix: false,
+        icons: {
+          solid: true,
+          brands: true,
+        },
+    },
 
   prismic: {
     endpoint: "https://sksswoolwich.prismic.io/api/v2",
