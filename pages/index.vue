@@ -78,6 +78,12 @@ export default {
       const upcomingEvents = events.filter((event) => {
         return moment(event.data.event_date).isSameOrAfter(today);
       });
+      upcomingEvents.sort(function (a, b) {
+        a = new Date(a.data.event_date);
+        b = new Date(b.data.event_date);
+        var results = a > b ? -1 : a < b ? 1 : 0;
+        return results * -1;
+      });
       var d = new Date();
       const recentUploadTime = d.getDate() - 5; // Last 30 days
       const unixTimeStamp = Math.floor(Date.now() / 1000);
