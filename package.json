@@ -39,7 +39,8 @@
     "moment": "^2.29.1",
     "nuxt": "^2.15.8",
     "nuxt-gmaps": "^1.2.10",
-    "vue": "^2.6.14"
+    "vue": "^2.6.14",
+    "vue2-flip-countdown": "^0.12.1"
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.1.1",

@@ -2,28 +2,28 @@
   <div>
     <div class="bs-calltoaction bs-calltoaction-primary">
       <div class="row">
-        <div class="col-md-9 cta-contents">
+        <div class="col-md-4 col-lg-4 col-sm-12 cta-contents">
           <h1 class="cta-title">Premras Mahotsav</h1>
-          <div class="cta-desc">
-            <p>
-              We will be celebrating our beloved Ghanshyam Maharaj's 5th
-              birthday from Sunday 7th - Sunday 14th August 2022.
-            </p>
-          </div>
         </div>
-        <div class="col-md-3 cta-button">
+        <div class="col-md-4 col-lg-4 col-sm-12"><Countdown /></div>
+        <div class="col-md-4 cta-button">
           <a href="/premras-mahotsav" class="btn btn-lg btn-block btn-primary"
             >Get involved now</a
           >
         </div>
       </div>
+      <div class="row"></div>
     </div>
   </div>
 </template>
 
 <script>
+import Countdown from "./Countdown.vue";
 export default {
   name: "CallToAction",
+  components: {
+    Countdown,
+  },
 };
 </script>
 
