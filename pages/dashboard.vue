@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper container">
+  <div class="wrapper container-fluid">
     <div class="row">
       <div class="col-md-6">
         <div>
