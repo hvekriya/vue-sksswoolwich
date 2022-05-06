@@ -1,8 +1,8 @@
 <template>
   <div>
-    <no-ssr>
+    <client-only>
       <flip-countdown deadline="2022-08-08 00:00:00"></flip-countdown>
-    </no-ssr>
+    </client-only>
   </div>
 </template>
 
