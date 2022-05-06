@@ -4,7 +4,7 @@
       <div class="col-md-6">
         <div>
           <header class="page-header">
-            <h2>Activities</h2>
+            <h2>Weekly Activities</h2>
           </header>
           <WeeklySchedule :fields="fields" />
         </div>
@@ -97,5 +97,12 @@ export default {
 <style lang="scss" scoped>
 .list-group {
   margin: 0;
+  .list-group-item {
+    font-size: 20px;
+    color: $primary;
+    small {
+      color: $gray-700;
+    }
+  }
 }
 </style>
