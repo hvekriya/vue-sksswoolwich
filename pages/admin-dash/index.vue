@@ -44,6 +44,13 @@
         <div v-else>
           <br />
           <p>Click on a annoucement to edit/update/delete...</p>
+          <p>
+            You can use
+            <a href="https://gujarati.indiatyping.com/"
+              >https://gujarati.indiatyping.com/</a
+            >
+            to type english lipi to gujarati
+          </p>
         </div>
       </div>
     </div>
