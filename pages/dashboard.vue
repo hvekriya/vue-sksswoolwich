@@ -57,7 +57,6 @@
       </div>
     </div>
     <marquee direction="left" behavior="scroll" scrollamount="4">
-      <img src="" alt="" />
       <p>
         {{ $prismic.asText(marqueeText) }}
       </p>
@@ -144,9 +143,6 @@ marquee {
   background-color: $poster-red;
   color: white;
   padding: 8px;
-  font-size: 14px;
-  p {
-    margin-top: 12px;
-  }
+  font-size: 16px;
 }
 </style>
