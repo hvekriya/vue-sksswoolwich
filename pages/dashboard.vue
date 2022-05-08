@@ -1,50 +1,78 @@
 <template>
-  <div class="wrapper container-fluid">
-    <div class="row">
-      <div class="col-md-6">
-        <div>
+  <div>
+    <div class="wrapper container-fluid">
+      <div class="row">
+        <div class="col-md-6">
           <header class="page-header">
-            <h2>Weekly Activities</h2>
+            <h2>Activities</h2>
           </header>
-          <WeeklySchedule :fields="fields" />
+          <template v-for="(slice, index) in fields.slices">
+            <template v-if="slice.slice_type === 'images_slider'">
+              <hooper
+                :progress="true"
+                :infiniteScroll="false"
+                :autoPlay="true"
+                :playSpeed="4000"
+                :wheelControl="false"
+                style="height: 100%"
+              >
+                <slide
+                  v-for="(item, index) in slice.items"
+                  :key="'photo-' + index"
+                >
+                  <prismic-image :field="item.image" class="img-responsive" />
+                </slide>
+                <hooper-navigation slot="hooper-addons"></hooper-navigation>
+              </hooper>
+            </template>
+          </template>
+          <img
+            src="https://images.prismic.io/sksswoolwich/438225dd-fd4b-46cb-85ad-e15a9d4ecf62_PGPM+Banner.png?auto=compress,format"
+            alt="premras"
+            class="img-responsive"
+          />
+          <br />
+          <br />
         </div>
-        <br />
-        <br />
-      </div>
-      <div class="col-md-6">
-        <header class="page-header">
-          <h2>Annoucements</h2>
-        </header>
-        <ul class="list-group">
-          <li
-            class="list-group-item"
-            :class="{ active: index == currentIndex }"
-            v-for="(annoucement, index) in announcements"
-            :key="index"
-          >
-            {{ annoucement.title }}
-            <br />
-            <small>{{ annoucement.description }}</small>
-          </li>
-        </ul>
-        <header class="page-header">
-          <h2>Utsav calendar</h2>
-        </header>
-        <Calendar />
-        <br />
-        <br />
+        <div class="col-md-6">
+          <header class="page-header">
+            <h2>Annoucements</h2>
+          </header>
+          <ul class="list-group">
+            <li
+              class="list-group-item"
+              :class="{ active: index == currentIndex }"
+              v-for="(annoucement, index) in announcements"
+              :key="index"
+            >
+              {{ annoucement.title }}
+              <br />
+              <small>{{ annoucement.description }}</small>
+            </li>
+          </ul>
+          <Calendar />
+          <br />
+          <br />
+        </div>
       </div>
     </div>
+    <marquee direction="left" behavior="scroll" scrollamount="4">
+      <img src="" alt="" />
+      <p>
+        {{ $prismic.asText(marqueeText) }}
+      </p>
+    </marquee>
   </div>
 </template>
 
 <script>
 import Calendar from "../components/CalendarList.vue";
-import WeeklySchedule from "../components/WeeklySchedule.vue";
+import { Hooper, Slide, Navigation as HooperNavigation } from "hooper";
+import "hooper/dist/hooper.css";
 export default {
   layout: "dashboard",
   name: "Dashboard",
-  components: { Calendar, WeeklySchedule },
+  components: { Calendar, Hooper, Slide, HooperNavigation },
   data() {
     return {
       announcements: [],
@@ -74,8 +102,9 @@ export default {
   async asyncData({ $prismic, error }) {
     try {
       // Get event data from Prismic
-      const document = await $prismic.api.getByUID("our-temple", "activities");
+      const document = await $prismic.api.getSingle("dashboard");
       return {
+        marqueeText: document.data.marquee_text,
         fields: {
           slices: document.data.body,
         },
@@ -97,12 +126,27 @@ export default {
 <style lang="scss" scoped>
 .list-group {
   margin: 0;
+  margin-bottom: 20px;
   .list-group-item {
     font-size: 20px;
-    color: $primary;
+    color: $white;
+    border-radius: 4;
+    margin: 4px;
+    background: $main-gradiant;
     small {
-      color: $gray-700;
+      color: $gray-200;
     }
+  }
+}
+marquee {
+  position: fixed;
+  bottom: 0%;
+  background-color: $poster-red;
+  color: white;
+  padding: 8px;
+  font-size: 14px;
+  p {
+    margin-top: 12px;
   }
 }
 </style>
