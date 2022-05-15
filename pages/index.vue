@@ -18,6 +18,14 @@
           <Calendar class="fc-calendar" />
         </div>
       </div>
+      <div class="row">
+        <header class="page-header">
+          <h2>
+            <i class="fa fa-bullhorn" aria-hidden="true"></i> Annoucements
+          </h2>
+        </header>
+        <AnnouncementList />
+      </div>
       <UpcomingEvents :upcomingEvents="upcomingEvents" />
       <div class="row">
         <header class="page-header">
@@ -50,6 +58,7 @@ import ImageSlider from "../components/ImageSlider";
 import Alert from "../components/Alert";
 import CallToAction from "../components/CallToAction.vue";
 import moment from "moment";
+import AnnouncementList from "../components/AnnouncementList.vue";
 
 export default {
   name: "Index",
@@ -63,6 +72,7 @@ export default {
     CallToAction,
     UpcomingEvents,
     RecentUploads,
+    AnnouncementList,
   },
   async asyncData({ $prismic, params, error, $axios }) {
     try {

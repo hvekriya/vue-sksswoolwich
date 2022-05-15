@@ -38,19 +38,8 @@
           <header class="page-header">
             <h2>Annoucements</h2>
           </header>
-          <ul class="list-group">
-            <li
-              class="list-group-item"
-              :class="{ active: index == currentIndex }"
-              v-for="(annoucement, index) in announcements"
-              :key="index"
-            >
-              {{ annoucement.title }}
-              <br />
-              <small>{{ annoucement.description }}</small>
-            </li>
-          </ul>
-          <Calendar />
+          <AnnouncementList />
+          <!-- <Calendar /> -->
           <br />
           <br />
         </div>
@@ -68,35 +57,13 @@
 import Calendar from "../components/CalendarList.vue";
 import { Hooper, Slide, Navigation as HooperNavigation } from "hooper";
 import "hooper/dist/hooper.css";
+import AnnouncementList from "../components/AnnouncementList.vue";
 export default {
   layout: "dashboard",
   name: "Dashboard",
-  components: { Calendar, Hooper, Slide, HooperNavigation },
+  components: { Calendar, Hooper, Slide, HooperNavigation, AnnouncementList },
   data() {
-    return {
-      announcements: [],
-      currentIndex: -1,
-    };
-  },
-  methods: {
-    onDataChange(items) {
-      let _announcements = [];
-      items.forEach((item) => {
-        let key = item.key;
-        let data = item.val();
-        _announcements.push({
-          key: key,
-          title: data.title,
-          description: data.description,
-          published: data.published,
-        });
-      });
-      this.announcements = _announcements;
-    },
-    refreshList() {
-      this.currentAnnouncements = null;
-      this.currentIndex = -1;
-    },
+    return {};
   },
   async asyncData({ $prismic, error }) {
     try {
@@ -112,12 +79,6 @@ export default {
       console.log(e);
       error({ statusCode: 404, message: "Page not found" });
     }
-  },
-  mounted() {
-    this.$fire.database.ref("/annoucements").on("value", this.onDataChange);
-  },
-  beforeDestroy() {
-    this.$fire.database.ref("/annoucements").off("value", this.onDataChange);
   },
 };
 </script>
