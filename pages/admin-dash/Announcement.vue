@@ -14,10 +14,9 @@
       <div class="form-group">
         <label for="description">Description</label>
         <wysiwyg
-          v-model="announcement.description"
+          v-model="currentAnnouncement.description"
           name="description"
           id="description"
-          :hide="hide"
         />
       </div>
       <div class="form-group">
@@ -66,9 +65,6 @@ export default {
       currentAnnouncement: null,
       message: "",
       user: "",
-      hide: {
-        bold: true,
-      },
     };
   },
   watch: {
