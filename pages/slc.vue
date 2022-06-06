@@ -13,11 +13,13 @@
     <div class="row">
       <iframe
         width="600"
-        height="400"
+        height="500"
         frameborder="0"
+        style="overflow: hidden"
         scrolling="no"
         src="https://onedrive.live.com/embed?resid=455BD0026BA8B44E%211721&authkey=%21AHtwCofYHzwfAig&em=2&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdInConfigurator=True&wdInConfigurator=True&edesNext=false&ejss=false"
-      ></iframe>
+      >
+      </iframe>
     </div>
   </div>
 </template>
@@ -26,3 +28,9 @@ export default {
   name: "SLC",
 };
 </script>
+
+<style lang="scss" scoped>
+iframe {
+  overflow: hidden;
+}
+</style>
