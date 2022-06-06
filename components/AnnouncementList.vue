@@ -8,9 +8,9 @@
           v-for="(annoucement, index) in announcements"
           :key="index"
         >
-          {{ annoucement.title }}
+          <b>{{ annoucement.title }}</b>
           <br />
-          <small>{{ annoucement.description }}</small>
+          <small v-html="annoucement.description"></small>
         </li>
       </ul>
       <p v-else>No announcements.</p>
@@ -61,14 +61,10 @@ export default {
   margin: 0;
   margin-bottom: 20px;
   .list-group-item {
-    font-size: 20px;
-    color: $white;
+    font-size: 16px;
+    // color: $white;
     border-radius: 4;
     margin: 4px;
-    background: $main-gradiant;
-    small {
-      color: $gray-200;
-    }
   }
 }
 </style>

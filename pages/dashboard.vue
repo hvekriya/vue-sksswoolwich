@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-6">
           <header class="page-header">
-            <h2>Activities</h2>
+            <h3>Activities</h3>
           </header>
           <template v-for="(slice, index) in fields.slices">
             <template v-if="slice.slice_type === 'images_slider'">
@@ -36,7 +36,7 @@
         </div>
         <div class="col-md-6">
           <header class="page-header">
-            <h2>Annoucements</h2>
+            <h3>Annoucements</h3>
           </header>
           <AnnouncementList />
           <!-- <Calendar /> -->
@@ -84,20 +84,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.list-group {
-  margin: 0;
-  margin-bottom: 20px;
-  .list-group-item {
-    font-size: 20px;
-    color: $white;
-    border-radius: 4;
-    margin: 4px;
-    background: $main-gradiant;
-    small {
-      color: $gray-200;
-    }
-  }
-}
 marquee {
   position: fixed;
   bottom: 0%;

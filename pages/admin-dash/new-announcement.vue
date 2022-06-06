@@ -16,13 +16,13 @@
         </div>
         <div class="form-group">
           <label for="description">Description</label>
-          <textarea
-            class="form-control"
-            id="description"
+          <wysiwyg
             v-model="announcement.description"
             name="description"
+            id="description"
           />
         </div>
+
         <button @click="saveAnnouncement" class="btn btn-success">
           Submit
         </button>
@@ -89,3 +89,7 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import "~vue-wysiwyg/dist/vueWysiwyg.css";
+</style>

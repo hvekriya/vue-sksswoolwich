@@ -19,7 +19,7 @@
           >
             {{ annoucement.title }}
             <br />
-            <small>{{ annoucement.description }}</small>
+            <small v-html="annoucement.description"></small>
           </li>
         </ul>
         <a href="/admin-dash/new-announcement" class="btn btn-primary"

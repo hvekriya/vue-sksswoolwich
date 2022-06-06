@@ -13,11 +13,11 @@
       </div>
       <div class="form-group">
         <label for="description">Description</label>
-        <textarea
-          type="text"
-          class="form-control"
+        <wysiwyg
+          v-model="announcement.description"
+          name="description"
           id="description"
-          v-model="currentAnnouncement.description"
+          :hide="hide"
         />
       </div>
       <div class="form-group">
@@ -66,6 +66,9 @@ export default {
       currentAnnouncement: null,
       message: "",
       user: "",
+      hide: {
+        bold: true,
+      },
     };
   },
   watch: {
@@ -130,3 +133,7 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import "~vue-wysiwyg/dist/vueWysiwyg.css";
+</style>
