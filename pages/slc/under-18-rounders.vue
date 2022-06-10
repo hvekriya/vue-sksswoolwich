@@ -12,7 +12,7 @@
       <div class="bs-calltoaction bs-calltoaction-primary">
         <div class="row">
           <div class="col-md-4 col-lg-4 col-sm-12 cta-contents">
-            <h1 class="cta-title">Sports in mind</h1>
+            <h1 class="cta-title">Sport In Mind</h1>
           </div>
           <div class="col-md-4 col-lg-4 col-sm-12">
             <p>Help us reach our target of £2,500!
