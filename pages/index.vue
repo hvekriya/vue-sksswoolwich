@@ -9,7 +9,13 @@
         <Alert :fields="fields" />
       </div>
       <div class="row">
-        <DailyDarshan />
+        <!-- <DailyDarshan :dailydarshan="dailydarshan" /> -->
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+          <legend>
+            <center>Annoucements</center>
+          </legend>
+          <AnnouncementList />
+        </div>
         <OpeningTimes />
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
           <legend>
@@ -18,22 +24,15 @@
           <Calendar class="fc-calendar" />
         </div>
       </div>
-      <div class="row">
-        <header class="page-header">
-          <h2>
-            <i class="fa fa-bullhorn" aria-hidden="true"></i> Annoucements
-          </h2>
-        </header>
-        <AnnouncementList />
-      </div>
       <UpcomingEvents :upcomingEvents="upcomingEvents" />
       <div class="row">
         <header class="page-header">
-          <h2>Photos from our recent event</h2>
+          <h2>Photostream</h2>
         </header>
         <p>
-          Events we have celebrated recently. See if you can spot yourself or
-          someone you know in the pictures!
+          Daily Darshan Photos and photos from events we have celebrated
+          recently. See if you can spot yourself or someone you know in the
+          pictures!
         </p>
         <RecentUploads :recentUploads="recentUploads" />
         <br />
@@ -105,21 +104,36 @@ export default {
         format: "json",
         nojsoncallback: 1,
       };
+
       const flickrUrl = process.env.flickrUrl;
+
       const set = await $axios.get(flickrUrl, {
         params: {
           ...flickrConfig,
           method: "flickr.photos.search",
           min_date_upload: unixTimeStamp,
           per_page: 14,
-          extras: "url_n, url_o",
+          extras: "url_n, url_o, tags",
         },
       });
       const recentUploads = set.data.photos.photo;
 
+      const dd = await $axios.get(flickrUrl, {
+        params: {
+          ...flickrConfig,
+          method: "flickr.photosets.getPhotos",
+          photoset_id: "72177720300123646",
+          extras: "url_n, url_o, date_upload, date_taken",
+          per_page: "10",
+        },
+      });
+
+      const dailydarshan = dd.data.photoset;
+
       return {
         upcomingEvents,
         recentUploads,
+        dailydarshan,
         fields: {
           slices: document.data.body,
         },
