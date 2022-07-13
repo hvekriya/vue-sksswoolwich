@@ -26,13 +26,6 @@
               </hooper>
             </template>
           </template>
-          <img
-            src="https://images.prismic.io/sksswoolwich/438225dd-fd4b-46cb-85ad-e15a9d4ecf62_PGPM+Banner.png?auto=compress,format"
-            alt="premras"
-            class="img-responsive"
-          />
-          <br />
-          <br />
         </div>
         <div class="col-md-6">
           <header class="page-header">
@@ -55,13 +48,25 @@
 
 <script>
 import Calendar from "../components/CalendarList.vue";
-import { Hooper, Slide, Navigation as HooperNavigation } from "hooper";
+import {
+  Hooper,
+  Slide,
+  Progress as HooperProgress,
+  Navigation as HooperNavigation,
+} from "hooper";
 import "hooper/dist/hooper.css";
 import AnnouncementList from "../components/AnnouncementList.vue";
 export default {
   layout: "dashboard",
   name: "Dashboard",
-  components: { Calendar, Hooper, Slide, HooperNavigation, AnnouncementList },
+  components: {
+    Calendar,
+    Hooper,
+    Slide,
+    HooperProgress,
+    HooperNavigation,
+    AnnouncementList,
+  },
   data() {
     return {};
   },
