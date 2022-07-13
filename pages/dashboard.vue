@@ -15,12 +15,16 @@
                 :playSpeed="4000"
                 :wheelControl="false"
                 style="height: 100%"
+                class="hooper-slider"
               >
                 <slide
                   v-for="(item, index) in slice.items"
                   :key="'photo-' + index"
                 >
-                  <prismic-image :field="item.image" class="img-responsive" />
+                  <prismic-image
+                    :field="item.image"
+                    class="img-responsive dashboard-slider"
+                  />
                 </slide>
                 <hooper-navigation slot="hooper-addons"></hooper-navigation>
               </hooper>
@@ -96,5 +100,12 @@ marquee {
   color: white;
   padding: 8px;
   font-size: 16px;
+}
+
+.dashboard-slider {
+  width: 70%;
+  height: auto;
+  margin: auto;
+  display: block;
 }
 </style>
