@@ -36,7 +36,7 @@
         </div>
         <div class="col-md-6">
           <header class="page-header">
-            <h3>Annoucements</h3>
+            <h3>Announcements</h3>
           </header>
           <AnnouncementList />
           <!-- <Calendar /> -->
