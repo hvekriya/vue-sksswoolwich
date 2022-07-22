@@ -5,21 +5,25 @@
     <header class="page-header">
       <h1 class="title">Events</h1>
     </header>
-    <!-- Upcoming events -->
-    <UpcomingEvents :upcomingEvents="upcomingEvents" />
 
-    <!-- Past events -->
-    <header class="page-header">
-      <div class="row">
-        <div class="col-lg-4"><h2 class="title">Past events</h2></div>
-        <div class="col-lg-8">
-          <PastYears />
-        </div>
+    <ul class="nav nav-pills">
+      <li class="active">
+        <a href="#1" data-toggle="tab">Upcoming events</a>
+      </li>
+      <li>
+        <a href="#2" data-toggle="tab">Past events</a>
+      </li>
+    </ul>
+
+    <div class="tab-content clearfix">
+      <div class="tab-pane active" id="1">
+        <!-- Upcoming events -->
+        <UpcomingEvents :upcomingEvents="upcomingEvents" />
       </div>
-    </header>
-    <!-- Filter -->
-    <br />
-    <PastEvents :pastEvents="pastEvents" />
+      <div class="tab-pane" id="2">
+        <PastEvents :pastEvents="pastEvents" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -27,13 +31,11 @@
 import moment from "moment";
 import UpcomingEvents from "../../components/UpcomingEvents";
 import PastEvents from "../../components/PastEvents";
-import PastYears from "../../components/PastYears";
 export default {
   name: "Events",
   components: {
     UpcomingEvents,
     PastEvents,
-    PastYears,
   },
   async asyncData({ $prismic, $axios, error }) {
     try {
@@ -85,5 +87,14 @@ export default {
   float: right;
   margin-top: 20px;
   margin-bottom: 10px;
+}
+.nav-pills {
+  li.active {
+    position: relative;
+    background: $main-gradiant;
+  }
+  li.active a {
+    color: white !important;
+  }
 }
 </style>

@@ -4,17 +4,12 @@
   <div class="wrapper container">
     <header class="page-header">
       <div class="row">
-        <div class="col-lg-4">
-          <h1 class="title">Past events {{ year }}</h1>
-        </div>
-        <div class="col-lg-8">
-          <PastYears />
-        </div>
+        <h1 class="title">Past events from {{ year }}</h1>
       </div>
     </header>
     <ol class="breadcrumb">
       <li>
-        <NuxtLink to="/events">Events </NuxtLink>
+        <NuxtLink to="/events#2"> Past events </NuxtLink>
       </li>
       <li class="active">{{ year }}</li>
     </ol>
@@ -28,13 +23,11 @@
 import moment from "moment";
 import UpcomingEvents from "../../../components/UpcomingEvents";
 import PastEvents from "../../../components/PastEvents";
-import PastYears from "../../../components/PastYears";
 export default {
   name: "Events",
   components: {
     UpcomingEvents,
     PastEvents,
-    PastYears,
   },
   async asyncData({ $prismic, $axios, error, params }) {
     try {

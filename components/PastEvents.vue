@@ -1,5 +1,16 @@
 <template>
   <div class="past-events">
+    <!-- Past events -->
+    <header class="page-header">
+      <div class="row">
+        <div class="col-lg-4"><h2 class="title">Past events</h2></div>
+        <div class="col-lg-8">
+          <PastYears />
+        </div>
+      </div>
+    </header>
+    <!-- Filter -->
+    <br />
     <div class="row">
       <ul class="event-list">
         <li
@@ -44,9 +55,13 @@
 </template>
 
 <script>
+import PastYears from "../components/PastYears";
 export default {
   name: "PastEvents",
   props: ["pastEvents"],
+  components: {
+    PastYears,
+  },
 };
 </script>
 
