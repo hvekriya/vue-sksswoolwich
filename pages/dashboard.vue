@@ -12,7 +12,7 @@
                 :progress="true"
                 :infiniteScroll="false"
                 :autoPlay="true"
-                :playSpeed="4000"
+                :playSpeed="8000"
                 :wheelControl="false"
                 style="height: 100%"
                 class="hooper-slider"
