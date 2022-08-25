@@ -1,42 +1,35 @@
 <template>
   <div>
     <template v-for="(slice, index) in fields.slices">
-      <template v-if="slice.slice_type === 'events_list'">
-        <div class="row">
-          <ul class="event-list">
-            <li
-              class="important"
-              v-for="(item, index) in slice.items"
-              :key="'event-' + index"
-            >
-              <time>
-                <span class="month">{{ item.event_day[0].text }}</span>
-              </time>
-              <div class="info">
-                <div class="col-lg-8">
-                  <prismic-rich-text :field="item.event_description" />
-                </div>
-                <div class="col-lg-2"></div>
-                <div class="col-lg-2" style="padding: 0">
-                  <img
-                    :src="item.event_poster.url"
-                    :alt="item.event_poster.alt"
-                    class="img-responsive"
-                    style="border: none; padding: 5px"
-                  />
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
+      <template v-if="slice.slice_type === 'image_gallery'">
+        <hooper
+          :progress="true"
+          :infiniteScroll="false"
+          :autoPlay="true"
+          :playSpeed="8000"
+          :wheelControl="false"
+          style="height: 100%"
+        >
+          <slide v-for="(item, index) in slice.items" :key="'photo-' + index">
+            <prismic-image :field="item.gallery_image" class="img-responsive" />
+          </slide>
+          <hooper-navigation slot="hooper-addons"></hooper-navigation>
+        </hooper>
       </template>
     </template>
   </div>
 </template>
 
 <script>
+import { Hooper, Slide, Navigation as HooperNavigation } from "hooper";
+import "hooper/dist/hooper.css";
 export default {
-  name: "WeeklySchedule",
+  name: "ImageSlider",
+  components: {
+    Hooper,
+    Slide,
+    HooperNavigation,
+  },
   props: ["fields"],
 };
 </script>
