@@ -2,7 +2,7 @@
   <main id="content" role="main">
     <ImageSlider :fields="fields" />
     <LiveStream :fields="fields" />
-    <CallToAction />
+    <!-- <CallToAction /> -->
     <div class="wrapper container">
       <br />
       <div class="row">
