@@ -35,6 +35,7 @@ export default {
         let data = item.val();
         _announcements.push({
           key: key,
+          order: data.order,
           title: data.title,
           description: data.description,
           published: data.published,
@@ -45,6 +46,17 @@ export default {
     refreshList() {
       this.currentAnnouncements = null;
       this.currentIndex = -1;
+    },
+  },
+  computed: {
+    sortedAnnouncements: function () {
+      function compare(a, b) {
+        if (a.order < b.order) return -1;
+        if (a.order > b.order) return 1;
+        return 0;
+      }
+
+      return this.announcements.sort(compare);
     },
   },
   mounted() {

@@ -15,6 +15,17 @@
           />
         </div>
         <div class="form-group">
+          <label for="order"
+            >Order (1 Appears first in the list and so on...)</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="order"
+            v-model="announcement.order"
+          />
+        </div>
+        <div class="form-group">
           <label for="description">Description</label>
           <wysiwyg
             v-model="announcement.description"
@@ -24,7 +35,7 @@
         </div>
 
         <button @click="saveAnnouncement" class="btn btn-success">
-          Submit
+          Add new annoucement
         </button>
       </div>
       <div v-else>
@@ -46,6 +57,7 @@ export default {
     return {
       announcement: {
         title: "",
+        order: 0,
         description: "",
         published: false,
       },
@@ -58,6 +70,7 @@ export default {
       const db = this.$fire.database.ref("/annoucements");
       var data = {
         title: this.announcement.title,
+        order: this.announcement.order,
         description: this.announcement.description,
         published: false,
       };

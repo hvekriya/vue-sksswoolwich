@@ -17,7 +17,7 @@
             :key="index"
             @click="setActiveAnnouncement(annoucement, index)"
           >
-            {{ annoucement.title }}
+            {{ annoucement.order }}. {{ annoucement.title }}
             <br />
             <small v-html="annoucement.description"></small>
           </li>
@@ -78,6 +78,7 @@ export default {
         let data = item.val();
         _announcements.push({
           key: key,
+          order: data.order,
           title: data.title,
           description: data.description,
           published: data.published,
