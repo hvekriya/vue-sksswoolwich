@@ -5,7 +5,7 @@
         <li
           class="list-group-item"
           :class="{ active: index == currentIndex }"
-          v-for="(annoucement, index) in announcements"
+          v-for="(annoucement, index) in sortedAnnouncements"
           :key="index"
         >
           <b>{{ annoucement.title }}</b>
