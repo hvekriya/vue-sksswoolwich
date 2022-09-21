@@ -8,7 +8,7 @@
       </header>
       <ol class="breadcrumb">
         <li>
-          <NuxtLink to="/events">Events </NuxtLink>
+          <NuxtLink to="/events/past">Past events</NuxtLink>
         </li>
         <li class="active">{{ album.title }}</li>
       </ol>
@@ -60,6 +60,10 @@
             />
           </a>
         </template>
+      </div>
+      <br />
+      <div class="alert alert-info" role="alert">
+        <p>No photo's found for this event.</p>
       </div>
       <br />
     </div>

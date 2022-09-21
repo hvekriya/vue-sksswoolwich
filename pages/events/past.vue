@@ -3,7 +3,7 @@
 <template>
   <div class="wrapper container">
     <header class="page-header">
-      <h1 class="title">Past events - {{ year }}</h1>
+      <h1 class="title">Past events</h1>
     </header>
 
     <ul class="nav nav-pills">
@@ -20,18 +20,21 @@
 
 <script>
 import moment from "moment";
-import PastEvents from "../../../components/PastEvents";
+import PastEvents from "../../components/PastEvents";
 export default {
   name: "Events",
   components: {
     PastEvents,
   },
-  async asyncData({ $prismic, $axios, error, params }) {
+  async asyncData({ $prismic, $axios, error }) {
     try {
       // Get event data from Prismic
       const currentYear = moment().year();
       const eventsFromPrismic = await $prismic.api.query([
-        $prismic.predicates.year("document.first_publication_date", params.uid),
+        $prismic.predicates.year(
+          "document.first_publication_date",
+          currentYear
+        ),
         $prismic.predicates.at("document.type", "events"),
       ]);
       const today = moment().format("YYYY-MM-DD").toString();
@@ -48,7 +51,6 @@ export default {
         return results * 1;
       });
       return {
-        year: params.uid,
         pastEvents,
       };
     } catch (e) {
@@ -58,7 +60,6 @@ export default {
   },
 };
 </script>
-
 <style lang="scss" scoped>
 .dropdown {
   float: right;

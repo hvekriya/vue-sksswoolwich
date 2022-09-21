@@ -3,39 +3,29 @@
 <template>
   <div class="wrapper container">
     <header class="page-header">
-      <h1 class="title">Events</h1>
+      <h1 class="title"><i class="fas fa-calendar-alt"></i> Upcoming events</h1>
     </header>
 
     <ul class="nav nav-pills">
       <li class="active">
-        <a href="#1" data-toggle="tab">Upcoming events</a>
+        <NuxtLink to="#">Upcoming events</NuxtLink>
       </li>
       <li>
-        <a href="#2" data-toggle="tab">Past events</a>
+        <NuxtLink to="/events/past">Past events</NuxtLink>
       </li>
     </ul>
-
-    <div class="tab-content clearfix">
-      <div class="tab-pane active" id="1">
-        <!-- Upcoming events -->
-        <UpcomingEvents :upcomingEvents="upcomingEvents" />
-      </div>
-      <div class="tab-pane" id="2">
-        <PastEvents :pastEvents="pastEvents" />
-      </div>
-    </div>
+    <br />
+    <UpcomingEvents :upcomingEvents="upcomingEvents" />
   </div>
 </template>
 
 <script>
 import moment from "moment";
 import UpcomingEvents from "../../components/UpcomingEvents";
-import PastEvents from "../../components/PastEvents";
 export default {
   name: "Events",
   components: {
     UpcomingEvents,
-    PastEvents,
   },
   async asyncData({ $prismic, $axios, error }) {
     try {
@@ -52,16 +42,6 @@ export default {
       const events = eventsFromPrismic.results;
 
       // Filter the events based on past and future
-      const pastEvents = events.filter((event) => {
-        return moment(event.data.event_date).isBefore(today);
-      });
-      pastEvents.sort(function (a, b) {
-        a = new Date(a.data.event_date);
-        b = new Date(b.data.event_date);
-        var results = a > b ? -1 : a < b ? 1 : 0;
-        return results * 1;
-      });
-
       const upcomingEvents = events.filter((event) => {
         return moment(event.data.event_date).isSameOrAfter(today);
       });
@@ -73,7 +53,6 @@ export default {
       });
       return {
         upcomingEvents,
-        pastEvents,
       };
     } catch (e) {
       console.log(e);
@@ -89,6 +68,7 @@ export default {
   margin-bottom: 10px;
 }
 .nav-pills {
+  background-color: $gray-300;
   li.active {
     position: relative;
     background: $main-gradiant;

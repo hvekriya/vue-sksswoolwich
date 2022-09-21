@@ -25,6 +25,9 @@
         </div>
       </div>
       <UpcomingEvents :upcomingEvents="upcomingEvents" />
+      <NuxtLink to="events/past" class="btn btn-primary view-all-events">
+        View past events</NuxtLink
+      >
       <div class="row">
         <header class="page-header">
           <h2>Photostream</h2>
@@ -36,8 +39,12 @@
         </p>
         <RecentUploads :recentUploads="recentUploads" />
         <br />
-        <NuxtLink to="/events" class="btn btn-primary view-all-events">
-          View all events</NuxtLink
+        <a
+          href="https://www.flickr.com/photos/sksswoolwich/"
+          class="btn btn-primary view-all-events"
+          target="_blank"
+        >
+          View all photos</a
         >
       </div>
       <br />
