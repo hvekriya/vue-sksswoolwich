@@ -30,24 +30,12 @@
               </hooper>
             </template>
           </template>
-        </div>
-        <div class="col-md-6">
-          <header class="page-header">
-            <h3>Announcements</h3>
-          </header>
-          <AnnouncementList />
-          <!-- <Calendar /> -->
-          <br />
-          <br />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <header class="page-header">
-            <h3>
+
+          <header class="page-header" style="margin-top: 15px">
+            <h4>
               Photos from our recent event | View all at
               www.sksswoolwich.org/events/past
-            </h3>
+            </h4>
           </header>
           <hooper
             :itemsToShow="3"
@@ -63,6 +51,15 @@
               <img :src="photo.url_o" class="category-banner img-responsive" />
             </slide>
           </hooper>
+        </div>
+        <div class="col-md-6">
+          <header class="page-header">
+            <h3>Announcements</h3>
+          </header>
+          <AnnouncementList />
+          <!-- <Calendar /> -->
+          <br />
+          <br />
         </div>
       </div>
     </div>
