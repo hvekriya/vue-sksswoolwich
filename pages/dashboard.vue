@@ -41,6 +41,30 @@
           <br />
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-6">
+          <header class="page-header">
+            <h3>
+              Photos from our recent event | View all at
+              www.sksswoolwich.org/events/past
+            </h3>
+          </header>
+          <hooper
+            :itemsToShow="3"
+            :progress="true"
+            :infiniteScroll="true"
+            :autoPlay="true"
+            :playSpeed="8000"
+            :wheelControl="false"
+            style="height: 100%"
+            class="hooper-slider"
+          >
+            <slide v-for="photo in recentUploads" v-bind:key="photo.id">
+              <img :src="photo.url_o" class="category-banner img-responsive" />
+            </slide>
+          </hooper>
+        </div>
+      </div>
     </div>
     <marquee direction="left" behavior="scroll" scrollamount="4">
       <p>
@@ -74,15 +98,39 @@ export default {
   data() {
     return {};
   },
-  async asyncData({ $prismic, error }) {
+  async asyncData({ $prismic, error, $axios }) {
     try {
       // Get event data from Prismic
       const document = await $prismic.api.getSingle("dashboard");
+
+      // Recently uploaded photos
+      const flickrConfig = {
+        api_key: process.env.flickrApiKey,
+        user_id: process.env.flickrUserId,
+        format: "json",
+        nojsoncallback: 1,
+      };
+
+      const flickrUrl = process.env.flickrUrl;
+      const unixTimeStamp = Math.floor(Date.now() / 1000);
+
+      const set = await $axios.get(flickrUrl, {
+        params: {
+          ...flickrConfig,
+          method: "flickr.photos.search",
+          min_date_upload: unixTimeStamp,
+          per_page: 14,
+          extras: "url_n, url_o, tags",
+        },
+      });
+      const recentUploads = set.data.photos.photo;
+
       return {
         marqueeText: document.data.marquee_text,
         fields: {
           slices: document.data.body,
         },
+        recentUploads,
       };
     } catch (e) {
       console.log(e);
