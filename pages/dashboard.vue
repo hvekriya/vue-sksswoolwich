@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="wrapper container-fluid">
-      <div class="row">
+      <div class="row" style="margin-top: 10px">
         <div class="col-md-6">
-          <header class="page-header">
+          <!-- <header class="page-header">
             <h3>Activities</h3>
-          </header>
+          </header> -->
           <template v-for="(slice, index) in fields.slices">
             <template v-if="slice.slice_type === 'images_slider'">
               <hooper
@@ -53,9 +53,9 @@
           </hooper>
         </div>
         <div class="col-md-6">
-          <header class="page-header">
+          <!-- <header class="page-header">
             <h3>Announcements</h3>
-          </header>
+          </header> -->
           <AnnouncementList />
           <!-- <Calendar /> -->
           <br />
