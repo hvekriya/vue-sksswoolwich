@@ -170,6 +170,10 @@ export default {
   }
 }
 
+main {
+  margin-top: 50px;
+}
+
 .fc-toolbar .fc-left {
   display: none;
 }

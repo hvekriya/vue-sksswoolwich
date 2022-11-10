@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nuxt />
+    <nuxt class="dashboard_layout" />
     <FooterPrismic />
   </div>
 </template>
@@ -24,8 +24,11 @@ export default {
 
 <style lang="scss">
 #__nuxt {
-  margin-top: 0px !important;
-  background: linear-gradient(to right, #ff8a00, #da1b60);
+  margin-top: 5px !important;
+}
+
+.dashboard_layout {
+  background: $gray-800;
   h1,
   h2,
   h3,
