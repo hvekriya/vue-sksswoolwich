@@ -1,3 +1,5 @@
+import PnpWebpackPlugin from "pnp-webpack-plugin";
+
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: "static",
@@ -284,6 +286,13 @@ export default {
     extend(config, ctx) {
       // to transform link with <nuxt-link> for the htmlSerializer
       config.resolve.alias["vue"] = "vue/dist/vue.common";
+    },
+    transpile: /@fullcalendar.*/, // always needed
+
+    // this `extend` callback is only needed if using Yarn Plug-n-Play
+    extend(config) {
+      config.resolve.plugins.push(PnpWebpackPlugin);
+      config.resolveLoader.plugins.push(PnpWebpackPlugin.moduleLoader(module));
     },
   },
   // generate: {

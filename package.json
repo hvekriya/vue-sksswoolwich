@@ -28,6 +28,7 @@
     "firebase": "^9.7.0",
     "fullcalendar": "^5.10.2",
     "hooper": "^0.3.4",
+    "ical.js": "^1.5.0",
     "lg-autoplay.js": "^1.2.0",
     "lg-fullscreen.js": "^1.2.0",
     "lg-hash.js": "^1.0.0",
@@ -41,6 +42,7 @@
     "moment": "^2.29.1",
     "nuxt": "^2.15.8",
     "nuxt-gmaps": "^1.2.10",
+    "pnp-webpack-plugin": "^1.7.0",
     "vue": "^2.6.14",
     "vue-wysiwyg": "^1.7.2",
     "vue2-flip-countdown": "^0.12.1"

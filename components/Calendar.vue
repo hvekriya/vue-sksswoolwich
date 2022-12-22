@@ -25,9 +25,10 @@ export default {
         plugins: [listPlugin, dayGridPlugin, googleCalendarPlugin],
         select: this.handleDateClick,
         stickyHeaderDates: false,
+        googleCalendarApiKey: process.env.google_api_key,
         events: {
-          googleCalendarApiKey: process.env.google_api_key,
-          googleCalendarId: "admin@bhujdham.org",
+          googleCalendarId:
+            "v4t99ri97ue5mfctsdvvbnrqbk@group.calendar.google.com",
         },
         // validRange: {
         //   start: "2017-05-01",
