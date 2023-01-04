@@ -27,7 +27,7 @@ export default {
         googleCalendarApiKey: process.env.google_api_key,
         events: {
           googleCalendarId:
-            "v4t99ri97ue5mfctsdvvbnrqbk@group.calendar.google.com",
+            "c_1cb9e7ffe7dcf521b3845a216054ded6372636a8d55cca21b64b2477ccc261b6@group.calendar.google.com",
         },
       },
     };
