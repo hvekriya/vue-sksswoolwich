@@ -31,13 +31,10 @@ export default {
     try {
       // Get event data from Prismic
       const currentYear = moment().year();
-      const eventsFromPrismic = await $prismic.api.query([
-        $prismic.predicates.year(
-          "document.first_publication_date",
-          currentYear
-        ),
-        $prismic.predicates.at("document.type", "events"),
-      ]);
+      const eventsFromPrismic = await $prismic.api.query(
+        $prismic.predicates.at("document.type", "events")
+      );
+
       const today = moment().format("YYYY-MM-DD").toString();
       const events = eventsFromPrismic.results;
 
