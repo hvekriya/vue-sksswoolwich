@@ -29,8 +29,8 @@ export default {
         select: this.handleDateClick,
         stickyHeaderDates: false,
         events: {
-          googleCalendarApiKey: process.env.google_api_key,
-          googleCalendarId: "admin@bhujdham.org",
+          googleCalendarId:
+            "c_1cb9e7ffe7dcf521b3845a216054ded6372636a8d55cca21b64b2477ccc261b6@group.calendar.google.com",
         },
         // validRange: {
         //   start: "2017-05-01",
