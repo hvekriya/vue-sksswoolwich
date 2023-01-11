@@ -6,7 +6,7 @@
 
     <ul class="nav nav-pills">
       <li>
-        <a href="#1">Online Donation (COMING SOON)</a>
+        <a href="#2">Online Donation</a>
       </li>
       <li class="active">
         <a href="#2" data-toggle="tab">Bank Transfer</a>
@@ -25,11 +25,25 @@
       </li>
     </ul>
 
-    <div class="tab-content clearfix">
-      <!-- <div class="tab-pane active" id="1">
-        <OnlineDonations />
-      </div>-->
-      <div class="tab-pane active" id="2">
+    <div class="tab-content clearfix active">
+      <div class="tab-pane active" id="1">
+        <h3>
+          Online transfer via
+          <img
+            class="img-responsive"
+            src="https://assets.stickpng.com/images/580b57fcd9996e24bc43c530.png"
+            alt="PayPal Logo"
+            style="display: inline; width: 20%"
+          />
+        </h3>
+        <a
+          href="https://www.paypal.com/donate/?hosted_button_id=QD9GCZ7PDY3XE"
+          class="btn btn-primary"
+        >
+          Donate now</a
+        >
+      </div>
+      <div class="tab-pane" id="2">
         <h3>Bank Transfer</h3>
         <div>
           Bank Transfer (BACS) can be accepted to the below Temple’s Bank
