@@ -5,10 +5,10 @@
     </header>
 
     <ul class="nav nav-pills">
-      <li>
-        <a href="#2">Online Donation</a>
-      </li>
       <li class="active">
+        <a href="#1" data-toggle="tab">Online Donation</a>
+      </li>
+      <li>
         <a href="#2" data-toggle="tab">Bank Transfer</a>
       </li>
       <li>

@@ -55,7 +55,6 @@ export default {
         if (a.order > b.order) return 1;
         return 0;
       }
-
       return this.announcements.sort(compare);
     },
   },
