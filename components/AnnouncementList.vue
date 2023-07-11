@@ -77,5 +77,7 @@ export default {
     border-radius: 0;
     margin: 4px;
   }
+
+  font-family: "Roboto", sans-serif;
 }
 </style>
