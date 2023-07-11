@@ -74,7 +74,7 @@ export default {
   .list-group-item {
     font-size: 16px;
     // color: $white;
-    border-radius: 4;
+    border-radius: 0;
     margin: 4px;
   }
 }
