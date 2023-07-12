@@ -29,6 +29,7 @@
     "fullcalendar": "^5.10.2",
     "hooper": "^0.3.4",
     "ical.js": "^1.5.0",
+    "jquery": "^3.7.0",
     "lg-autoplay.js": "^1.2.0",
     "lg-fullscreen.js": "^1.2.0",
     "lg-hash.js": "^1.0.0",

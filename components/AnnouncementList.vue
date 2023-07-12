@@ -1,20 +1,18 @@
 <template>
   <div>
-    <div>
-      <ul class="list-group" v-if="announcements">
-        <li
-          class="list-group-item"
-          :class="{ active: index == currentIndex }"
-          v-for="(annoucement, index) in sortedAnnouncements"
-          :key="index"
-        >
-          <b>{{ annoucement.title }}</b>
-          <br />
-          <small v-html="annoucement.description"></small>
-        </li>
-      </ul>
-      <p v-else>No announcements.</p>
-    </div>
+    <ul class="list-group" v-if="announcements">
+      <li
+        class="list-group-item"
+        :class="{ active: index == currentIndex }"
+        v-for="(annoucement, index) in sortedAnnouncements"
+        :key="index"
+      >
+        <b>{{ annoucement.title }}</b>
+        <br />
+        <small v-html="annoucement.description"></small>
+      </li>
+    </ul>
+    <p v-else>No announcements.</p>
   </div>
 </template>
 
