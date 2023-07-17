@@ -33,9 +33,8 @@
           <h2>Photostream</h2>
         </header>
         <p>
-          Daily Darshan Photos and photos from events we have celebrated
-          recently. See if you can spot yourself or someone you know in the
-          pictures!
+          Daily Darshan Photos and photos from events we have celebrated recently. See if
+          you can spot yourself or someone you know in the pictures!
         </p>
         <RecentUploads :recentUploads="recentUploads" />
         <br />

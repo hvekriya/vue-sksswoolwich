@@ -19,7 +19,11 @@
             class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
           >
             <a :href="photo.url_o">
-              <img :src="photo.url_n" class="category-banner img-responsive" />
+              <v-lazy-image
+                :src="photo.url_n || ''"
+                class="img-responsive category-banner"
+                style="border: none; padding: 5px"
+              />
             </a>
           </template>
         </div>
@@ -41,9 +45,9 @@
       <br />
       <div class="col-lg-6" style="padding: 0">
         <a :href="eventDetails.data.poster.url">
-          <img
-            :src="eventDetails.data.poster.url"
-            :alt="eventDetails.data.poster.alt"
+          <v-lazy-image
+            :src="eventDetails.data.poster.url || ''"
+            :alt="eventDetails.data.poster.alt || ''"
             class="img-responsive"
             style="border: none; padding: 5px"
           />
@@ -52,9 +56,10 @@
       <div class="col-lg-6" style="padding: 0">
         <template v-if="eventDetails.data.poster_2.url">
           <a :href="eventDetails.data.poster_2.url">
-            <img
-              :src="eventDetails.data.poster_2.url"
-              :alt="eventDetails.data.poster_2.alt"
+            <v-lazy-image
+              :src="eventDetails.data.poster_2.url || ''"
+              :alt="eventDetails.data.poster_2.alt || ''"
+              loading="lazy"
               class="img-responsive"
               style="border: none; padding: 5px"
             />
@@ -71,8 +76,13 @@
 </template>
 
 <script>
+import VLazyImage from "v-lazy-image/v2";
+
 export default {
   name: "Event",
+  components: {
+    VLazyImage,
+  },
   head() {
     return {
       title: `${this.eventDetails.data.event_title[0].text} | Woolwich Temple`,
@@ -93,9 +103,7 @@ export default {
         {
           hid: "description",
           name: "description",
-          content: this.$prismic.asText(
-            this.eventDetails.data.event_description
-          ),
+          content: this.$prismic.asText(this.eventDetails.data.event_description),
         },
         {
           hid: "twitter:title",
@@ -105,9 +113,7 @@ export default {
         {
           hid: "twitter:description",
           name: "twitter:description",
-          content: this.$prismic.asText(
-            this.eventDetails.data.event_description
-          ),
+          content: this.$prismic.asText(this.eventDetails.data.event_description),
         },
         {
           hid: "twitter:image",
@@ -128,9 +134,7 @@ export default {
         {
           hid: "og-desc",
           property: "og:description",
-          content: this.$prismic.asText(
-            this.eventDetails.data.event_description
-          ),
+          content: this.$prismic.asText(this.eventDetails.data.event_description),
         },
         {
           hid: "og-image",

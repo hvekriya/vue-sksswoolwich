@@ -21,7 +21,10 @@
           class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
         >
           <a :href="photo.url_o">
-            <img :src="photo.url_n" class="category-banner img-responsive" />
+            <v-lazy-image
+              :src="photo.url_n || ''"
+              class="category-banner img-responsive"
+            />
           </a>
         </template>
       </div>
@@ -30,9 +33,14 @@
 </template>
 
 <script>
+import VLazyImage from "v-lazy-image/v2";
+
 export default {
   name: "RecentUploads",
   props: ["recentUploads"],
+  components: {
+    VLazyImage,
+  },
   mounted() {
     const el = document.getElementById("lightgallery");
     window.lightGallery(el);

@@ -21,9 +21,9 @@
             <div class="col-lg-2"></div>
             <div class="col-lg-2" style="padding: 0">
               <a :href="event.data.poster.url">
-                <img
-                  :src="event.data.poster.url"
-                  :alt="event.data.poster.alt"
+                <v-lazy-image
+                  :src="event.data.poster.url || ''"
+                  :alt="event.data.poster.alt || ''"
                   class="img-responsive"
                   style="border: none; padding: 5px"
                 />
@@ -48,11 +48,14 @@
 
 <script>
 import PastYears from "../components/PastYears";
+import VLazyImage from "v-lazy-image/v2";
+
 export default {
   name: "PastEvents",
   props: ["pastEvents"],
   components: {
     PastYears,
+    VLazyImage,
   },
 };
 </script>
@@ -68,4 +71,3 @@ export default {
   }
 }
 </style>
- 
