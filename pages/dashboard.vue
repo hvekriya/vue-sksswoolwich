@@ -9,31 +9,8 @@
     <div class="wrapper container-fluid">
       <div class="row" style="margin-top: 10px">
         <div class="col-md-6">
-          <!-- <header class="page-header">
-            <h3>Activities</h3>
-          </header> -->
           <template v-for="(slice, index) in fields.slices">
             <template v-if="slice.slice_type === 'images_slider'">
-              <!-- <hooper
-                :progress="true"
-                :infiniteScroll="false"
-                :autoPlay="true"
-                :playSpeed="8000"
-                :wheelControl="false"
-                style="height: 100%"
-                class="hooper-slider"
-              >
-                <slide
-                  v-for="(item, index) in slice.items"
-                  :key="'photo-' + index"
-                >
-                  <prismic-image
-                    :field="item.image"
-                    class="img-responsive dashboard-slider"
-                  />
-                </slide>
-                <hooper-navigation slot="hooper-addons"></hooper-navigation>
-              </hooper> -->
               <div class="iframe-container">
                 <iframe
                   style="border: 1px solid rgba(0, 0, 0, 0.1)"
@@ -71,24 +48,12 @@
 
 <script>
 import Calendar from "../components/CalendarList.vue";
-
-import {
-  Hooper,
-  Slide,
-  Progress as HooperProgress,
-  Navigation as HooperNavigation,
-} from "hooper";
-import "hooper/dist/hooper.css";
 import AnnouncementList from "../components/AnnouncementList.vue";
 export default {
   layout: "dashboard",
   name: "Dashboard",
   components: {
     Calendar,
-    Hooper,
-    Slide,
-    HooperProgress,
-    HooperNavigation,
     AnnouncementList,
   },
   data() {
@@ -98,35 +63,11 @@ export default {
     try {
       // Get event data from Prismic
       const document = await $prismic.api.getSingle("dashboard");
-
-      // // Recently uploaded photos
-      // const flickrConfig = {
-      //   api_key: process.env.flickrApiKey,
-      //   user_id: process.env.flickrUserId,
-      //   format: "json",
-      //   nojsoncallback: 1,
-      // };
-
-      // const flickrUrl = process.env.flickrUrl;
-      // const unixTimeStamp = Math.floor(Date.now() / 1000);
-
-      // const set = await $axios.get(flickrUrl, {
-      //   params: {
-      //     ...flickrConfig,
-      //     method: "flickr.photos.search",
-      //     min_date_upload: unixTimeStamp,
-      //     per_page: 14,
-      //     extras: "url_n, url_o, tags",
-      //   },
-      // });
-      // const recentUploads = set.data.photos.photo;
-
       return {
         marqueeText: document.data.marquee_text,
         fields: {
           slices: document.data.body,
         },
-        // recentUploads,
       };
     } catch (e) {
       console.log(e);
@@ -137,17 +78,6 @@ export default {
   mounted() {
     this.onScroll();
   },
-
-  // created() {
-  //   if (process.client) {
-  //     window.addEventListener("scroll", this.onScroll);
-  //   }
-  // },
-  // beforeDestroy() {
-  //   if (process.client) {
-  //     window.removeEventListener("scroll", this.onScroll);
-  //   }
-  // },
 
   methods: {
     onScroll() {
