@@ -20,10 +20,6 @@
     <h5>
       Posted on {{ fields.postedDate | formatDate }} by {{ fields.postedBy }}
     </h5>
-    <hr />
-
-    <div class="sharethis-inline-reaction-buttons"></div>
-    <div class="sharethis-inline-share-buttons"></div>
     <br />
     <br />
   </div>

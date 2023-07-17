@@ -62,15 +62,7 @@ export default {
       },
       {
         rel: "stylesheet",
-        href: "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css",
-      },
-      {
-        rel: "stylesheet",
         href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css",
-      },
-      {
-        rel: "stylesheet",
-        href: "https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.6/css/lightslider.min.css",
       },
       // Font
       {
@@ -80,18 +72,8 @@ export default {
     ],
     script: [
       {
-        type: "text/javascript",
-        src: "https://platform-api.sharethis.com/js/sharethis.js#property=5e11c640dd527900136b1744&product=inline-reaction-buttons&cms=sop",
-        async: true,
-      },
-      {
         src: "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js",
         body: true,
-      },
-      {
-        src: "https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.6/js/lightslider.min.js",
-        body: true,
-        defer: true,
       },
       {
         src: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",

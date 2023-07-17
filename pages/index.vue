@@ -24,7 +24,7 @@
           <Calendar class="fc-calendar" />
         </div>
       </div>
-      <UpcomingEvents :upcomingEvents="upcomingEvents" />
+      <LazyUpcomingEvents :upcomingEvents="upcomingEvents" />
       <NuxtLink to="events/past" class="btn btn-primary view-all-events">
         View past events</NuxtLink
       >
@@ -33,10 +33,11 @@
           <h2>Photostream</h2>
         </header>
         <p>
-          Daily Darshan Photos and photos from events we have celebrated recently. See if
-          you can spot yourself or someone you know in the pictures!
+          Daily Darshan Photos and photos from events we have celebrated
+          recently. See if you can spot yourself or someone you know in the
+          pictures!
         </p>
-        <RecentUploads :recentUploads="recentUploads" />
+        <LazyRecentUploads :recentUploads="recentUploads" />
         <br />
         <a
           href="https://www.flickr.com/photos/sksswoolwich/"
