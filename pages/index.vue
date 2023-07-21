@@ -14,7 +14,9 @@
           <legend>
             <center>Annoucements</center>
           </legend>
-          <AnnouncementList />
+          <div class="announcements-container">
+            <AnnouncementList class="announcements-list" />
+          </div>
         </div>
         <OpeningTimes />
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
@@ -24,7 +26,7 @@
           <Calendar class="fc-calendar" />
         </div>
       </div>
-      <LazyUpcomingEvents :upcomingEvents="upcomingEvents" />
+      <LazyUpcomingEvents :upcomingEvents="upcomingEvents" style="margin-top: 20px" />
       <NuxtLink to="events/past" class="btn btn-primary view-all-events">
         View past events</NuxtLink
       >
@@ -33,9 +35,8 @@
           <h2>Photostream</h2>
         </header>
         <p>
-          Daily Darshan Photos and photos from events we have celebrated
-          recently. See if you can spot yourself or someone you know in the
-          pictures!
+          Daily Darshan Photos and photos from events we have celebrated recently. See if
+          you can spot yourself or someone you know in the pictures!
         </p>
         <LazyRecentUploads :recentUploads="recentUploads" />
         <br />
@@ -186,5 +187,15 @@ main {
   @include respond-to(handhelds) {
     width: 100%;
   }
+}
+
+.announcements-container {
+  height: 500px;
+  padding: 3px;
+}
+
+.announcements-list {
+  height: 480px;
+  overflow: auto;
 }
 </style>

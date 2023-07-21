@@ -2,7 +2,7 @@
   <div>
     <HeaderPrismic />
     <nuxt />
-    <LazyFooterPrismic />
+    <FooterPrismic />
   </div>
 </template>
 
