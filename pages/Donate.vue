@@ -121,7 +121,17 @@
       </div>
       <div class="tab-pane" id="5">
         <h3>Gift Aid</h3>
-        If you are a tax payer, please complete the
+
+        <a
+          href="/gift-aid-form"
+          class="btn btn-secondary"
+          >Complete the Gift Aid Form online</a
+        >
+
+        <br><br>
+
+        <p>
+        Alternatively you can download and complete the form here:
         <a
           href="https://prismic-io.s3.amazonaws.com/sksswoolwich/c4961f65-b640-4a81-ab64-0ace552c3c39_Gift+Aid+Form_v5.pdf"
           >Gift Aid Form</a
@@ -143,7 +153,7 @@
         and send it to
         <code>
           <a href="mailto:donations@sksswoolwich.org"
-            >donations@sksswoolwich.or</a
+            >donations@sksswoolwich.org</a
           >
         </code>
         <h3>Tax Benefits of Charitable Donations:</h3>
@@ -158,7 +168,7 @@
         >
           Charitable Giving Leaflet
         </a>
-        prepared specially for us by McBrides Chartered Accountants.
+        prepared specially for us by McBrides Chartered Accountants.</p>
       </div>
       <div class="tab-pane" id="6">
         <h3>Amazon Smile</h3>
