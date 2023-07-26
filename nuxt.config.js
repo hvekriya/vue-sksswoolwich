@@ -41,7 +41,7 @@ export default {
         hid: "og-image",
         property: "og:image",
         content:
-          "https://images.prismic.io/sksswoolwich/7da698e1-5231-4ef9-9d5a-837e2e759ca8_Premras_Thumbnail.png?auto=compress,format",
+          "https://images.prismic.io/sksswoolwich/c1acd8d9-7ccb-4f1b-bcc1-57ceb5ada080_39972331571_6d6de90849_o.png?auto=compress,format",
       },
       {
         hid: "og-url",
