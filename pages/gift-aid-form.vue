@@ -8,7 +8,7 @@
           <iframe
             src="https://docs.google.com/forms/d/e/1FAIpQLSd_1dc8cPFGjHNclxWpXXArhFIjeXIUiGvv23xKfN5OQffh7A/viewform?embedded=true"
             width="100%"
-            height="1200"
+            height="1400"
             frameborder="0"
             marginheight="0"
             marginwidth="0"
@@ -25,6 +25,15 @@
 <script>
 export default {
   name: "GiftAidForm",
+  mounted() {
+    document.querySelector("iframe").addEventListener("load", function () {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    });
+  },
 };
 </script>
 
