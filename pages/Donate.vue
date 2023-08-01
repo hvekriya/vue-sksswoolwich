@@ -20,9 +20,6 @@
       <li>
         <a href="#5" data-toggle="tab">Gift Aid</a>
       </li>
-      <li>
-        <a href="#6" data-toggle="tab">Amazon Smile</a>
-      </li>
     </ul>
 
     <div class="tab-content clearfix active">
@@ -169,39 +166,6 @@
           Charitable Giving Leaflet
         </a>
         prepared specially for us by McBrides Chartered Accountants.</p>
-      </div>
-      <div class="tab-pane" id="6">
-        <h3>Amazon Smile</h3>
-        AmazonSmile is a simple and automatic way for you to support a charity
-        of your choice every time you shop, at no cost to you. When you shop at
-        smile.amazon.co.uk, you’ll find the exact same low prices, vast
-        selection and convenient shopping experience as amazon.co.uk, with the
-        added bonus that Amazon will donate a portion of the purchase price to
-        your selected charity.
-        <br />
-        <br />
-        <a
-          href="https://smile.amazon.co.uk/gp/chpf/about/ref=smi_se_rspo_laas_aas"
-          >More info here</a
-        >
-        <br />
-        <br />
-        <p>
-          1. Visit:
-          <a href="https://smile.amazon.co.uk">smile.amazon.co.uk</a>
-          <br />2. Search for our charity: Shree Kutch Satsang Swaminarayan
-          Temple - South East London <br />3. Select the charity <br />4. Start
-          shopping and Amazon will donate 0.5% of your purchase to your chosen
-          chairty
-        </p>
-        <h3>
-          <a
-            class="btn btn-primary"
-            href="https://smile.amazon.co.uk/ref=smi_se_ssr_btnr6_setch?_encoding=UTF8&pldnNewSub=1"
-          >
-            Support us here
-          </a>
-        </h3>
       </div>
     </div>
   </div>
