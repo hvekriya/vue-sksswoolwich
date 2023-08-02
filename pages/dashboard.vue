@@ -9,27 +9,56 @@
     <div class="wrapper container-fluid">
       <div class="row" style="margin-top: 10px">
         <div class="col-md-6">
-          <template v-for="(slice, index) in fields.slices">
-            <template v-if="slice.slice_type === 'images_slider'">
-              <div class="iframe-container">
-                <iframe
-                  style="border: 1px solid rgba(0, 0, 0, 0.1)"
-                  width="800"
-                  height="450"
-                  id="figma-frame"
-                  src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2F34VQlVH9uW5nabviromCSY%2FPosters%3Fpage-id%3D4519%253A4342%26type%3Ddesign%26node-id%3D4519-4363%26viewport%3D1161%252C252%252C0.09%26t%3DKVzbBCeuAIBPlcLK-1%26scaling%3Dscale-down-width%26starting-point-node-id%3D4519%253A4433%26hotspot-hints%3D0%26mode%3Ddesign%26hide-ui%3D1"
-                ></iframe>
-              </div>
+          <!-- Fixed posters -->
 
-              <!-- %26hide-ui%3D1 at the end of figma src url hides figma UI-->
-              <div class="iframe-container">
-                <iframe
-                  style="border: 1px solid rgba(0, 0, 0, 0.1)"
-                  width="800"
-                  height="450"
-                  src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2F34VQlVH9uW5nabviromCSY%2FPosters%3Fpage-id%3D4519%253A4342%26type%3Ddesign%26node-id%3D4519-4511%26viewport%3D1161%252C252%252C0.09%26t%3DKVzbBCeuAIBPlcLK-1%26scaling%3Dscale-down-width%26starting-point-node-id%3D4519%253A4433%26mode%3Ddesign%26hide-ui%3D1"
-                ></iframe>
-              </div>
+          <template v-for="(slice, index) in fields.slices">
+            <template v-if="slice.slice_label == 'weekly_activities'">
+              <hooper
+                :progress="false"
+                :infiniteScroll="false"
+                :autoPlay="true"
+                :playSpeed="8000"
+                :wheelControl="false"
+                style="height: 100%; margin-bottom: 20px"
+                class="hooper-slider"
+              >
+                <slide
+                  v-for="(item, index) in slice.items"
+                  :key="'photo-' + index"
+                >
+                  <prismic-image
+                    :field="item.image"
+                    class="img-responsive dashboard-slider"
+                  />
+                </slide>
+                <!-- <hooper-navigation slot="hooper-addons"></hooper-navigation> -->
+              </hooper>
+            </template>
+          </template>
+
+          <!-- Pinned posters -->
+          <template v-for="(slice, index) in fields.slices">
+            <template v-if="slice.slice_label == 'pinned_posters'">
+              <hooper
+                :progress="false"
+                :infiniteScroll="false"
+                :autoPlay="true"
+                :playSpeed="8000"
+                :wheelControl="false"
+                style="height: 100%; margin-bottom: 20px"
+                class="hooper-slider"
+              >
+                <slide
+                  v-for="(item, index) in slice.items"
+                  :key="'photo-' + index"
+                >
+                  <prismic-image
+                    :field="item.gallery_image"
+                    class="img-responsive dashboard-slider"
+                  />
+                </slide>
+                <!-- <hooper-navigation slot="hooper-addons"></hooper-navigation> -->
+              </hooper>
             </template>
           </template>
         </div>
@@ -47,19 +76,29 @@
 </template>
 
 <script>
-import Calendar from "../components/CalendarList.vue";
 import AnnouncementList from "../components/AnnouncementList.vue";
+import {
+  Hooper,
+  Slide,
+  Progress as HooperProgress,
+  Navigation as HooperNavigation,
+} from "hooper";
+import "hooper/dist/hooper.css";
+
 export default {
   layout: "dashboard",
   name: "Dashboard",
   components: {
-    Calendar,
+    Hooper,
+    Slide,
+    HooperProgress,
+    HooperNavigation,
     AnnouncementList,
   },
   data() {
     return {};
   },
-  async asyncData({ $prismic, error, $axios }) {
+  async asyncData({ $prismic, error }) {
     try {
       // Get event data from Prismic
       const document = await $prismic.api.getSingle("dashboard");
@@ -123,19 +162,5 @@ export default {
   top: 0;
   bottom: 0;
   z-index: -1;
-}
-
-.iframe-container {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 */
-  margin-bottom: 25px;
-  height: 0;
-}
-.iframe-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
 }
 </style>
