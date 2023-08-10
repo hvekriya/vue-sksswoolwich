@@ -22,10 +22,7 @@
                 style="height: 100%; margin-bottom: 20px"
                 class="hooper-slider"
               >
-                <slide
-                  v-for="(item, index) in slice.items"
-                  :key="'photo-' + index"
-                >
+                <slide v-for="(item, index) in slice.items" :key="'photo-' + index">
                   <prismic-image
                     :field="item.image"
                     class="img-responsive dashboard-slider"
@@ -48,10 +45,7 @@
                 style="height: 100%; margin-bottom: 20px"
                 class="hooper-slider"
               >
-                <slide
-                  v-for="(item, index) in slice.items"
-                  :key="'photo-' + index"
-                >
+                <slide v-for="(item, index) in slice.items" :key="'photo-' + index">
                   <prismic-image
                     :field="item.gallery_image"
                     class="img-responsive dashboard-slider"
@@ -63,10 +57,7 @@
           </template>
         </div>
         <div class="col-md-6">
-          <AnnouncementList
-            id="announcements"
-            style="overflow: auto; height: 700px"
-          />
+          <AnnouncementList id="announcements" style="overflow: auto; height: 700px" />
           <br />
           <br />
         </div>
@@ -115,27 +106,28 @@ export default {
   },
 
   mounted() {
-    this.onScroll();
-  },
-
-  methods: {
-    onScroll() {
+    $(document).ready(function () {
       var up = false;
-      var div = document.getElementById("announcements");
+      var lastPosition;
 
       var interval = setInterval(function () {
+        var $container = $("#announcements");
+        var position = $container.scrollTop();
+        var height = $container[0].scrollHeight;
+
+        // If we haven't moved, switch direction
+        if (position === lastPosition) up = !up;
+        lastPosition = position;
+
         if (up) {
-          div.scrollTop -= 1;
+          // Going up
+          $container.animate({ scrollTop: position - 10 });
         } else {
-          div.scrollTop += 1;
+          // Going down
+          $container.animate({ scrollTop: position + 10 });
         }
-        if (div.scrollTop === div.scrollHeight - div.clientHeight) {
-          up = true;
-        } else if (div.scrollTop === 0) {
-          up = false;
-        }
-      }, 50);
-    },
+      }, 800);
+    });
   },
 };
 </script>
@@ -146,7 +138,7 @@ export default {
 }
 
 .dashboard-slider {
-  width: 100%;
+  width: 100;
   height: auto;
   margin: auto;
   display: block;
