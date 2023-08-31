@@ -5,6 +5,8 @@
       <div v-if="user">
         <span>{{ user.email }} | </span>
         <a @click="logout">Logout</a>
+        <span> | </span>
+        <nuxt-link to="/admin-dash/sitebuild">Rebuild the website</nuxt-link>
       </div>
     </header>
     <div class="list row">
@@ -36,10 +38,7 @@
       </div>
       <div class="col-md-6">
         <div v-if="currentAnnouncements">
-          <Announcement
-            :announcement="currentAnnouncements"
-            @refreshList="refreshList"
-          />
+          <Announcement :announcement="currentAnnouncements" @refreshList="refreshList" />
         </div>
         <div v-else>
           <br />

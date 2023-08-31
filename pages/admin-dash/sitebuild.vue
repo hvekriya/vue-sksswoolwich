@@ -10,11 +10,10 @@
     <br />
     <br />
     <p>
-      This feature allows to re build the site if you have made change like
-      uploaded photos to flickr and they are not appearing. It will sync all the
-      changes and build fresh website with up to date data. Please use this
-      feature wisely as using it too much in one can go queue up lots of builds
-      and it will take time"
+      This feature allows to re build the site if you have made change like uploaded
+      photos to flickr and they are not appearing. It will sync all the changes and build
+      fresh website with up to date data. Please use this feature wisely as using it too
+      much in one can go queue up lots of builds and it will take time
     </p>
     <br />
     <br />
@@ -22,8 +21,8 @@
       Rebuild the site now
     </button>
     <code v-else>
-      Website is getting built again. This can take up to 3-5 mins. Force
-      refresh the page using cmd+shift+R or ctrl+shift+R after 3 mins.
+      Website is getting built again. This can take up to 3-5 mins. Force refresh the page
+      using cmd+shift+R or ctrl+shift+R after 3 mins.
     </code>
     <br />
     <br />
