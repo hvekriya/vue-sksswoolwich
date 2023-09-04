@@ -68,7 +68,10 @@
       </div>
       <br />
       <div class="alert alert-info" role="alert">
-        <p>No photo's found for this event.</p>
+        <p>
+          No photo's found for this event. Please try again later when they are
+          uploaded.
+        </p>
       </div>
       <br />
     </div>
@@ -103,7 +106,9 @@ export default {
         {
           hid: "description",
           name: "description",
-          content: this.$prismic.asText(this.eventDetails.data.event_description),
+          content: this.$prismic.asText(
+            this.eventDetails.data.event_description
+          ),
         },
         {
           hid: "twitter:title",
@@ -113,7 +118,9 @@ export default {
         {
           hid: "twitter:description",
           name: "twitter:description",
-          content: this.$prismic.asText(this.eventDetails.data.event_description),
+          content: this.$prismic.asText(
+            this.eventDetails.data.event_description
+          ),
         },
         {
           hid: "twitter:image",
@@ -134,7 +141,9 @@ export default {
         {
           hid: "og-desc",
           property: "og:description",
-          content: this.$prismic.asText(this.eventDetails.data.event_description),
+          content: this.$prismic.asText(
+            this.eventDetails.data.event_description
+          ),
         },
         {
           hid: "og-image",
