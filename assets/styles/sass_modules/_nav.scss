@@ -20,7 +20,7 @@
 .navbar-default .navbar-nav>li>a {
     color: $brown;
     &:hover {
-        color: $orange;
+        color: $brand;
     }
 }
 
@@ -90,7 +90,7 @@ a.router-link-exact-active {
     background: transparent !important;
     &:hover {
         background: transparent !important;
-        color: $orange !important;
+        color: $brand !important;
     }
     .icon-bar {
         width: 22px;

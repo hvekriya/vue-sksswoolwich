@@ -27,7 +27,7 @@
   text-transform: uppercase;
 }
 .event-list > li:nth-child(even) > time {
-  background-color: $poster-yellow;
+  background-color: $brand;
 }
 .event-list > li > time > span {
   display: none;

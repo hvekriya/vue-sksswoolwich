@@ -52,7 +52,7 @@
 
 // Custom scroll bar
 @include scrollbars(0.5em,
-  $orange);
+  $brand);
 
 .lead {
   font-size: 18px;
@@ -121,7 +121,7 @@
 .banner-intro {
   color: #f8f8f8;
   margin-bottom: 2%;
-  // background-color: $poster-yellow;
+  // background-color: $brand;
   background-image: url("https://farm5.staticflickr.com/4296/35879893372_1772b22410_o.png");
   background-size: cover;
   padding-top: 65px;
@@ -138,11 +138,11 @@
 
 .GAM-Banner {
   padding-top: 50px;
-  background-color: $poster-yellow;
+  background-color: $brand;
 
   .coverSection {
     margin-top: -40px;
-    background-color: $poster-yellow;
+    background-color: $brand;
 
     @include respond-to(handhelds) {
       margin-top: -35px;
@@ -200,7 +200,7 @@ img.img-responsive.poster {
 .banner {
   padding: 25px 0;
   color: #f8f8f8;
-  background-color: $poster-yellow;
+  background-color: $brand;
   background-size: cover;
 }
 
@@ -416,7 +416,7 @@ footer {
 
 div.contact {
   text-align: center;
-  background-color: $poster-yellow;
+  background-color: $brand;
   background:
     /* top, transparent red, faked with gradient */
     linear-gradient(rgba(255, 166, 0, 0.45), rgba(245, 166, 146, 0.45)),
