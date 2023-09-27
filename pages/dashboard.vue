@@ -1,11 +1,5 @@
 <template>
   <div>
-    <video id="background-video" autoplay loop muted>
-      <source
-        src="https://prismic-io.s3.amazonaws.com/sksswoolwich/cf0a62e4-39cf-4cdd-8524-fe796ad2807a_Dashboard-BG-Video.mp4"
-        type="video/mp4"
-      />
-    </video>
     <div class="wrapper container-fluid">
       <div class="row" style="margin-top: 10px">
         <div class="col-md-6">
@@ -22,7 +16,10 @@
                 style="height: 100%; margin-bottom: 20px"
                 class="hooper-slider"
               >
-                <slide v-for="(item, index) in slice.items" :key="'photo-' + index">
+                <slide
+                  v-for="(item, index) in slice.items"
+                  :key="'photo-' + index"
+                >
                   <prismic-image
                     :field="item.image"
                     class="img-responsive dashboard-slider"
@@ -45,7 +42,10 @@
                 style="height: 100%; margin-bottom: 20px"
                 class="hooper-slider"
               >
-                <slide v-for="(item, index) in slice.items" :key="'photo-' + index">
+                <slide
+                  v-for="(item, index) in slice.items"
+                  :key="'photo-' + index"
+                >
                   <prismic-image
                     :field="item.gallery_image"
                     class="img-responsive dashboard-slider"
@@ -57,7 +57,10 @@
           </template>
         </div>
         <div class="col-md-6">
-          <AnnouncementList id="announcements" style="overflow: auto; height: 700px" />
+          <AnnouncementList
+            id="announcements"
+            style="overflow: auto; height: 700px"
+          />
           <br />
           <br />
         </div>
@@ -133,26 +136,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dashboard_layout {
-  background: transparent;
-}
-
 .dashboard-slider {
   width: 100;
   height: auto;
   margin: auto;
   display: block;
-}
-
-#background-video {
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  z-index: -1;
 }
 </style>

@@ -28,7 +28,10 @@ export default {
 }
 
 .dashboard_layout {
-  background: $gray-800;
+  background-image: url("https://images.prismic.io/sksswoolwich/db3411ef-046c-42be-90a0-e9e21e5d0613_sksswoolwich-tv-bg.png?auto=compress,format");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top;
   h1,
   h2,
   h3,
