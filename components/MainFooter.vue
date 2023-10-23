@@ -9,10 +9,7 @@
           itemtype="http://schema.org/Organization"
         >
           <li class="social">
-            <a
-              itemprop="sameAs"
-              href="https://www.facebook.com/WoolwichTemple/"
-            >
+            <a itemprop="sameAs" href="https://www.facebook.com/WoolwichTemple/">
               <i class="fab fa-facebook-f"></i>
             </a>
           </li>
@@ -54,10 +51,15 @@
           {{ new Date().getFullYear() }}
           | Registered Charity 292934
           <br />
-          <router-link
-            to="/our-temple/privacy-policy"
-            @click.native="$scrollToTop"
+          <router-link to="/our-temple/privacy-policy" @click.native="$scrollToTop"
             >Privacy Policy</router-link
+          >
+          <router-link
+            href="https://prismic-io.s3.amazonaws.com/sksswoolwich/e1d9742d-a7ff-4fbc-bfdb-d2913465066c_Complaints+Policy+and+Procedures.pdf"
+            target="_blank"
+            @click.native="$scrollToTop"
+            style="margin-left: 4px"
+            >Complaints Policy & Procedures</router-link
           >
         </p>
         <img
