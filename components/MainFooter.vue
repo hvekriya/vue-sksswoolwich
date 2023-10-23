@@ -52,14 +52,13 @@
           | Registered Charity 292934
           <br />
           <router-link to="/our-temple/privacy-policy" @click.native="$scrollToTop"
-            >Privacy Policy</router-link
-          >
-          <router-link
+            >Privacy Policy
+          </router-link>
+          <span style="margin-left: 4px; margin-right: 4px">|</span>
+          <a
             href="https://prismic-io.s3.amazonaws.com/sksswoolwich/e1d9742d-a7ff-4fbc-bfdb-d2913465066c_Complaints+Policy+and+Procedures.pdf"
             target="_blank"
-            @click.native="$scrollToTop"
-            style="margin-left: 4px"
-            >Complaints Policy & Procedures</router-link
+            >Complaints Policy and Procedures</a
           >
         </p>
         <img
