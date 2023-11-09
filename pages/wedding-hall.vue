@@ -18,6 +18,54 @@
     <div class="icon-wrapper">
       <prismic-image :field="fields.icon" class="icon" />
     </div>
+
+    <form
+      name="contactus"
+      action="/thanks"
+      method="post"
+      netlify
+      netlify-honeypot="bot-field"
+    >
+      <input type="hidden" name="form-name" value="contactus" />
+
+      <div class="input-group">
+        <span class="input-group-addon" id="name">Name</span>
+        <input
+          type="text"
+          class="form-control"
+          name="name"
+          placeholder="Name"
+          aria-describedby="name"
+        />
+      </div>
+
+      <div class="input-group">
+        <span class="input-group-addon" id="email">Email</span>
+        <input
+          type="text"
+          class="form-control"
+          name="email"
+          placeholder="Name"
+          aria-describedby="email"
+        />
+      </div>
+
+      <div class="input-group">
+        <span class="input-group-addon" id="message">Message</span>
+        <input
+          type="textarea"
+          class="form-control"
+          name="message"
+          placeholder="Name"
+          aria-describedby="message"
+        />
+      </div>
+
+      <button type="submit" value="Send message" class="btn btn-default">
+        Send
+      </button>
+    </form>
+
     <WeddingContact />
     <br /><br />
   </div>
