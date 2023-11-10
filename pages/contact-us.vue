@@ -4,7 +4,57 @@
     <br />
     <div class="row">
       <div class="col-md-8">
-        <div class="contact-map">
+        <form
+          name="contact-us"
+          action="/thanks"
+          method="post"
+          netlify
+          netlify-honeypot="bot-field"
+        >
+          <input type="hidden" name="form-name" value="contactus" />
+
+          <div class="form-group">
+            <label for="name">Full name</label>
+            <input
+              type="text"
+              id="name"
+              class="form-control"
+              name="name"
+              placeholder="Full name including surname"
+              aria-describedby="name"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <span class="form-group-addon" id="email">Email</span>
+            <input
+              type="text"
+              class="form-control"
+              name="email"
+              placeholder="Your email"
+              aria-describedby="email"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <span class="form-group-addon" id="message">Message</span>
+            <textarea
+              type="text"
+              class="form-control"
+              name="message"
+              placeholder="Any extra info"
+              aria-describedby="message"
+            />
+          </div>
+
+          <button type="submit" value="Send message" class="btn btn-primary">
+            Send request
+          </button>
+        </form>
+
+        <!-- <div class="contact-map">
           <iframe
             src="https://docs.google.com/forms/d/e/1FAIpQLSdjmyr18LtJcXbb2SQfA8ZjMV9u49zLbkztET8sURT-VqtI_w/viewform?embedded=true"
             width="100%"
@@ -14,7 +64,7 @@
             marginwidth="0"
             >Loading...</iframe
           >
-        </div>
+        </div> -->
       </div>
 
       <div class="col-md-4">

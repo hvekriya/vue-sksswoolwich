@@ -7,7 +7,7 @@
       </header>
       <div class="col-md-8">
         <form
-          name="contactus"
+          name="wedding-hall"
           action="/thanks"
           method="post"
           netlify
