@@ -75,9 +75,9 @@
           <address>
             <strong>SKSS Temple Woolwich</strong>
             <br />St. Margarets Grove, <br />London, SE18 7RL
-            <br />
+            <!-- <br />
             <abbr title="Phone">P:</abbr>
-            <a href="tel:+442088540823" itemprop="telephone">+442088540823</a>
+            <a href="tel:+442088540823" itemprop="telephone">+442088540823</a> -->
           </address>
           <address>
             <strong>Admin</strong>
