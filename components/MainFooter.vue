@@ -60,6 +60,18 @@
             target="_blank"
             >Complaints Policy and Procedures</a
           >
+          <span style="margin-left: 4px; margin-right: 4px">|</span>
+          <a
+            href="https://prismic-io.s3.amazonaws.com/sksswoolwich/9f87356c-dc03-4175-8355-840a3cb6b7fd_SKSSTW+Complaints+Form.pdf"
+            target="_blank"
+            >Complaints Form</a
+          >
+          <span style="margin-left: 4px; margin-right: 4px">|</span>
+          <a
+            href="https://prismic-io.s3.amazonaws.com/sksswoolwich/4c041e32-62d7-440c-87eb-870b028bf3f9_Photography+and+Video+Policy.pdf"
+            target="_blank"
+            >Photography and Video Policy</a
+          >
         </p>
         <img
           class="footerLogo"
