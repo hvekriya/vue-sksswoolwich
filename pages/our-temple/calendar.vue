@@ -14,20 +14,22 @@ import FullCalendar from "@fullcalendar/vue";
 import listPlugin from "@fullcalendar/list";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import googleCalendarPlugin from "@fullcalendar/google-calendar";
+import moment from "moment";
 
 export default {
-  name: "CalendarFull",
+  name: "Calendar",
   components: {
     FullCalendar,
   },
   data() {
     return {
       calendarOptions: {
-        initialView: "dayGridMonth",
+        initialView: "listMonth",
         themeSystem: "bootstrap",
         plugins: [listPlugin, dayGridPlugin, googleCalendarPlugin],
         select: this.handleDateClick,
         stickyHeaderDates: false,
+        googleCalendarApiKey: process.env.google_api_key,
         events: {
           googleCalendarId:
             "c_1cb9e7ffe7dcf521b3845a216054ded6372636a8d55cca21b64b2477ccc261b6@group.calendar.google.com",
@@ -50,7 +52,7 @@ export default {
         footerToolbar: {
           left: "today listMonth dayGridMonth",
           center: "",
-          right: "",
+          right: "myCustomButton",
         },
       },
     };
@@ -59,6 +61,10 @@ export default {
     handleDateClick: function (arg) {
       console.log("date click! " + arg.dateStr);
     },
+  },
+  mounted() {
+    let calendarApi = this.$refs.fullCalendar.getApi();
+    // calendarApi.next(); // Next month
   },
 };
 </script>

@@ -16,6 +16,7 @@ h6 {
 }
 
 body {
+  font-size: 16px;
   color: $brown;
   text-decoration: none;
 }
@@ -139,4 +140,8 @@ pre {
   /* Opera 7 */
   word-wrap: break-word;
   /* Internet Explorer 5.5+ */
+}
+
+p {
+  font-size: 16px;
 }

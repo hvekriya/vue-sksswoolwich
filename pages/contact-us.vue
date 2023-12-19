@@ -1,9 +1,11 @@
 <template>
   <div class="wrapper container">
-    <br />
-    <br />
+    <header class="page-header">
+      <h1>Contact us</h1>
+    </header>
+
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-8" style="margin-bottom: 40px">
         <form
           name="contact-us"
           action="/thanks"

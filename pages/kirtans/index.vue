@@ -51,3 +51,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+ul {
+  margin-left: 0;
+}
+</style>

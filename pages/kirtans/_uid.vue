@@ -11,7 +11,7 @@
     </header>
 
     <div>
-      <prismic-rich-text :field="kirtans.kirtan_lyrics" />
+      <prismic-rich-text :field="kirtans.kirtan_lyrics" class="lyrics" />
       <br />
       <h2>Other details</h2>
       <p><strong>Composer:</strong> {{ $prismic.asText(kirtans.composer) }}</p>

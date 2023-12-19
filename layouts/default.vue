@@ -22,3 +22,8 @@ export default {
   },
 };
 </script>
+
+<style lang="sass">
+#__layout
+  margin-top: 40px
+</style>
