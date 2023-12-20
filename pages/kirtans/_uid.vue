@@ -4,9 +4,7 @@
   <div class="wrapper container">
     <header class="page-header">
       <br />
-      <a href="/kirtans">
-        <i class="fas fa-arrow-left"></i> Back to all kirtans</a
-      >
+      <a href="/kirtans"> <i class="fas fa-arrow-left"></i> Back to all kirtans</a>
       <h1 class="title">{{ $prismic.asText(kirtans.kirtan_title) }}</h1>
     </header>
 
@@ -15,7 +13,7 @@
       <br />
       <h2>Other details</h2>
       <p><strong>Composer:</strong> {{ $prismic.asText(kirtans.composer) }}</p>
-      <prismic-embed :field="kirtans.variations" />
+      <prismic-embed :field="kirtans.variations" class="embed" />
       <prismic-image :field="kirtans.image_attachments" />
       <br />
     </div>
@@ -28,10 +26,7 @@ export default {
   async asyncData({ $prismic, $axios, error, params }) {
     try {
       // Get kirtans data from Prismic
-      const kirtansFromPrismic = await $prismic.api.getByUID(
-        "kirtan",
-        params.uid
-      );
+      const kirtansFromPrismic = await $prismic.api.getByUID("kirtan", params.uid);
       const kirtans = kirtansFromPrismic.data;
       return {
         kirtans,
@@ -43,3 +38,10 @@ export default {
   },
 };
 </script>
+
+<style lang="sass" scoped>
+.embed
+  iframe
+    width: 600px
+    height: 600px
+</style>

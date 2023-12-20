@@ -1,8 +1,13 @@
 <template>
-  <div class="container">
+  <div class="wrapper container">
+    <header class="page-header">
+      <h1>Login</h1>
+    </header>
+
     <div class="row">
       <div class="col-md-6 login-form-1">
-        <h3>Login</h3>
+        <h3>Enter your details</h3>
+        <p>Speak to Haresh if you don't have login.</p>
         <form @submit.prevent="">
           <div class="form-group">
             <input

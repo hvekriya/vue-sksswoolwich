@@ -23,7 +23,7 @@ export default {
 };
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 #__layout
   margin-top: 40px
 </style>

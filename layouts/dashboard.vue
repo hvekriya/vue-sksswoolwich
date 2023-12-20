@@ -41,3 +41,9 @@ export default {
   }
 }
 </style>
+
+<style lang="scss" scoped>
+#__layout {
+  margin-top: 5px;
+}
+</style>

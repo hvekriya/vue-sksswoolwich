@@ -4,63 +4,38 @@
       <div class="row" style="margin-top: 10px">
         <div class="col-md-6">
           <!-- Fixed posters -->
+          <hooper
+            :progress="false"
+            :infiniteScroll="false"
+            :autoPlay="true"
+            :playSpeed="8000"
+            :wheelControl="false"
+            style="height: 100%; margin-bottom: 20px"
+            class="hooper-slider"
+          >
+            <slide v-for="(item, index) in slideshow" :key="'photo-' + index">
+              <img :src="item" class="img-responsive dashboard-slider" />
+            </slide>
+            <!-- <hooper-navigation slot="hooper-addons"></hooper-navigation> -->
+          </hooper>
 
-          <template v-for="(slice, index) in fields.slices">
-            <template v-if="slice.slice_label == 'weekly_activities'">
-              <hooper
-                :progress="false"
-                :infiniteScroll="false"
-                :autoPlay="true"
-                :playSpeed="8000"
-                :wheelControl="false"
-                style="height: 100%; margin-bottom: 20px"
-                class="hooper-slider"
-              >
-                <slide
-                  v-for="(item, index) in slice.items"
-                  :key="'photo-' + index"
-                >
-                  <prismic-image
-                    :field="item.image"
-                    class="img-responsive dashboard-slider"
-                  />
-                </slide>
-                <!-- <hooper-navigation slot="hooper-addons"></hooper-navigation> -->
-              </hooper>
-            </template>
-          </template>
-
-          <!-- Pinned posters -->
-          <template v-for="(slice, index) in fields.slices">
-            <template v-if="slice.slice_label == 'pinned_posters'">
-              <hooper
-                :progress="false"
-                :infiniteScroll="false"
-                :autoPlay="true"
-                :playSpeed="8000"
-                :wheelControl="false"
-                style="height: 100%; margin-bottom: 20px"
-                class="hooper-slider"
-              >
-                <slide
-                  v-for="(item, index) in slice.items"
-                  :key="'photo-' + index"
-                >
-                  <prismic-image
-                    :field="item.gallery_image"
-                    class="img-responsive dashboard-slider"
-                  />
-                </slide>
-                <!-- <hooper-navigation slot="hooper-addons"></hooper-navigation> -->
-              </hooper>
-            </template>
-          </template>
+          <hooper
+            :progress="false"
+            :infiniteScroll="false"
+            :autoPlay="true"
+            :playSpeed="8000"
+            :wheelControl="false"
+            style="height: 100%; margin-bottom: 20px"
+            class="hooper-slider"
+          >
+            <slide v-for="(item, index) in pinnedPosters" :key="'photo-' + index">
+              <img :src="item" class="img-responsive dashboard-slider" />
+            </slide>
+            <!-- <hooper-navigation slot="hooper-addons"></hooper-navigation> -->
+          </hooper>
         </div>
         <div class="col-md-6">
-          <AnnouncementList
-            id="announcements"
-            style="overflow: auto; height: 700px"
-          />
+          <AnnouncementList id="announcements" style="overflow: auto; height: 700px" />
           <br />
           <br />
         </div>
@@ -90,7 +65,10 @@ export default {
     AnnouncementList,
   },
   data() {
-    return {};
+    return {
+      slideshow: [],
+      pinnedPosters: [],
+    };
   },
   async asyncData({ $prismic, error }) {
     try {
@@ -108,7 +86,60 @@ export default {
     }
   },
 
+  methods: {
+    getSlideshow() {
+      // Get firebase images
+      const fireStorage = this.$fire.storage.ref("slideshow/");
+      fireStorage
+        .listAll()
+        .then((res) => {
+          let _slideshow = [];
+          res.items.forEach((itemRef) => {
+            this.$fire.storage
+              .ref(itemRef.fullPath)
+              .getDownloadURL()
+              .then((url) => {
+                _slideshow.push(url);
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          });
+          this.slideshow = _slideshow;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    getPinnedPosters() {
+      // Get firebase images
+      const fireStorage = this.$fire.storage.ref("pinned-posters/");
+      fireStorage
+        .listAll()
+        .then((res) => {
+          let _pinnedPosters = [];
+          res.items.forEach((itemRef) => {
+            this.$fire.storage
+              .ref(itemRef.fullPath)
+              .getDownloadURL()
+              .then((url) => {
+                _pinnedPosters.push(url);
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          });
+          this.pinnedPosters = _pinnedPosters;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+  },
+
   mounted() {
+    this.getSlideshow();
+    this.getPinnedPosters();
     $(document).ready(function () {
       var up = false;
       var lastPosition;
