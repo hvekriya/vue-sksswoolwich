@@ -32,6 +32,12 @@
           <div class="form-group">
             <button class="btn btn-primary" @click="login">Login</button>
           </div>
+          <p>OR</p>
+          <div class="form-group">
+            <button class="btn btn-primary" @click="loginWithGoogle">
+              Login with Google
+            </button>
+          </div>
           <div v-if="errorMessage" color="error">
             {{ errorMessage }}
           </div>
@@ -65,6 +71,19 @@ export default {
             this.errorMessage = error.message;
           });
       }
+    },
+    loginWithGoogle() {
+      const provider = new this.$fireModule.auth.GoogleAuthProvider();
+      this.$fire.auth
+        .signInWithPopup(provider)
+        .then((result) => {
+          // store the user ore wathever
+          this.$router.replace("/admin-dash");
+        })
+        .catch((error) => {
+          console.log("Login error", error);
+          this.errorMessage = error.message;
+        });
     },
   },
 };
