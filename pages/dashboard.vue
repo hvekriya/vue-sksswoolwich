@@ -70,21 +70,21 @@ export default {
       pinnedPosters: [],
     };
   },
-  async asyncData({ $prismic, error }) {
-    try {
-      // Get event data from Prismic
-      const document = await $prismic.api.getSingle("dashboard");
-      return {
-        marqueeText: document.data.marquee_text,
-        fields: {
-          slices: document.data.body,
-        },
-      };
-    } catch (e) {
-      console.log(e);
-      error({ statusCode: 404, message: "Page not found" });
-    }
-  },
+  // async asyncData({ $prismic, error }) {
+  //   try {
+  //     // Get event data from Prismic
+  //     const document = await $prismic.api.getSingle("dashboard");
+  //     return {
+  //       marqueeText: document.data.marquee_text,
+  //       fields: {
+  //         slices: document.data.body,
+  //       },
+  //     };
+  //   } catch (e) {
+  //     console.log(e);
+  //     error({ statusCode: 404, message: "Page not found" });
+  //   }
+  // },
 
   methods: {
     getSlideshow() {
