@@ -2,7 +2,7 @@
   <div class="container">
     <div class="submit-form">
       <br /><br />
-      <h1>New Annoucement</h1>
+      <h1>New Link Tree Item</h1>
       <div v-if="!submitted">
         <div class="form-group">
           <label for="title">Title</label>
@@ -16,14 +16,16 @@
           />
         </div>
         <div class="form-group">
-          <label for="order"
-            >Order (1 Appears first in the list and so on...)</label
+          <label for="title"
+            >Link (url for example "https://sksswoolwich.org")</label
           >
           <input
-            type="number"
+            type="text"
             class="form-control"
-            id="order"
-            v-model="announcement.order"
+            id="link"
+            required
+            v-model="announcement.link"
+            name="link"
           />
         </div>
         <div class="form-group">
@@ -35,16 +37,26 @@
           />
         </div>
 
-        <button @click="saveAnnouncement" class="btn btn-success">
-          Add new annoucement
+        <div class="form-group">
+          <label for="order"
+            >Order (1 Appears first in the list and so on...)</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="order"
+            v-model="announcement.order"
+          />
+        </div>
+
+        <button @click="saveLink" class="btn btn-success">
+          Add new link tree item
         </button>
       </div>
       <div v-else>
         <h4>You submitted successfully!</h4>
-        <a href="/admin-dash/announcements"> Go back to list of annoucements</a>
-        <button class="btn btn-primary" @click="newAnnouncement">
-          Add another
-        </button>
+        <a href="/admin-dash/link-tree"> Go back to link tree list</a>
+        <button class="btn btn-primary" @click="newLink">Add another</button>
       </div>
     </div>
     <br />
@@ -58,39 +70,41 @@ export default {
     return {
       announcement: {
         title: "",
-        order: 0,
+        link: "",
         description: "",
-        published: false,
+        order: 0,
       },
       user: "",
       submitted: false,
     };
   },
   methods: {
-    saveAnnouncement() {
-      const db = this.$fire.database.ref("/annoucements");
+    saveLink() {
+      const db = this.$fire.database.ref("/link-tree");
       var data = {
         title: this.announcement.title,
-        order: this.announcement.order,
+        link: this.announcement.link,
         description: this.announcement.description,
-        published: false,
+        order: this.announcement.order,
       };
       db.push(data)
         .then(() => {
           this.submitted = true;
-          this.$router.replace("/admin-dash");
+          this.$router.replace("/admin-dash/link-tree");
         })
         .catch((e) => {
           console.log(e);
         });
     },
 
-    newAnnouncement() {
+    newLink() {
       this.submitted = false;
       this.announcement = {
         title: "",
         description: "",
-        published: false,
+        link: "",
+        description: "",
+        order: 0,
       };
     },
   },
