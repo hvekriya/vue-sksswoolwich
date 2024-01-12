@@ -23,6 +23,20 @@
         />
       </div>
       <div class="form-group">
+        <label for="title"
+          >Icon ID (Get the name from fontawesome.com and add the name like
+          "fa-brands fa-instafram")</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="icon"
+          required
+          v-model="currentLink.icon"
+          name="icon"
+        />
+      </div>
+      <div class="form-group">
         <label for="description">Description</label>
         <wysiwyg
           v-model="currentLink.description"
@@ -84,6 +98,7 @@ export default {
       const data = {
         title: this.currentLink.title,
         link: this.currentLink.link,
+        icon: this.currentLink.icon,
         description: this.currentLink.description,
         order: this.currentLink.order,
       };

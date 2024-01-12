@@ -17,6 +17,7 @@
           :key="index"
         >
           <template v-if="item.link">
+            <i :class="item.icon" style="color: white; margin-right: 4px"></i>
             <a :href="item.link" class="btn btn-primary">{{ item.title }}</a>
           </template>
           <template v-else>

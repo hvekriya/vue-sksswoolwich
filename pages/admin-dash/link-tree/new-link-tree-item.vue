@@ -17,6 +17,20 @@
         </div>
         <div class="form-group">
           <label for="title"
+            >Icon ID (Get the name from fontawesome.com and add the name like
+            "fa-brands fa-instafram")</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="icon"
+            required
+            v-model="announcement.icon"
+            name="icon"
+          />
+        </div>
+        <div class="form-group">
+          <label for="title"
             >Link (url for example "https://sksswoolwich.org")</label
           >
           <input
@@ -65,12 +79,13 @@
 </template>
 <script>
 export default {
-  name: "NewAnnouncement",
+  name: "NewLink",
   data() {
     return {
-      announcement: {
+      linkTree: {
         title: "",
         link: "",
+        icon: "",
         description: "",
         order: 0,
       },
@@ -82,10 +97,11 @@ export default {
     saveLink() {
       const db = this.$fire.database.ref("/link-tree");
       var data = {
-        title: this.announcement.title,
-        link: this.announcement.link,
-        description: this.announcement.description,
-        order: this.announcement.order,
+        title: this.linkTree.title,
+        link: this.linkTree.link,
+        icon: this.linkTree.icon,
+        description: this.linkTree.description,
+        order: this.linkTree.order,
       };
       db.push(data)
         .then(() => {
@@ -99,9 +115,10 @@ export default {
 
     newLink() {
       this.submitted = false;
-      this.announcement = {
+      this.linkTree = {
         title: "",
         description: "",
+        icon: "",
         link: "",
         description: "",
         order: 0,

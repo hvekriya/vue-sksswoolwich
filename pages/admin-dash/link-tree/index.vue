@@ -17,6 +17,7 @@
             :key="index"
             @click="setActiveLink(item, index)"
           >
+            <i :class="item.icon" style="margin-right: 4px"></i>
             {{ item.order }}. {{ item.title }}
             <br />
             <small v-html="item.description"></small>
@@ -75,6 +76,7 @@ export default {
           title: data.title,
           description: data.description,
           link: data.link,
+          icon: data.icon,
         });
       });
       this.linkTreeItems = _links;
