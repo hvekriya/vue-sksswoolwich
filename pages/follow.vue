@@ -17,11 +17,16 @@
           :key="index"
         >
           <template v-if="item.link">
-            <i :class="item.icon" style="color: white; margin-right: 4px"></i>
-            <a :href="item.link" class="btn btn-primary">{{ item.title }}</a>
+            <a :href="item.link" class="btn btn-primary">
+              <i :class="item.icon" style="color: white; margin-right: 4px"></i>
+              {{ item.title }}</a
+            >
           </template>
           <template v-else>
-            <b>{{ item.title }}</b>
+            <b>
+              <i :class="item.icon" style="color: white; margin-right: 4px"></i>
+              {{ item.title }}</b
+            >
           </template>
           <br />
           <small v-html="item.description"></small>
@@ -52,6 +57,7 @@ export default {
           key: key,
           title: data.title,
           link: data.link,
+          icon: data.icon,
           description: data.description,
           order: data.order,
         });
