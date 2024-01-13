@@ -11,7 +11,7 @@
             class="form-control"
             id="title"
             required
-            v-model="announcement.title"
+            v-model="linkTree.title"
             name="title"
           />
         </div>
@@ -25,7 +25,7 @@
             class="form-control"
             id="icon"
             required
-            v-model="announcement.icon"
+            v-model="linkTree.icon"
             name="icon"
           />
         </div>
@@ -38,14 +38,14 @@
             class="form-control"
             id="link"
             required
-            v-model="announcement.link"
+            v-model="linkTree.link"
             name="link"
           />
         </div>
         <div class="form-group">
           <label for="description">Description</label>
           <wysiwyg
-            v-model="announcement.description"
+            v-model="linkTree.description"
             name="description"
             id="description"
           />
@@ -59,7 +59,7 @@
             type="number"
             class="form-control"
             id="order"
-            v-model="announcement.order"
+            v-model="linkTree.order"
           />
         </div>
 
