@@ -89,6 +89,9 @@ export default {
 </script>
 
 <style scoped>
+.list-group-item {
+  text-align: center;
+}
 .wrapper {
   background-image: url("https://images.prismic.io/sksswoolwich/db3411ef-046c-42be-90a0-e9e21e5d0613_sksswoolwich-tv-bg.png?auto=compress,format");
   background-repeat: no-repeat;
