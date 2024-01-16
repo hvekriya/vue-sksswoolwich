@@ -1,5 +1,12 @@
 <template>
   <div class="wrapper container-fluid">
+    <video autoplay muted loop id="myVideo">
+      <source
+        src="https://firebasestorage.googleapis.com/v0/b/sksswoolwich.appspot.com/o/backgrounds%2FBlue%20Animated%20Winter%20Clearance%20Sale%20Video.mp4?alt=media&token=926bf5ef-2473-4f13-8e0a-a0a83629abfe"
+        type="video/mp4"
+      />
+    </video>
+
     <div class="wrap">
       <div class="profile">
         <img
@@ -95,6 +102,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#myVideo {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
 .list-group-item {
   text-align: center;
 }
@@ -118,6 +136,9 @@ export default {
 .photo {
   width: 30%;
   border-radius: 50%;
+}
+.profile {
+  position: relative;
 }
 .profile_name {
   font-weight: bold;
