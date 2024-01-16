@@ -1,10 +1,14 @@
 <template>
   <div class="wrapper container-fluid">
-    <video autoplay muted loop id="myVideo">
-      <source
-        src="https://firebasestorage.googleapis.com/v0/b/sksswoolwich.appspot.com/o/backgrounds%2FBlue%20Animated%20Winter%20Clearance%20Sale%20Video.mp4?alt=media&token=926bf5ef-2473-4f13-8e0a-a0a83629abfe"
-        type="video/mp4"
-      />
+    <video
+      autoplay
+      muted
+      loop
+      id="myVideo"
+      v-for="(video, index) in backgroundVid"
+      :key="'video-' + index"
+    >
+      <source :src="video" type="video/mp4" />
     </video>
 
     <div class="wrap">
@@ -58,6 +62,7 @@ export default {
     return {
       linkTree: [],
       currentIndex: -1,
+      backgroundVid: [],
     };
   },
   methods: {
@@ -77,6 +82,31 @@ export default {
       });
       this.linkTree = _linkTree;
     },
+    getBackgroundVideo() {
+      // Get firebase images
+      const fireStorage = this.$fire.storage.ref("backgrounds");
+      fireStorage
+        .listAll()
+        .then((res) => {
+          let _backgroundVid = [];
+          res.items.forEach((itemRef) => {
+            this.$fire.storage
+              .ref(itemRef.fullPath)
+              .getDownloadURL()
+              .then((url) => {
+                console.log(url);
+                _backgroundVid.push(url);
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          });
+          this.backgroundVid = _backgroundVid;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
     refreshList() {
       this.currentLinks = null;
       this.currentIndex = -1;
@@ -93,6 +123,7 @@ export default {
     },
   },
   mounted() {
+    this.getBackgroundVideo();
     this.$fire.database.ref("/link-tree").on("value", this.onDataChange);
   },
   beforeDestroy() {
