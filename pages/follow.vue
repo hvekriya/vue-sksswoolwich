@@ -17,19 +17,25 @@
           :key="index"
         >
           <template v-if="item.link">
-            <a :href="item.link" class="btn btn-primary">
+            <a
+              :href="item.link"
+              class="btn btn-primary"
+              style="margin-bottom: 6px"
+            >
               <i :class="item.icon" style="color: white; margin-right: 4px"></i>
               {{ item.title }}</a
             >
+            <small v-html="item.description"></small>
           </template>
           <template v-else>
-            <b>
-              <i :class="item.icon" style="color: white; margin-right: 4px"></i>
-              {{ item.title }}</b
-            >
+            <div class="info-message">
+              <h4>
+                <i :class="item.icon" style="margin-right: 4px"></i>
+                {{ item.title }}
+              </h4>
+              <small v-html="item.description"></small>
+            </div>
           </template>
-          <br />
-          <small v-html="item.description"></small>
         </li>
       </ul>
       <p v-else>No links.</p>
@@ -88,7 +94,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .list-group-item {
   text-align: center;
 }
@@ -102,7 +108,7 @@ export default {
   width: 100%;
   max-width: 320px;
   margin: 0 auto;
-  margin-top: 60px;
+  margin-top: 30px;
   margin-bottom: 60px;
 }
 .profile {
@@ -128,9 +134,25 @@ export default {
   font-size: 16px;
   border-radius: 0;
   margin: 4px;
+  background: transparent;
+  border: none;
+  color: white;
 }
 
-.btn.btn-primary {
-  width: 100%;
+.info-message {
+  background-color: white;
+  padding: 20px;
+  color: $primary;
+}
+
+.btn {
+  border-radius: 30px;
+  font-size: 18px;
+  border: solid 2px white !important;
+  padding: 16px;
+  background: transparent !important;
+  &.btn-primary {
+    width: 100%;
+  }
 }
 </style>
