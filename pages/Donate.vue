@@ -24,7 +24,18 @@
 
     <div class="tab-content clearfix active">
       <div class="tab-pane active" id="1">
-        <h3>
+
+      <script async
+        src="https://js.stripe.com/v3/buy-button.js">
+      </script>
+
+      <stripe-buy-button
+        buy-button-id="buy_btn_1OtTX8H14DOHzSLbbZ0WNNT6"
+        publishable-key="pk_live_51OoPISH14DOHzSLboCq5Dnnp5NSc9we8f0IPBYktNd6EU0g3rade9ajvECEaphSVMhdrdrRVmP16LV51W42YvNJ800pusyxm5X"
+      >
+      </stripe-buy-button>
+
+        <!-- <h3>
           Online transfer via
           <img
             class="img-responsive"
@@ -38,7 +49,7 @@
           class="btn btn-primary"
         >
           Donate now</a
-        >
+        > -->
       </div>
       <div class="tab-pane" id="2">
         <h3>Bank Transfer</h3>
@@ -184,3 +195,12 @@ export default {
   methods: {},
 };
 </script>
+
+<style lang="scss" scoped>
+.nav-pills > li.active {
+    background: $main-gradiant;
+  a {
+    color: #ffffff !important
+  }
+}
+</style>
