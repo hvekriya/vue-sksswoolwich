@@ -14,7 +14,7 @@
     <div class="wrap">
       <div class="profile">
         <img
-          src="https://media.licdn.com/dms/image/D560BAQEhWHtCe0MXrg/company-logo_200_200/0/1689536558179?e=1713398400&v=beta&t=3c-AJpZzKfoStVU-6MSIC4yPvpzi0PSNJsMhnYJjBzE"
+          src="https://www.sksswoolwich.org/img/WoolwichMandirLogo.png"
           class="photo"
         />
         <span class="profile_name">SKSS Temple Woolwich</span>
@@ -28,11 +28,7 @@
           :key="index"
         >
           <template v-if="item.link">
-            <a
-              :href="item.link"
-              class="btn btn-primary"
-              style="margin-bottom: 6px"
-            >
+            <a :href="item.link" class="btn btn-primary" style="margin-bottom: 6px">
               <i :class="item.icon" style="color: white; margin-right: 4px"></i>
               {{ item.title }}</a
             >
