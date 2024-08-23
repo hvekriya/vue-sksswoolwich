@@ -55,7 +55,6 @@
     "@nuxtjs/fontawesome": "^1.1.2",
     "@nuxtjs/google-analytics": "^2.4.0",
     "@nuxtjs/style-resources": "^1.2.1",
-    "node-sass": "^6.0.1",
     "sass": "^1.41.1",
     "sass-loader": "^10.2.0"
   }

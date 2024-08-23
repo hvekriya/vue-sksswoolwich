@@ -69,8 +69,7 @@
       <br />
       <div class="alert alert-info" role="alert">
         <p>
-          No photo's found for this event. Please try again later when they are
-          uploaded.
+          No photo's found for this event. Please try again later when they are uploaded.
         </p>
       </div>
       <br />
@@ -106,9 +105,7 @@ export default {
         {
           hid: "description",
           name: "description",
-          content: this.$prismic.asText(
-            this.eventDetails.data.event_description
-          ),
+          content: this.$prismic.asText(this.eventDetails.data.event_description),
         },
         {
           hid: "twitter:title",
@@ -118,9 +115,7 @@ export default {
         {
           hid: "twitter:description",
           name: "twitter:description",
-          content: this.$prismic.asText(
-            this.eventDetails.data.event_description
-          ),
+          content: this.$prismic.asText(this.eventDetails.data.event_description),
         },
         {
           hid: "twitter:image",
@@ -141,9 +136,7 @@ export default {
         {
           hid: "og-desc",
           property: "og:description",
-          content: this.$prismic.asText(
-            this.eventDetails.data.event_description
-          ),
+          content: this.$prismic.asText(this.eventDetails.data.event_description),
         },
         {
           hid: "og-image",
@@ -178,7 +171,7 @@ export default {
         params: {
           ...flickrConfig,
           method: "flickr.photosets.getPhotos",
-          photoset_id: params.uid,
+          photoset_id: params.id,
           extras: "url_n, url_o",
         },
       });
