@@ -8,8 +8,7 @@ export default function (doc) {
   }
 
   if (doc.type === 'events') {
-    console.log(doc)
-    return '/events/' + doc.uid + '?event_id=';
+    return '/events/' + doc.uid + '/:id';
   }
 
   return '/not-found';
