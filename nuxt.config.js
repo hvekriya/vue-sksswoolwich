@@ -187,13 +187,13 @@ export default {
 
   prismic: {
     endpoint: "https://sksswoolwich.prismic.io/api/v2",
-    linkResolver: "~/plugins/link-resolver.js",
+    // linkResolver: "~/plugins/link-resolver.js",
     apiOptions: {
-      routes: [
-        { type: 'events', path: '/events/:event/:id' }
-      ],
       accessToken: process.env.VUE_APP_PRISMIC,
     },
+    routes: [
+	    { type: 'events', path: '/events/:uid/:id' }
+	  ]
   },
 
   googleAnalytics: {

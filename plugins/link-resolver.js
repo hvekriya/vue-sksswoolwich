@@ -8,7 +8,7 @@ export default function (doc) {
   }
 
   if (doc.type === 'events') {
-    return '/events/' + doc.uid + '/:id';
+    return `/events/${doc.uid}/:id`;
   }
 
   return '/not-found';
