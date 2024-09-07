@@ -187,13 +187,11 @@ export default {
 
   prismic: {
     endpoint: "https://sksswoolwich.prismic.io/api/v2",
-    // linkResolver: "~/plugins/link-resolver.js",
+    linkResolver: "~/plugins/link-resolver.js",
     apiOptions: {
       accessToken: process.env.VUE_APP_PRISMIC,
     },
-    routes: [
-	    { type: 'events', path: '/events/:uid/:id' }
-	  ]
+    disableGenerator: true,
   },
 
   googleAnalytics: {
@@ -201,7 +199,7 @@ export default {
   },
   publicRuntimeConfig: {
     googleAnalytics: {
-      id: process.env.GA,
+      id: process.env.GA4,
     },
   },
 
@@ -274,21 +272,26 @@ export default {
     },
   },
   // generate: {
+  //   fallback: "404.html", // Netlify reads a 404.html, Nuxt will load as an SPA
   //   routes: async () => {
-  //     const client = Prismic.client(nuxtConfig.prismic.endpoint, {
-  //       routes: nuxtConfig.prismic.apiOptions.routes,
-  //     })
 
-  //     const pages = await client.query(
-  //       Prismic.Predicates.at('document.type', 'events'),
-  //       Prismic.Predicates.at('document.type', 'article'),
-  //       Prismic.Predicates.at('document.type', 'blog'),
-  //       Prismic.Predicates.at('document.type', 'home'),
-  //       Prismic.Predicates.at('document.type', 'kirtan'),
-  //       Prismic.Predicates.at('document.type', 'our-temple')
-  //     )
-
-  //     return pages.results.map((page) => page.url)
+  //     // Creates the dynamic routes and save them so we can tell nuxt to build the static pages
+  //     const locs = locations.locations
+  //     const locationRoutes = locs.map((loc) => {
+  //       return {
+  //         route: `/${loc.Page}`,
+  //       };
+  //     });
+  //     const posts = await axios.get(
+  //       `https://propertyindustryeye.com/wp-json/wp/v2/posts`
+  //     );
+  //     const newsRoutes = posts.data.map((article) => {
+  //       return {
+  //         route: `/news/${article.id}`,
+  //       };
+  //     });
+  //     const routes = locationRoutes.concat(newsRoutes);
+  //     return routes
   //   }
   // }
 };

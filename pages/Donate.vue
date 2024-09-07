@@ -62,12 +62,14 @@
           <code>20-98-57</code>
           <h4>Bank Account Number:</h4>
           <code>80813745</code>
+          <h4>Account name</h4>
+          <code>S K S Swaminarayan Temple - South East London</code>
           <h4>SWIFT Code:</h4>
           <code>BARCGB22</code>
           <h4>IBAN Number:</h4>
           <code>GB23 BARC 2098 5780 8137 45</code>
           <h4>Reference:</h4>
-          <code>Your Full name</code>
+          <code>Full name - type of donation</code>
         </div>
       </div>
       <div class="tab-pane" id="3">
