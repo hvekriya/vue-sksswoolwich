@@ -12,7 +12,7 @@
         <!-- <DailyDarshan :dailydarshan="dailydarshan" /> -->
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
           <legend>
-            <center>Annoucements</center>
+            <center>Announcements</center>
           </legend>
           <div class="announcements-container">
             <AnnouncementList class="announcements-list" />
