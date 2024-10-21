@@ -2,7 +2,6 @@
   <main id="content" role="main">
     <ImageSlider :fields="fields" />
     <LiveStream :fields="fields" />
-    <!-- <CallToAction /> -->
     <div class="wrapper container">
       <br />
       <div class="row">
@@ -63,7 +62,6 @@ import RecentUploads from "../components/RecentUploads";
 import LiveStream from "../components/LiveStream";
 import ImageSlider from "../components/ImageSlider";
 import Alert from "../components/Alert";
-import CallToAction from "../components/CallToAction.vue";
 import moment from "moment";
 import AnnouncementList from "../components/AnnouncementList.vue";
 
@@ -76,7 +74,6 @@ export default {
     LiveStream,
     ImageSlider,
     Alert,
-    CallToAction,
     UpcomingEvents,
     RecentUploads,
     AnnouncementList,

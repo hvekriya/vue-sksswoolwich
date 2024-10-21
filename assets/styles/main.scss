@@ -87,6 +87,10 @@
   border-top: 3px solid #e7e7e7;
 }
 
+.page-header {
+  margin: 70px 0 20px;
+}
+
 .block-img img {
   // Allows the prismic image to use bootstrap reponsive class
   @extend .img-responsive;
