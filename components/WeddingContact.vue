@@ -13,7 +13,7 @@
           netlify
           netlify-honeypot="bot-field"
         >
-          <input type="hidden" name="form-name" value="contactus" />
+          <input type="hidden" name="form-name" value="wedding-hall" />
 
           <div class="form-group">
             <label for="name">Full name</label>
@@ -92,9 +92,7 @@
       </div>
 
       <div class="col-md-4">
-        <legend>
-          <span class="glyphicon glyphicon-map-marker"></span> Our Location
-        </legend>
+        <legend><span class="glyphicon glyphicon-map-marker"></span> Our Location</legend>
         <address>
           <strong>SKSS Temple Woolwich</strong>
           <br />
@@ -108,9 +106,7 @@
         <address>
           <strong>Events Team</strong>
           <br />
-          <a href="mailto:bookings@sksswoolwich.org"
-            >bookings@sksswoolwich.org</a
-          >
+          <a href="mailto:bookings@sksswoolwich.org">bookings@sksswoolwich.org</a>
         </address>
       </div>
     </div>
