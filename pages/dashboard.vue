@@ -35,7 +35,7 @@
           </hooper>
         </div>
         <div class="col-md-6">
-          <AnnouncementList id="announcements" style="overflow: auto; height: 700px" />
+          <AnnouncementList id="announcements" style="overflow: auto; height: 1050px" />
           <br />
           <br />
         </div>
