@@ -20,6 +20,9 @@
       <li>
         <a href="#5" data-toggle="tab">Gift Aid</a>
       </li>
+      <li>
+        <a href="#6" data-toggle="tab">New donor registration</a>
+      </li>
     </ul>
 
     <div class="tab-content clearfix active">
@@ -179,6 +182,15 @@
           Charitable Giving Leaflet
         </a>
         prepared specially for us by McBrides Chartered Accountants.</p>
+      </div>
+      <div class="tab-pane" id="6">
+        <h3>New donor registration</h3>
+
+        <a
+          href="/new-donor-registration-form"
+          class="btn btn-secondary"
+          >New donor registration form</a
+        >
       </div>
     </div>
   </div>
