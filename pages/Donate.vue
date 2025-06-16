@@ -6,10 +6,10 @@
 
     <ul class="nav nav-pills">
       <li class="active">
-        <a href="#1" data-toggle="tab">Online Donation</a>
+        <a href="#1" data-toggle="tab">Bank Transfer</a>
       </li>
       <li>
-        <a href="#2" data-toggle="tab">Bank Transfer</a>
+        <a href="#2" data-toggle="tab">Online Donation</a>
       </li>
       <li>
         <a href="#3" data-toggle="tab">Standing Order</a>
@@ -27,7 +27,27 @@
 
     <div class="tab-content clearfix active">
       <div class="tab-pane active" id="1">
-
+        <h3>Bank Transfer</h3>
+        <div>
+          Bank Transfer (BACS) can be accepted to the below Temple’s Bank
+          Account:
+          <h4>Bank Name:</h4>
+          <code>Barclays Bank Plc</code>
+          <h4>Bank Sort Code:</h4>
+          <code>20-98-57</code>
+          <h4>Bank Account Number:</h4>
+          <code>80813745</code>
+          <h4>Account name</h4>
+          <code>S K S Swaminarayan Temple - South East London</code>
+          <h4>SWIFT Code:</h4>
+          <code>BARCGB22</code>
+          <h4>IBAN Number:</h4>
+          <code>GB23 BARC 2098 5780 8137 45</code>
+          <h4>Reference:</h4>
+          <code>Full name - type of donation</code>
+        </div>
+      </div>
+      <div class="tab-pane" id="2">
       <script async
         src="https://js.stripe.com/v3/buy-button.js">
       </script>
@@ -53,27 +73,6 @@
         >
           Donate now</a
         > -->
-      </div>
-      <div class="tab-pane" id="2">
-        <h3>Bank Transfer</h3>
-        <div>
-          Bank Transfer (BACS) can be accepted to the below Temple’s Bank
-          Account:
-          <h4>Bank Name:</h4>
-          <code>Barclays Bank Plc</code>
-          <h4>Bank Sort Code:</h4>
-          <code>20-98-57</code>
-          <h4>Bank Account Number:</h4>
-          <code>80813745</code>
-          <h4>Account name</h4>
-          <code>S K S Swaminarayan Temple - South East London</code>
-          <h4>SWIFT Code:</h4>
-          <code>BARCGB22</code>
-          <h4>IBAN Number:</h4>
-          <code>GB23 BARC 2098 5780 8137 45</code>
-          <h4>Reference:</h4>
-          <code>Full name - type of donation</code>
-        </div>
       </div>
       <div class="tab-pane" id="3">
         <h3>Standing Order</h3>

@@ -7,7 +7,7 @@
     <div class="row">
       <div class="col-md-8" style="margin-bottom: 40px">
         <form
-          name="contact-us"
+          name="contactus"
           action="/thanks"
           method="post"
           netlify
