@@ -83,9 +83,6 @@
           <br />Your Bank Branch using form below
           <br />
           <br />Your Bank Online Banking website using details below
-          <br />
-          <br />MyDonate (see Online Donation and selecting regular once logged
-          in at MyDonate)
           <h3>Via Own Bank Branch:</h3>
           Please download and complete the
           <a
