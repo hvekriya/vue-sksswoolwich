@@ -15,24 +15,8 @@
       <prismic-image :field="fields.icon" class="icon" />
     </div>
 
-    <!-- Form -->
-
-    <!-- <div class="row">
-      <div class="col-md-8">
-        <iframe
-          src="https://docs.google.com/forms/d/e/1FAIpQLSe8dPqlVQR04KZAuk-K3_FOusWqrYSC7xaB_a_yz3PUM-He0g/viewform?embedded=true"
-          width="100%"
-          height="1000"
-          frameborder="0"
-          marginheight="0"
-          marginwidth="0"
-        >Loading...</iframe>
-    </div>-->
-
     <div class="col-md-4">
-      <legend>
-        <span class="glyphicon glyphicon-map-marker"></span> Our Location
-      </legend>
+      <legend><span class="glyphicon glyphicon-map-marker"></span> Our Location</legend>
       <address>
         <strong>SKSS Temple Woolwich</strong>
         <br />St. Margarets Grove, <br />London, SE18 7RL

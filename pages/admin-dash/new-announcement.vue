@@ -16,9 +16,7 @@
           />
         </div>
         <div class="form-group">
-          <label for="order"
-            >Order (1 Appears first in the list and so on...)</label
-          >
+          <label for="order">Order (1 Appears first in the list and so on...)</label>
           <input
             type="number"
             class="form-control"
@@ -42,9 +40,7 @@
       <div v-else>
         <h4>You submitted successfully!</h4>
         <a href="/admin-dash/announcements"> Go back to list of annoucements</a>
-        <button class="btn btn-primary" @click="newAnnouncement">
-          Add another
-        </button>
+        <button class="btn btn-primary" @click="newAnnouncement">Add another</button>
       </div>
     </div>
     <br />
