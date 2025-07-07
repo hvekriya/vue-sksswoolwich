@@ -313,7 +313,6 @@ $font-body: "Open Sans", sans-serif;
     margin-bottom: 8px;
     font-weight: 600;
     color: $dark-text;
-    font-size: 1.05rem;
   }
 }
 
@@ -322,7 +321,6 @@ $font-body: "Open Sans", sans-serif;
   display: block;
   width: 100%; // Crucial for filling the available space
   padding: 12px 15px;
-  font-size: 1rem;
   line-height: 1.5;
   color: $dark-text;
   background-color: #fff;

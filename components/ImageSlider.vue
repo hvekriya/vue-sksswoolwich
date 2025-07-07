@@ -83,7 +83,6 @@ $font-body: "Open Sans", sans-serif;
   margin-bottom: 40px; // Spacing before the next content section
   position: relative;
   overflow: hidden;
-  border-radius: 10px; // Rounded corners for consistency
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); // Subtle shadow
 
   @media (max-width: 767px) {

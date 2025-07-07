@@ -267,7 +267,6 @@ $font-body: "Open Sans", sans-serif;
     margin-bottom: 8px;
     font-weight: 600;
     color: $dark-text;
-    font-size: 1.05rem;
   }
 }
 
@@ -276,7 +275,6 @@ $font-body: "Open Sans", sans-serif;
   display: block;
   width: 100%;
   padding: 12px 15px;
-  font-size: 1rem;
   line-height: 1.5;
   color: $dark-text;
   background-color: #fff;
@@ -369,7 +367,6 @@ $font-body: "Open Sans", sans-serif;
 .btn-primary {
   display: inline-block;
   padding: 12px 30px;
-  font-size: 1.1rem;
   font-weight: 600;
   text-align: center;
   white-space: nowrap;
@@ -389,7 +386,6 @@ $font-body: "Open Sans", sans-serif;
     display: block;
     width: 100%;
     padding: 10px 20px;
-    font-size: 1rem;
   }
 
   &:hover {
