@@ -52,7 +52,13 @@
         </div>
       </div>
 
-      <div v-if="album && album.photo && album.photo.length" class="event-photos-section">
+      <div v-if="isLoadingGallery" class="alert-message no-photos-alert">
+        <p>Loading event photos...</p>
+      </div>
+      <div
+        v-else-if="album && album.photo && album.photo.length"
+        class="event-photos-section"
+      >
         <h2 class="section-sub-heading">Event Gallery</h2>
         <div id="lightgallery" class="lightgallery-grid">
           <a
@@ -131,6 +137,8 @@ export default {
       twitterShareUrl: "",
       photosetId: null, // Store photosetId to use in template
       flickrPhotosetWebUrl: "", // Store Flickr web URL
+      album: null, // Initialize album here, as it will be populated client-side
+      isLoadingGallery: true, // New data property for loading state
     };
   },
   head() {
@@ -199,10 +207,8 @@ export default {
       ],
     };
   },
-  async asyncData({ $prismic, $axios, params, error }) {
+  async asyncData({ $prismic, params, error }) {
     let eventDetails = null;
-    let album = null;
-    let photosetId = null; // Declare photosetId here to pass it to the component
 
     try {
       const eventUid = params.event;
@@ -212,46 +218,16 @@ export default {
         throw new Error("Event not found");
       }
 
-      console.log(eventDetails);
-
-      photosetId = eventDetails.data.flickr_photoset_id || params.id;
-
-      if (photosetId) {
-        const flickrConfig = {
-          api_key: process.env.flickrApiKey,
-          user_id: process.env.flickrUserId,
-          format: "json",
-          nojsoncallback: 1,
-        };
-        const flickrApiUrl = process.env.flickrUrl; // Use a different name to avoid confusion with public URL
-
-        try {
-          const set = await $axios.get(flickrApiUrl, {
-            params: {
-              ...flickrConfig,
-              method: "flickr.photosets.getPhotos",
-              photoset_id: photosetId,
-              extras: "url_n, url_o, url_sq, title",
-            },
-          });
-          if (set.data && set.data.photoset) {
-            album = set.data.photoset;
-          } else {
-            console.warn("Flickr photoset data not found:", set.data);
-          }
-        } catch (flickrErr) {
-          console.error("Error fetching Flickr album:", flickrErr);
-          album = null;
-        }
-      }
+      // We still need photosetId in data for the Flickr link,
+      // but the API call itself is moved to client-side.
+      const photosetId = eventDetails.data.flickr_photoset_id || params.id;
 
       return {
-        album,
         eventDetails,
-        photosetId, // Return photosetId so it's available in data()
+        photosetId, // photosetId is still available for the template and client-side fetch
       };
     } catch (e) {
-      console.error("Error in asyncData for EventDetailPage:", e);
+      console.error("Error in asyncData for EventDetailPage (Prismic fetch):", e);
       error({
         statusCode: e.message === "Event not found" ? 404 : 500,
         message: e.message || "Page not found",
@@ -262,19 +238,22 @@ export default {
     album: {
       immediate: true,
       handler(newAlbum) {
-        this.$nextTick(() => {
-          if (
-            newAlbum &&
-            newAlbum.photo &&
-            newAlbum.photo.length &&
-            document.getElementById("lightgallery")
-          ) {
-            this.initLightgallery();
-          } else if (this.lgInstance) {
-            this.lgInstance.destroy();
-            this.lgInstance = null;
-          }
-        });
+        // Only attempt to initialize lightgallery on the client
+        if (process.client) {
+          this.$nextTick(() => {
+            if (
+              newAlbum &&
+              newAlbum.photo &&
+              newAlbum.photo.length &&
+              document.getElementById("lightgallery")
+            ) {
+              this.initLightgallery();
+            } else if (this.lgInstance) {
+              this.lgInstance.destroy();
+              this.lgInstance = null;
+            }
+          });
+        }
       },
     },
   },
@@ -318,9 +297,51 @@ export default {
         }
       }
     },
+    async fetchFlickrAlbum() {
+      if (!this.photosetId || !process.client) {
+        this.isLoadingGallery = false;
+        return; // No photoset ID or not on client
+      }
+
+      this.isLoadingGallery = true; // Set loading to true before fetch
+
+      const flickrConfig = {
+        api_key: process.env.flickrApiKey,
+        user_id: process.env.flickrUserId,
+        format: "json",
+        nojsoncallback: 1,
+      };
+      const flickrApiUrl = process.env.flickrUrl;
+
+      try {
+        const set = await this.$axios.get(flickrApiUrl, {
+          params: {
+            ...flickrConfig,
+            method: "flickr.photosets.getPhotos",
+            photoset_id: this.photosetId,
+            extras: "url_n, url_o, url_sq, title",
+          },
+        });
+        if (set.data && set.data.photoset) {
+          this.album = set.data.photoset;
+        } else {
+          console.warn("Flickr photoset data not found:", set.data);
+          this.album = null; // Ensure album is null if data is empty
+        }
+      } catch (flickrErr) {
+        console.error("Error fetching Flickr album:", flickrErr);
+        this.album = null;
+      } finally {
+        this.isLoadingGallery = false; // Set loading to false after fetch
+      }
+    },
   },
   mounted() {
     this.updateShareUrls();
+    // Only fetch Flickr album if on client side
+    if (process.client) {
+      this.fetchFlickrAlbum();
+    }
   },
   beforeDestroy() {
     if (this.lgInstance) {
@@ -376,6 +397,9 @@ $font-body: "Open Sans", sans-serif;
   min-height: calc(100vh - 100px);
   font-family: $font-body;
   color: $dark-text;
+
+  /* As per user instruction, removed grey background from wrapper class */
+  /* background-color: $light-gray-bg; */
 
   @media (max-width: 767px) {
     padding-top: 30px;
