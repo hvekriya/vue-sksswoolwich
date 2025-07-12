@@ -165,7 +165,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use "~vue-wysiwyg/dist/vueWysiwyg.css";
+@import "~vue-wysiwyg/dist/vueWysiwyg.css";
 
 /* Modal Overlay */
 .modal-overlay {
