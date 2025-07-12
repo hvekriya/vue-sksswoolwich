@@ -212,6 +212,8 @@ export default {
         throw new Error("Event not found");
       }
 
+      console.log(eventDetails);
+
       photosetId = eventDetails.data.flickr_photoset_id || params.id;
 
       if (photosetId) {

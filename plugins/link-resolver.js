@@ -8,7 +8,7 @@ export default function (doc) {
   }
 
   if (doc.type === 'events') {
-    return `/events/${doc.uid}`;
+    return `/events/${doc.uid}/${doc.data.flickr_photoset_id}`;
   }
 
   return '/not-found';
