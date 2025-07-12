@@ -102,24 +102,8 @@ export default {
     },
   },
   methods: {
-    updatePublished(status) {
-      this.$fire.database
-        .ref("/announcements") // Assuming this is the correct path
-        .child(this.currentAnnouncement.key)
-        .update({
-          published: status,
-        })
-        .then(() => {
-          this.currentAnnouncement.published = status;
-          this.message = "The announcement status was updated successfully!";
-          this.$emit("updated");
-        })
-        .catch((e) => {
-          console.error("Error updating published status:", e);
-          this.message = "Error updating status.";
-        });
-    },
     updateAnnouncement() {
+      console.log("Attempting update. Current user:", this.user); // <-- ADD THIS
       if (!this.currentAnnouncement || !this.currentAnnouncement.key) {
         this.message = "No announcement selected for update.";
         return;
@@ -130,7 +114,7 @@ export default {
         description: this.currentAnnouncement.description,
       };
       this.$fire.database
-        .ref("/announcements") // Assuming this is the correct path
+        .ref("/annoucements") // Assuming this is the correct path
         .child(this.currentAnnouncement.key)
         .update(data)
         .then(() => {
@@ -151,7 +135,7 @@ export default {
       }
       if (confirm("Are you sure you want to delete this announcement?")) {
         this.$fire.database
-          .ref("/announcements") // Assuming this is the correct path
+          .ref("/annoucements") // Assuming this is the correct path
           .child(this.currentAnnouncement.key)
           .remove()
           .then(() => {
@@ -181,7 +165,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~vue-wysiwyg/dist/vueWysiwyg.css";
+@use "~vue-wysiwyg/dist/vueWysiwyg.css";
 
 /* Modal Overlay */
 .modal-overlay {
