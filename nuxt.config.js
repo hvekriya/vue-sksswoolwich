@@ -266,6 +266,9 @@ export default {
       // to transform link with <nuxt-link> for the htmlSerializer
       config.resolve.alias["vue"] = "vue/dist/vue.common";
     },
+    transpile: [
+      "axios"
+    ]
   },
   // generate: {
   //   fallback: "404.html", // Netlify reads a 404.html, Nuxt will load as an SPA
