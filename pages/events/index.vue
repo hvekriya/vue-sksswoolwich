@@ -48,26 +48,22 @@ export default {
   async asyncData({ $prismic, error }) {
     try {
       // Get event data from Prismic
+      const document = await $prismic.api.getSingle("home");
       const eventsFromPrismic = await $prismic.api.query(
-        $prismic.predicates.at("document.type", "events"),
-        { orderings: "[my.events.event_date]" } // Order by event_date ascending directly from Prismic for upcoming
+        $prismic.predicates.at("document.type", "events")
       );
-
-      const today = moment().format("YYYY-MM-DD");
+      const today = moment().format("YYYY-MM-DD").toString();
       const events = eventsFromPrismic.results;
 
-      // Filter the events based on upcoming
+      // Filter the events based on past and future
       const upcomingEvents = events.filter((event) => {
         return moment(event.data.event_date).isSameOrAfter(today);
       });
-
-      // Client-side sort is still useful if Prismic ordering isn't perfect or for specific needs
-      // However, with Prismic ordering '[my.events.event_date]', it should already be sorted ascending.
-      // If you want to ensure earliest upcoming event first:
-      upcomingEvents.sort((a, b) => {
-        const dateA = moment(a.data.event_date);
-        const dateB = moment(b.data.event_date);
-        return dateA.diff(dateB); // Sort ascending (earliest upcoming event first)
+      upcomingEvents.sort(function (a, b) {
+        a = new Date(a.data.event_date);
+        b = new Date(b.data.event_date);
+        var results = a > b ? -1 : a < b ? 1 : 0;
+        return results * -1;
       });
 
       return {
