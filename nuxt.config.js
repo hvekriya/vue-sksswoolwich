@@ -110,6 +110,7 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
+    '~plugins/axios-auth.js',
     { src: "~/plugins/prismicLinks", ssr: false },
     "~plugins/filters.js",
     "~plugins/wysiwyg.js",

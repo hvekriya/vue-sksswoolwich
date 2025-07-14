@@ -1,18 +1,22 @@
 <template>
   <div class="wrapper container">
     <header class="page-header">
-      <h1>Announcements</h1>
-      <div v-if="user">
+      <h1>Admin Dashboard</h1>
+      <div v-if="user" class="header-actions">
         <span>{{ user.email }} | </span>
         <a @click="logout" class="logout-link">Logout</a>
         <span> | </span>
         <nuxt-link to="/admin-dash/sitebuild" class="rebuild-link"
           >Rebuild the website</nuxt-link
         >
+        <span> | </span>
+        <nuxt-link to="/admin-dash/events" class="events-link">Manage Events</nuxt-link>
       </div>
     </header>
+
     <div class="list row">
       <div class="col-md-6">
+        <h2>Announcements</h2>
         <ul class="list-group">
           <li
             class="list-group-item"
@@ -63,18 +67,17 @@
 </template>
 
 <script>
-import AnnouncementEditorModal from "./AnnouncementEditorModal.vue"; // Renamed and imported as modal
+import AnnouncementEditorModal from "./AnnouncementEditorModal.vue";
 export default {
-  name: "AnnouncementsAdmin",
-  components: { AnnouncementEditorModal }, // Use the new component name
+  name: "AdminDashboard", // Changed name to reflect broader scope
+  components: { AnnouncementEditorModal },
   data() {
     return {
       announcements: [],
-      // currentAnnouncements: null, // No longer needed directly for rendering the editor here
-      currentIndex: -1, // Still useful for active state in list
+      currentIndex: -1,
       user: null,
-      showEditModal: false, // Control modal visibility
-      selectedAnnouncement: null, // The announcement object passed to the modal
+      showEditModal: false,
+      selectedAnnouncement: null,
     };
   },
   methods: {
@@ -93,28 +96,17 @@ export default {
       this.announcements = _announcements;
     },
     refreshList() {
-      // This method now primarily ensures the list is up-to-date and modal is reset
       this.selectedAnnouncement = null;
       this.currentIndex = -1;
-      this.showEditModal = false; // Ensure modal closes
-      // Firebase `on('value')` listener will automatically re-run `onDataChange`
-      // when data changes, so a manual re-fetch isn't usually needed here.
+      this.showEditModal = false;
     },
-    // New method to open the modal
     openEditModal(announcement, index) {
-      this.selectedAnnouncement = announcement; // Set the announcement to be edited
-      this.currentIndex = index; // Set active state in the list
-      this.showEditModal = true; // Show the modal
+      this.selectedAnnouncement = announcement;
+      this.currentIndex = index;
+      this.showEditModal = true;
     },
     onAnnouncementUpdated() {
-      // This is a new method to handle updates from the modal.
-      // Firebase's real-time nature means `onDataChange` will fire automatically,
-      // updating `this.announcements`. We just need to make sure `selectedAnnouncement`
-      // in the parent is also updated if needed, or simply rely on the full list refresh.
-      // For simplicity, we'll let Firebase reactivity handle the list update.
-      // If the modal makes changes, the main list will automatically reflect them.
-      // We don't need to manually update `selectedAnnouncement` here as it's a copy passed to the modal.
-      // The `refreshList` will implicitly handle necessary state resets.
+      // Logic for after announcement update (Firebase's onDataChange should handle display)
     },
     logout() {
       this.$fire.auth
@@ -177,13 +169,21 @@ export default {
     font-weight: 500;
   }
 
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between links */
+  }
+
   span {
     color: #6c757d;
     font-size: 0.95em;
   }
 
   .logout-link,
-  .rebuild-link {
+  .rebuild-link,
+  .events-link {
+    /* Apply consistent styling to the new link */
     color: #007bff;
     text-decoration: none;
     transition: color 0.2s ease-in-out;
@@ -195,7 +195,16 @@ export default {
   }
 }
 
-/* List Group Styling */
+/* Add some spacing for the "Announcements" heading */
+.list.row h2 {
+  margin-top: 20px;
+  margin-bottom: 15px;
+  font-size: 1.8em;
+  color: #343a40;
+  font-family: "Roboto", sans-serif;
+}
+
+/* Rest of your existing styles below remain unchanged */
 .list-group {
   margin: 0;
   margin-bottom: 20px;
@@ -305,8 +314,9 @@ export default {
     flex-direction: column;
     align-items: flex-start;
 
-    div {
+    .header-actions {
       margin-top: 10px;
+      flex-wrap: wrap; /* Allow links to wrap on small screens */
     }
   }
 
