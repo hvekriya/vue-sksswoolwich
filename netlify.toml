@@ -1,6 +1,6 @@
 # netlify.toml
 [build]
-  command = "npm run build" # or "yarn build"
+  command = "npm run generate" # or "yarn build"
   publish = "dist"          # or ".nuxt/dist" depending on your Nuxt static output path
 
 [functions]
