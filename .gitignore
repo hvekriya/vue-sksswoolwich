@@ -14,3 +14,6 @@ yarn-error.log*
 .env
 .env.local
 .nuxt
+
+# Local Netlify folder
+.netlify

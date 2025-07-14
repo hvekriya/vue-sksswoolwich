@@ -110,7 +110,6 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '~plugins/axios-auth.js',
     { src: "~/plugins/prismicLinks", ssr: false },
     "~plugins/filters.js",
     "~plugins/wysiwyg.js",
@@ -193,10 +192,6 @@ export default {
       accessToken: process.env.VUE_APP_PRISMIC,
     },
     disableGenerator: true,
-  },
-
-  googleAnalytics: {
-    id: process.env.GA, // Use as fallback if no runtime config is provided
   },
   publicRuntimeConfig: {
     googleAnalytics: {

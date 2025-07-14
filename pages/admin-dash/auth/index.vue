@@ -60,10 +60,6 @@ export default {
         this.$fire.auth
           .signInWithEmailAndPassword(this.email, this.password)
           .then((userCredential) => {
-            // const authUser = {
-            //   uid: userCredential.user.uid,
-            //   email: userCredential.user.email,
-            // };
             this.$router.replace("/admin-dash");
           })
           .catch((error) => {
