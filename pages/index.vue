@@ -39,12 +39,8 @@
         </p>
         <LazyRecentUploads :recentUploads="recentUploads" />
         <br />
-        <a
-          href="https://www.flickr.com/photos/sksswoolwich/"
-          class="btn btn-primary view-all-events"
-          target="_blank"
-        >
-          View all photos</a
+        <NuxtLink to="/events/past" class="btn btn-primary view-all-events"
+          >Past Events</NuxtLink
         >
       </div>
       <br />
@@ -98,6 +94,7 @@ export default {
         var results = a > b ? -1 : a < b ? 1 : 0;
         return results * -1;
       });
+
       var d = new Date();
       const recentUploadTime = d.getDate() - 5; // Last 30 days
       const unixTimeStamp = Math.floor(Date.now() / 1000);
