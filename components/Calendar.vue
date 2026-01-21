@@ -25,7 +25,7 @@ export default {
         plugins: [listPlugin, dayGridPlugin, googleCalendarPlugin],
         select: this.handleDateClick,
         stickyHeaderDates: false,
-        googleCalendarApiKey: process.env.firebase_apiKey,
+        googleCalendarApiKey: process.env.googleCalendarApiKey,
         events: {
           googleCalendarId:
             "121eb417fb3181fea9b75aec903dd0e98f0c4464e7ef4a5c1048380134af53d5@group.calendar.google.com",
