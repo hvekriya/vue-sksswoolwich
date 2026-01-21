@@ -28,7 +28,7 @@ export default {
         googleCalendarApiKey: process.env.firebase_apiKey,
         events: {
           googleCalendarId:
-            "c_1cb9e7ffe7dcf521b3845a216054ded6372636a8d55cca21b64b2477ccc261b6@group.calendar.google.com",
+            "121eb417fb3181fea9b75aec903dd0e98f0c4464e7ef4a5c1048380134af53d5@group.calendar.google.com",
         },
         // validRange: {
         //   start: "2017-05-01",
