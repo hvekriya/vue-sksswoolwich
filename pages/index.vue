@@ -9,7 +9,7 @@
       </div>
       <div class="row">
         <!-- <DailyDarshan :dailydarshan="dailydarshan" /> -->
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
           <legend>
             <center>Announcements</center>
           </legend>
@@ -18,17 +18,16 @@
           </div>
         </div>
         <OpeningTimes />
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+        <!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
           <legend>
             <center>Events calendar</center>
           </legend>
           <Calendar class="fc-calendar" />
-        </div>
+        </div> -->
       </div>
       <LazyUpcomingEvents :upcomingEvents="upcomingEvents" style="margin-top: 20px" />
       <NuxtLink to="events/past" class="btn btn-primary view-all-events">
-        View past events</NuxtLink
-      >
+        View past events</NuxtLink>
       <div class="row">
         <header class="page-header">
           <h2>Photostream</h2>
@@ -39,9 +38,7 @@
         </p>
         <LazyRecentUploads :recentUploads="recentUploads" />
         <br />
-        <NuxtLink to="/events/past" class="btn btn-primary view-all-events"
-          >Past Events</NuxtLink
-        >
+        <NuxtLink to="/events/past" class="btn btn-primary view-all-events">Past Events</NuxtLink>
       </div>
       <br />
       <br />
@@ -154,11 +151,15 @@ export default {
     @media only screen and (max-width: 768px) {
       @content;
     }
-  } @else if $media==medium-screens {
+  }
+
+  @else if $media==medium-screens {
     @media only screen and (min-width: 769px) and (max-width: 1024px) {
       @content;
     }
-  } @else if $media==wide-screens {
+  }
+
+  @else if $media==wide-screens {
     @media only screen and (min-width: 1024px) {
       @content;
     }
@@ -172,12 +173,14 @@ main {
 .fc-toolbar .fc-left {
   display: none;
 }
+
 .fc-scroller {
   height: 400px !important;
 }
 
 .view-all-events {
   width: 20%;
+
   @include respond-to(handhelds) {
     width: 100%;
   }

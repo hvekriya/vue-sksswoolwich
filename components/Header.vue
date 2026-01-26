@@ -1,19 +1,10 @@
 <template>
-  <nav
-    class="navbar navbar-default navbar-fixed-top topnav"
-    role="navigation"
-    id="header"
-  >
+  <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation" id="header">
     <div class="container-fluid topnav">
       <div class="navbar-header animated fadeInDown">
-        <button
-          type="button"
-          class="navbar-toggle collapsed"
-          data-toggle="collapse"
-          data-target="#bs-example-navbar-collapse-1"
-          v-bind:class="{ 'is-active': menuIsActive }"
-          v-on:click="toggleNav"
-        >
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+          data-target="#bs-example-navbar-collapse-1" v-bind:class="{ 'is-active': menuIsActive }"
+          v-on:click="toggleNav">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar top-bar"></span>
           <span class="icon-bar middle-bar"></span>
@@ -23,63 +14,44 @@
           <img alt="Brand" class="brand" src="/img/WoolwichMandirLogo.png" />
         </a>
       </div>
-      <div
-        class="collapse navbar-collapse animated fadeInDown"
-        id="bs-example-navbar-collapse-1"
-      >
+      <div class="collapse navbar-collapse animated fadeInDown" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-left">
           <li>
-            <NuxtLink to="/" @click.native="$scrollToTop"
-              ><fa :icon="['fas', 'house']" /> HOME
+            <NuxtLink to="/" @click.native="$scrollToTop">
+              <fa :icon="['fas', 'house']" /> HOME
             </NuxtLink>
           </li>
+          <li>
+            <a href="https://www.bhaktiras.sksswoolwich.org">
+              🥳 BHAKTIRAS
+            </a>
+          </li>
           <li class="dropdown">
-            <a
-              href="#"
-              class="dropdown-toggle"
-              data-toggle="dropdown"
-              aria-expanded="false"
-              :class="{
-                'NuxtLink-exact-active': subIsActive('/our-temple'),
-              }"
-            >
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" :class="{
+              'NuxtLink-exact-active': subIsActive('/our-temple'),
+            }">
               <fa :icon="['fas', 'circle-info']" /> OUR TEMPLE
             </a>
             <ul class="dropdown-menu multi-level" role="menu">
               <li>
-                <NuxtLink
-                  to="/our-temple/our-temple"
-                  @click.native="$scrollToTop"
-                  >ABOUT</NuxtLink
-                >
+                <NuxtLink to="/our-temple/our-temple" @click.native="$scrollToTop">ABOUT</NuxtLink>
               </li>
               <li>
                 <a href="/our-temple/calendar">UTSAVS CALENDAR</a>
               </li>
               <li>
-                <NuxtLink
-                  to="/our-temple/yuvak-mandal"
-                  @click.native="$scrollToTop"
-                  >YUVAK MANDAL</NuxtLink
-                >
+                <NuxtLink to="/our-temple/yuvak-mandal" @click.native="$scrollToTop">YUVAK MANDAL</NuxtLink>
               </li>
               <li>
-                <NuxtLink
-                  to="/our-temple/swaminarayan-education"
-                  @click.native="$scrollToTop"
-                >
+                <NuxtLink to="/our-temple/swaminarayan-education" @click.native="$scrollToTop">
                   SWAMINARAYAN EDUCATION
                 </NuxtLink>
               </li>
               <li>
-                <NuxtLink to="/wedding-hall" @click.native="$scrollToTop"
-                  >WEDDING HALL</NuxtLink
-                >
+                <NuxtLink to="/wedding-hall" @click.native="$scrollToTop">WEDDING HALL</NuxtLink>
               </li>
               <li>
-                <NuxtLink to="/our-temple/careers" @click.native="$scrollToTop"
-                  >CAREERS</NuxtLink
-                >
+                <NuxtLink to="/our-temple/careers" @click.native="$scrollToTop">CAREERS</NuxtLink>
               </li>
             </ul>
           </li>
@@ -103,8 +75,8 @@
           </li> -->
           <li>
             <NuxtLink to="/contact-us" @click.native="$scrollToTop">
-              <fa :icon="['fas', 'phone']" /> CONTACT US</NuxtLink
-            >
+              <fa :icon="['fas', 'phone']" /> CONTACT US
+            </NuxtLink>
           </li>
         </ul>
       </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
     <div itemscope itemtype="http://schema.org/OpeningHoursSpecification">
       <meta itemprop="openingHours" content="Mon-Fri Morning 7:00 - 11:00" />
       <meta itemprop="openingHours" content="Mon-Fri Evening 16:00 - 20:00" />
