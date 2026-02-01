@@ -1,159 +1,125 @@
 <template>
-  <div>
-    <h2>Pinned posters</h2>
+  <div class="space-y-8">
+    <div class="flex items-center justify-between">
+      <div>
+        <h2 class="text-3xl font-serif font-bold text-gray-900 dark:text-white mb-2">Pinned Posters</h2>
+        <p class="text-sm text-gray-500">Manage the prominent posters displayed in the pinned section.</p>
+      </div>
+      <UButton icon="i-heroicons-cloud-arrow-up" label="Upload New Poster" size="lg" color="golden"
+        class="rounded-full shadow-lg" :loading="isUploading" @click="launchFilePicker" />
+    </div>
 
-    <!-- Clicking this button triggers the "click" event of the file input. -->
-    <button
-      @click="launchImageFile"
-      :disabled="isUploadingPinnedImage"
-      type="button"
-      class="btn btn-primary"
-    >
-      {{ isUploadingPinnedImage ? "Uploading..." : "Upload a new pinned poster" }}
-    </button>
-    <p>
-      NOTE: Please delete existing poster if you are uploading updated version.
-      <strong>Maximum posters allowed in the Pinned Section is 2.</strong>
-    </p>
+    <!-- Hidden File Input -->
+    <input ref="fileInput" type="file" accept="image/png, image/jpeg" class="hidden" @change="handleFileUpload" />
 
-    <!-- This is the real file input element. -->
-    <input
-      ref="imageFile"
-      @change.prevent="uploadPinnedPoster($event.target.files)"
-      type="file"
-      accept="image/png, image/jpeg"
-      class="hidden"
-    />
+    <UAlert v-if="pinnedPosters.length >= 2" icon="i-heroicons-information-circle" color="orange" variant="soft"
+      title="Limit Reached"
+      description="Maximum posters allowed in the Pinned Section is 2. Please delete an existing poster before uploading a new one." />
 
-    <table v-if="pinnedPosters.length !== 0">
-      <tr>
-        <th>Image</th>
-        <th>Action</th>
-      </tr>
-      <tr v-for="(image, imageIndex) in pinnedPosters">
-        <td>
-          <img :src="image" class="img-responsive" :key="imageIndex" style="width: 25%" />
-        </td>
-        <td>
-          <button
-            @click="deleteImage(image)"
-            :disabled="isDeletingImage"
-            type="button"
-            class="bg-red-500 border-red-300 text-white"
-          >
-            {{ isDeletingImage ? "Deleting..." : "Delete" }}
-          </button>
-        </td>
-      </tr>
-    </table>
-    <h3 v-else>No posters uploaded.</h3>
+    <div v-if="pinnedPosters.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <UCard v-for="(poster, index) in pinnedPosters" :key="index"
+        class="group overflow-hidden rounded-[2rem] border-gray-100 dark:border-gray-800 shadow-xl"
+        :ui="{ body: { padding: 'p-0' } }">
+        <div class="relative aspect-[16/9]">
+          <img :src="poster.url" class="w-full h-full object-cover" />
+          <div
+            class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+            <UButton color="red" variant="soft" icon="i-heroicons-trash" label="Delete Poster" class="rounded-full"
+              @click="deletePoster(poster.fullPath)" />
+          </div>
+        </div>
+      </UCard>
+    </div>
+
+    <div v-else-if="loading" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <USkeleton v-for="i in 2" :key="i" class="h-48 w-full rounded-[2rem]" />
+    </div>
+
+    <div v-else
+      class="text-center py-20 bg-gray-50 dark:bg-gray-900/50 rounded-[3rem] border-2 border-dashed border-gray-200 dark:border-gray-800">
+      <UIcon name="i-heroicons-photo" class="w-16 h-16 text-gray-300 mb-4 mx-auto" />
+      <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">No posters found</h3>
+      <p class="text-gray-500">Get started by uploading your first pinned poster.</p>
+    </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: "UploadPinnedPosters",
-  data() {
-    return {
-      isUploadingPinnedImage: false,
-      isDeletingImage: false,
-      pinnedPosters: [],
-    };
-  },
+<script setup lang="ts">
+import { ref as storageRef, listAll, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage'
+import { useFirebaseStorage } from 'vuefire'
 
-  methods: {
-    getPinnedPosters() {
-      // Get firebase images
-      const fireStorage = this.$fire.storage.ref("pinned-posters/");
-      fireStorage
-        .listAll()
-        .then((res) => {
-          let _pinnedPosters = [];
-          res.items.forEach((itemRef) => {
-            this.$fire.storage
-              .ref(itemRef.fullPath)
-              .getDownloadURL()
-              .then((url) => {
-                _pinnedPosters.push(url);
-              })
-              .catch((e) => {
-                console.log(e);
-              });
-          });
-          this.pinnedPosters = _pinnedPosters;
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
-    launchImageFile() {
-      // Trigger the file input click event.
-      this.$refs.imageFile.click();
-    },
-    uploadPinnedPoster(files) {
-      if (!files.length) {
-        return;
-      }
-      const file = files[0];
+const storage = useFirebaseStorage()
+const fileInput = ref<HTMLInputElement | null>(null)
+const pinnedPosters = ref<{ url: string, fullPath: string }[]>([])
+const isUploading = ref(false)
+const loading = ref(false)
+const toast = useToast()
 
-      if (!file.type.match("image.*")) {
-        alert("Please upload an image.");
-        return;
-      }
+const fetchPosters = async () => {
+  loading.value = true
+  try {
+    const listRef = storageRef(storage, 'pinned-posters/')
+    const res = await listAll(listRef)
+    const promises = res.items.map(async (itemRef) => {
+      const url = await getDownloadURL(itemRef)
+      return { url, fullPath: itemRef.fullPath }
+    })
+    pinnedPosters.value = await Promise.all(promises)
+  } catch (error) {
+    console.error('Error fetching posters:', error)
+  } finally {
+    loading.value = false
+  }
+}
 
-      const metadata = {
-        contentType: file.type,
-      };
+const launchFilePicker = () => {
+  if (pinnedPosters.value.length >= 2) {
+    toast.add({ title: 'Limit Reached', description: 'Please delete a poster first.', color: 'orange' })
+    return
+  }
+  fileInput.value?.click()
+}
 
-      this.isUploadingPinnedImage = true;
+const handleFileUpload = async (event: Event) => {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
+  if (!file) return
 
-      // Create a reference to the destination where we're uploading
-      // the file.
-      const storage = this.$fire.storage;
-      const imageRef = storage.ref(`pinned-posters/${file.name}`);
+  if (!file.type.match('image.*')) {
+    toast.add({ title: 'Invalid File', description: 'Please upload an image file.', color: 'red' })
+    return
+  }
 
-      const uploadTask = imageRef
-        .put(file, metadata)
-        .then((snapshot) => {
-          window.location.reload(true);
-          // Once the image is uploaded, obtain the download URL, which
-          // is the publicly accessible URL of the image.
-          return snapshot.ref.getDownloadURL().then((url) => {
-            return url;
-          });
-        })
-        .catch((error) => {
-          console.error("Error uploading image", error);
-        });
+  isUploading.value = true
+  try {
+    const posterRef = storageRef(storage, `pinned-posters/${Date.now()}_${file.name}`)
+    await uploadBytes(posterRef, file)
+    toast.add({ title: 'Upload Successful', icon: 'i-heroicons-check-circle', color: 'green' })
+    await fetchPosters()
+  } catch (error) {
+    console.error('Upload failed:', error)
+    toast.add({ title: 'Upload Failed', description: 'Could not upload poster.', color: 'red' })
+  } finally {
+    isUploading.value = false
+    target.value = ''
+  }
+}
 
-      // When the upload ends, set the value of the blog image URL
-      // and signal that uploading is done.
-      uploadTask.then((url) => {
-        this.isUploadingPinnedImage = false;
-      });
-    },
-    deleteImage(image) {
-      this.$fire.storage
-        .refFromURL(image)
-        .delete()
-        .then(() => {
-          window.location.reload(true);
-        })
-        .catch((error) => {
-          console.error("Error deleting image", error);
-        });
-    },
-    logout() {
-      this.$fire.auth.signOut().then((result) => {
-        this.user = "";
-        this.$router.push("/admin-dash/auth");
-      });
-    },
-  },
-  beforeMount() {
-    this.getPinnedPosters();
-  },
-};
+const deletePoster = async (fullPath: string) => {
+  if (!confirm('Are you sure you want to delete this poster?')) return
+
+  try {
+    const posterRef = storageRef(storage, fullPath)
+    await deleteObject(posterRef)
+    toast.add({ title: 'Deleted', description: 'Poster has been removed.', color: 'gray' })
+    await fetchPosters()
+  } catch (error) {
+    console.error('Delete failed:', error)
+    toast.add({ title: 'Delete Failed', color: 'red' })
+  }
+}
+
+onMounted(fetchPosters)
 </script>
 
 <style scoped>
@@ -163,6 +129,7 @@ td {
   padding: 20px;
   border: 1px solid black;
 }
+
 strong {
   font-weight: 900;
 }

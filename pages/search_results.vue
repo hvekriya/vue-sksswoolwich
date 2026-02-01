@@ -1,132 +1,103 @@
-<!-- Create file src/views/Page.vue -->
-
 <template>
-  <div class="wrapper container">
-    <header class="page-header">
-      <a href="javascript:history.back()">Go back</a>
-      <div class="row">
-        <div class="col-md-8">
-          <h1 class="title">Search results</h1>
-        </div>
-        <div class="col-md-4">
-          <div class="navbar-form" id="search">
-            <div class="form-group">
-              <input
-                type="text"
-                class="form-control search"
-                placeholder="Search"
-                v-model="search_query"
-              />
-            </div>
-            <button class="btn btn-primary search" v-on:click="newSearch">
-              Search
-            </button>
-          </div>
+  <div class="search-results pb-24">
+    <!-- Immersive Header -->
+    <section class="relative h-[40vh] flex flex-col justify-end pb-12 overflow-hidden">
+      <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-gray-950/20 dark:bg-black/40"></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-gray-50 dark:from-black via-gray-50/80 dark:via-black/80 to-transparent">
         </div>
       </div>
-    </header>
-    <div>
-      <p>
-        Showing search results for <b>{{ search_query }}</b>
-      </p>
-      <div
-        class="post"
-        v-for="(item, index) in articles"
-        :key="'posts-' + index"
-      >
-        <div class="well">
-          <div class="media">
-            <img
-              class="media-object pull-left"
-              :src="item.data.cover.url"
-              alt=""
-              width="10%"
-            />
-            <div class="col-sm-10 col-md-10 col-lg-10">
-              <h2
-                class="media-heading"
-                v-for="(title, index) in item.data.title"
-              >
-                <NuxtLink :to="`/our-sampraday/${item.uid}`"
-                  >{{ title.text }}
-                </NuxtLink>
-              </h2>
-              <!-- <div class="description" v-for="(content, index) in item.data.content">
-                {{content.text}}
-              </div> -->
-              <p>
-                {{ item.data.content | readMore(300, "...") }}
-                <NuxtLink :to="`/our-sampraday/${item.uid}`"
-                  >Read more
-                </NuxtLink>
-                <a :href="'/our-sampraday/' + item.uid">Read more</a>
-              </p>
-              <!-- <ul class="list-inline list-unstyled">
-              <li>
-                <span>
-                  <i class="glyphicon glyphicon-calendar"></i>Posted on
-                  {{ item.first_publication_date | formatDate }}
-                </span>
-              </li>
-            </ul> -->
+
+      <UContainer class="relative z-10 text-center">
+        <h1 class="text-4xl lg:text-6xl font-serif font-bold text-gray-900 dark:text-white mb-6">
+          Search <span class="text-golden-500">Results</span>
+        </h1>
+        <div class="max-w-xl mx-auto relative group">
+          <UInput v-model="searchQuery" placeholder="Search our wisdom..." size="xl" icon="i-heroicons-magnifying-glass"
+            class="rounded-full shadow-2xl" @keyup.enter="refreshSearch" />
+        </div>
+      </UContainer>
+    </section>
+
+    <UContainer class="py-12 relative z-20">
+      <div v-if="articles?.length" class="space-y-8">
+        <p class="text-gray-500 dark:text-gray-900 mb-8 italic">
+          Showing results for <span class="font-bold text-golden-600">"{{ searchQuery }}"</span>
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <UCard v-for="(item, index) in articles" :key="index"
+            class="group hover:ring-2 hover:ring-golden-500/50 transition-all duration-300 rounded-[2.5rem] overflow-hidden bg-white/50 dark:bg-gray-900/50 backdrop-blur-md">
+            <div class="flex gap-6 items-start p-6">
+              <div v-if="item.data.cover?.url" class="w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0 shadow-lg">
+                <img :src="item.data.cover.url"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              </div>
+              <div class="flex-grow">
+                <h3
+                  class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-golden-600 transition-colors">
+                  {{ item.data.title[0]?.text }}
+                </h3>
+                <div class="text-gray-500 dark:text-gray-900 text-sm line-clamp-2 mb-4"
+                  v-html="excerpt(item.data.content)"></div>
+                <UButton :to="`/our-temple/${item.uid}`" variant="ghost" color="golden" label="Learn More" size="sm"
+                  class="px-0 hover:bg-transparent -ml-2" />
+              </div>
             </div>
-            <div class="hidden-xs col-sm-2 col-md-2 col-lg-2">
-              <prismic-image
-                :field="item.cover"
-                class="img pull-right img-responsive"
-              />
-            </div>
-          </div>
+          </UCard>
         </div>
       </div>
-    </div>
+
+      <div v-else-if="!pending" class="text-center py-20">
+        <UIcon name="i-heroicons-face-frown" class="w-16 h-16 text-gray-300 mb-4 mx-auto" />
+        <h3 class="text-2xl font-serif font-bold text-gray-900 dark:text-white mb-2">No results found</h3>
+        <p class="text-gray-500 max-w-sm mx-auto">We couldn't find anything matching your search. Try different
+          keywords.</p>
+      </div>
+
+      <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <USkeleton v-for="i in 4" :key="i" class="h-40 w-full rounded-[2.5rem]" />
+      </div>
+    </UContainer>
   </div>
 </template>
 
-<script>
-import Search from "../components/Search";
-export default {
-  name: "SearchResults",
-  components: {
-    Search,
-  },
-  data() {
-    return {
-      articles: null,
-      pageTitle: null,
-      search_query: "",
-    };
-  },
+<script setup lang="ts">
+const route = useRoute()
+const router = useRouter()
+const { client } = usePrismic()
 
-  methods: {
-    async getContent(search_query) {
-      await this.$prismic.api
-        .query([
-          this.$prismic.predicates.at("document.type", "article"),
-          this.$prismic.predicates.fulltext("document", search_query),
-        ])
-        .then((response) => {
-          this.articles = response.results;
-        });
-    },
-    newSearch() {
-      this.getContent(this.search_query);
-    },
-  },
+const searchQuery = ref(route.query.search as string || '')
 
-  created() {
-    this.getContent(this.$route.query.search);
-    this.search_query = this.$route.query.search;
-  },
-  beforeRouteUpdate(to, from, next) {
-    next();
-  },
-};
-</script>
+const { data: articles, pending, refresh } = await useAsyncData('search-results', async () => {
+  if (!searchQuery.value) return []
 
-<style lang="scss" scoped>
-.col-md-8,
-.col-md-4 {
-  padding: 0;
+  const response = await client.getAllByType('our-temple', {
+    filters: [
+      usePrismic().filter.fulltext('document', searchQuery.value)
+    ]
+  })
+  return response
+})
+
+const refreshSearch = () => {
+  router.push({ query: { search: searchQuery.value } })
+  refresh()
 }
-</style>
+
+const excerpt = (content: any) => {
+  if (!content) return ''
+  if (Array.isArray(content)) {
+    return content.map((c: any) => c.text).join(' ').substring(0, 120) + '...'
+  }
+  return content.toString().substring(0, 120) + '...'
+}
+
+useHead({
+  title: 'Search Results | Woolwich Temple',
+  meta: [
+    { name: 'description', content: `Search results for ${searchQuery.value} on Woolwich Temple.` }
+  ]
+})
+</script>

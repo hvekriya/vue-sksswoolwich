@@ -1,349 +1,140 @@
 <template>
-  <div class="follow-page-wrapper">
-    <div
-      class="background-overlay"
-      :style="{ backgroundImage: 'url(' + defaultBgImage + ')' }"
-    ></div>
+  <div class="follow-page min-h-screen relative overflow-x-hidden flex flex-col items-center py-16 px-6">
+    <!-- Immersive Background -->
+    <div class="fixed inset-0 z-0">
+      <img 
+        :src="defaultBgImage" 
+        class="w-full h-full object-cover blur-2xl scale-110 opacity-40 grayscale"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-gray-950 via-gray-900/60 to-gray-950"></div>
+    </div>
 
-    <div class="wrap">
-      <div class="profile-section">
-        <img
-          src="https://www.sksswoolwich.org/img/WoolwichMandirLogo.png"
-          class="profile-photo"
-          alt="SKSS Temple Woolwich Logo"
-        />
-        <h1 class="profile-name">SKSS Temple Woolwich</h1>
-        <p class="profile-handle">@woolwichTemple</p>
+    <!-- Content Wrapper -->
+    <div class="relative z-10 w-full max-w-md mx-auto flex flex-col items-center">
+      <!-- Profile Section -->
+      <div class="text-center mb-12 animate-fade-in">
+        <div class="relative inline-block mb-6">
+          <div class="absolute inset-0 bg-golden-500 rounded-full blur-2xl opacity-20 animate-pulse"></div>
+          <img
+            src="https://www.sksswoolwich.org/img/WoolwichMandirLogo.png"
+            class="relative w-24 h-24 rounded-full border-4 border-white/10 shadow-2xl object-cover"
+            alt="Woolwich Mandir"
+          />
+        </div>
+        <h1 class="text-3xl font-serif font-bold text-white mb-1">Woolwich Temple</h1>
+        <p class="text-golden-500 font-medium tracking-widest uppercase text-xs">Digital Spiritual Journey</p>
       </div>
 
-      <ul class="link-list" v-if="linkTree && sortedLinkTree.length > 0">
-        <li
-          class="link-list-item"
+      <!-- Links List -->
+      <div v-if="linkTree?.length" class="w-full space-y-4">
+        <div
           v-for="(item, index) in sortedLinkTree"
-          :key="'link-item-' + index"
+          :key="index"
+          class="group"
         >
           <template v-if="item.link">
             <a
               :href="item.link"
               target="_blank"
-              rel="noopener noreferrer"
-              class="link-button"
+              class="flex items-center gap-4 p-5 glass-effect rounded-2xl border-white/5 hover:border-golden-500/40 transition-all duration-300 hover:scale-[1.02] shadow-xl"
             >
-              <i :class="item.icon" class="link-icon"></i>
-              <span class="link-text">{{ item.title }}</span>
+              <div class="p-3 bg-white/5 rounded-xl group-hover:bg-golden-500/10 transition-colors">
+                <UIcon :name="getLinkIcon(item.icon)" class="w-6 h-6 text-white group-hover:text-golden-900" />
+              </div>
+              <div class="flex-grow">
+                <h3 class="text-white font-bold">{{ item.title }}</h3>
+                <p v-if="item.description" class="text-xs text-gray-900 line-clamp-1" v-html="item.description"></p>
+              </div>
+              <UIcon name="i-heroicons-arrow-up-right" class="w-4 h-4 text-white/20 group-hover:text-golden-900" />
             </a>
-            <small v-html="item.description" class="link-description"></small>
           </template>
-          <template v-else>
-            <div class="info-card">
-              <h4 class="info-title">
-                <i :class="item.icon" class="info-icon"></i>
-                {{ item.title }}
-              </h4>
-              <small v-html="item.description" class="info-description"></small>
+          
+          <div
+            v-else
+            class="p-6 glass-effect rounded-2xl border-white/5 bg-white/5"
+          >
+            <div class="flex items-center gap-4 mb-3">
+              <UIcon :name="getLinkIcon(item.icon)" class="w-5 h-5 text-golden-500" />
+              <h3 class="text-sm font-bold text-white uppercase tracking-wider">{{ item.title }}</h3>
             </div>
-          </template>
-        </li>
-      </ul>
-      <p v-else class="no-links-message">No links available at the moment.</p>
+            <p class="text-sm text-gray-900 leading-relaxed" v-html="item.description"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skeleton Loading -->
+      <div v-else class="w-full space-y-4">
+        <USkeleton v-for="i in 6" :key="i" class="h-20 w-full rounded-2xl opacity-10" />
+      </div>
+
+      <!-- Footer -->
+      <footer class="mt-16 text-center">
+        <p class="text-gray-500 text-xs font-medium tracking-widest uppercase">
+          &copy; {{ new Date().getFullYear() }} Shree Swaminarayan Mandir Woolwich
+        </p>
+      </footer>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  layout: "linkTree", // Assuming this is a custom layout in Nuxt.js
-  name: "Follow",
-  data() {
-    return {
-      linkTree: [],
-      currentIndex: -1, // This seems unused if not for active state
-      backgroundVid: [],
-      defaultBgImage:
-        "https://images.prismic.io/sksswoolwich/db3411ef-046c-42be-90a0-e9e21e5d0613_sksswoolwich-tv-bg.png?auto=compress,format", // Default background image
-    };
-  },
-  methods: {
-    onDataChange(snapshot) {
-      // Renamed 'items' to 'snapshot' for clarity
-      let _linkTree = [];
-      snapshot.forEach((childSnapshot) => {
-        let data = childSnapshot.val();
-        _linkTree.push({
-          key: childSnapshot.key,
-          title: data.title,
-          link: data.link,
-          icon: data.icon,
-          description: data.description,
-          order: data.order,
-        });
-      });
-      this.linkTree = _linkTree;
-    },
-  },
-  computed: {
-    sortedLinkTree: function () {
-      // Use .slice() to create a shallow copy for sorting without mutating original array
-      return this.linkTree.slice().sort((a, b) => {
-        // Handle cases where 'order' might be missing or not a number
-        const orderA = typeof a.order === "number" ? a.order : Infinity;
-        const orderB = typeof b.order === "number" ? b.order : Infinity;
-        return orderA - orderB;
-      });
-    },
-  },
-  mounted() {
-    // Ensure Firebase path is correct, e.g., 'link-tree' or 'linktree'
-    this.$fire.database.ref("/link-tree").on("value", this.onDataChange);
-  },
-  beforeDestroy() {
-    this.$fire.database.ref("/link-tree").off("value", this.onDataChange);
-  },
-  head() {
-    return {
-      // Example of adding Google Fonts (adjust as needed)
-      link: [
-        {
-          rel: "stylesheet",
-          href:
-            "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@400;700&display=swap",
-        },
-        // For Font Awesome icons if you're not using a Nuxt module
-        // {
-        //   rel: 'stylesheet',
-        //   href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css'
-        // }
-      ],
-    };
-  },
-};
+<script setup lang="ts">
+import { ref as dbRef, onValue } from 'firebase/database'
+
+definePageMeta({
+  layout: 'link-tree'
+})
+
+const db = useDatabase()
+const linkTree = ref<any[]>([])
+const defaultBgImage = "https://images.prismic.io/sksswoolwich/db3411ef-046c-42be-90a0-e9e21e5d0613_sksswoolwich-tv-bg.png?auto=compress,format"
+
+onMounted(() => {
+  const treeRef = dbRef(db, '/link-tree')
+  onValue(treeRef, (snapshot) => {
+    const data = snapshot.val()
+    if (data) {
+      linkTree.value = Object.keys(data).map(key => ({
+        ...data[key],
+        key
+      }))
+    }
+  })
+})
+
+const sortedLinkTree = computed(() => {
+  return [...linkTree.value].sort((a, b) => (a.order || 99) - (b.order || 99))
+})
+
+const getLinkIcon = (iconClass: string) => {
+  if (!iconClass) return 'i-heroicons-link'
+  // Map old FontAwesome classes to Heroicons or SimpleIcons if possible
+  if (iconClass.includes('youtube')) return 'i-simple-icons-youtube'
+  if (iconClass.includes('facebook')) return 'i-simple-icons-facebook'
+  if (iconClass.includes('instagram')) return 'i-simple-icons-instagram'
+  if (iconClass.includes('twitter')) return 'i-simple-icons-x'
+  if (iconClass.includes('flickr')) return 'i-simple-icons-flickr'
+  if (iconClass.includes('envelope')) return 'i-heroicons-envelope'
+  if (iconClass.includes('phone')) return 'i-heroicons-phone'
+  return 'i-heroicons-link'
+}
+
+useHead({
+  title: 'Follow Us | Woolwich Temple',
+  bodyAttrs: {
+    class: 'bg-gray-950'
+  }
+})
 </script>
 
-<style lang="scss" scoped>
-/* Base Setup for Full Page Background */
-.follow-page-wrapper {
-  position: relative;
-  width: 100vw;
-  min-height: 100vh; // Use min-height to ensure it covers viewport even with less content
-  display: flex;
-  justify-content: center;
-  align-items: flex-start; // Align content to the top
-  padding-top: 50px; // Space from the top for the profile section
-  padding-bottom: 50px; // Space at the bottom
-  overflow: hidden; // Hide any overflow from background elements
-  box-sizing: border-box; // Include padding in width/height
+<style scoped>
+.follow-page {
+  background-attachment: fixed;
 }
-
-.background-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -2; // Send to back
-  background-color: rgba(0, 0, 0, 0.4); // Dark overlay
+.animate-fade-in {
+  animation: fadeIn 1s ease-out forwards;
 }
-
-.background-overlay {
-  background-size: cover;
-  background-position: center;
-  filter: brightness(0.7); // Darken image background slightly
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
-/* Content Wrapper */
-.wrap {
-  width: 100%;
-  max-width: 400px; // Increased max-width for better link button size
-  margin: 0 auto;
-  z-index: 1; // Bring content to front
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 20px; // Add horizontal padding for smaller screens
-}
-
-/* Profile Section */
-.profile-section {
-  text-align: center;
-  color: #fff;
-  margin-bottom: 30px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); // Subtle text shadow for readability over background
-}
-
-.profile-photo {
-  width: 100px; // Fixed size for consistency
-  height: 100px; // Fixed size
-  border-radius: 50%;
-  object-fit: cover; // Ensure image covers the circular area
-  border: 4px solid rgba(255, 255, 255, 0.8); // White border
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); // More prominent shadow
-  margin-bottom: 15px;
-}
-
-.profile-name {
-  font-family: "Montserrat", sans-serif; // Modern font
-  font-size: 2.2em; // Larger for prominence
-  font-weight: 700;
-  margin: 0;
-  line-height: 1.2;
-}
-
-.profile-handle {
-  font-family: "Roboto", sans-serif; // Another modern font
-  font-size: 1em;
-  color: rgba(255, 255, 255, 0.8); // Slightly muted
-  margin-top: 5px;
-}
-
-/* Link List */
-.link-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  width: 100%; // Make list take full width of .wrap
-}
-
-.link-list-item {
-  margin-bottom: 15px; // Space between items
-  background: rgba(255, 255, 255, 0.15); // Semi-transparent white background
-  border-radius: 10px; // Rounded corners
-  overflow: hidden; // Ensure content respects border-radius
-  backdrop-filter: blur(5px); // Frosted glass effect
-  -webkit-backdrop-filter: blur(5px); // For Safari
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); // Subtle lift
-  transition: transform 0.2s ease, box-shadow 0.2s ease; // Smooth hover
-  will-change: transform, box-shadow; // Performance hint
-
-  &:hover {
-    transform: translateY(-3px); // Lift on hover
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  }
-}
-
-/* Link Button Styling */
-.link-button {
-  display: flex; // Use flexbox for icon and text alignment
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 18px 20px; // More padding for larger buttons
-  font-size: 1.1em; // Larger font size
-  font-weight: 600;
-  text-decoration: none;
-  color: #ffffff; // White text
-  border: 2px solid rgba(255, 255, 255, 0.6); // Slightly softer white border
-  border-radius: 10px; // Match item border-radius
-  background: transparent; // Transparent background
-  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
-
-  .link-icon {
-    font-size: 1.3em;
-    margin-right: 10px; // Space between icon and text
-    color: #ffffff; // Ensure icon color is white
-  }
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.25); // Slightly more opaque on hover
-    border-color: #ffffff; // Solid white border on hover
-    transform: scale(1.01); // Subtle grow effect
-  }
-}
-
-.link-description {
-  display: block; // Ensure description is on its own line
-  color: rgba(255, 255, 255, 0.7); // Slightly muted white for description
-  font-size: 0.85em;
-  padding: 10px 20px; // Padding to align with button text
-  line-height: 1.4;
-  text-align: center;
-}
-
-/* Info Card Styling (for items without a link) */
-.info-card {
-  background-color: rgba(255, 255, 255, 0.9); // Mostly opaque white background
-  color: #333; // Darker text for readability
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  will-change: transform, box-shadow;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-  &:hover {
-    transform: translateY(-2px); // Lift on hover
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-}
-
-.info-title {
-  font-family: "Montserrat", sans-serif;
-  font-size: 1.3em;
-  font-weight: 600;
-  margin-top: 0;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.info-icon {
-  margin-right: 8px;
-  color: #007bff; // A prominent color for info icons
-}
-
-.info-description {
-  display: block;
-  font-size: 0.9em;
-  line-height: 1.5;
-  color: #555;
-}
-
-.no-links-message {
-  color: rgba(255, 255, 255, 0.7);
-  text-align: center;
-  font-size: 1.1em;
-  margin-top: 30px;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 576px) {
-  .profile-photo {
-    width: 80px;
-    height: 80px;
-  }
-  .profile-name {
-    font-size: 1.8em;
-  }
-  .profile-handle {
-    font-size: 0.9em;
-  }
-  .link-button {
-    padding: 15px 15px;
-    font-size: 1em;
-  }
-  .link-description {
-    padding: 8px 15px;
-    font-size: 0.8em;
-  }
-  .info-card {
-    padding: 15px;
-  }
-  .info-title {
-    font-size: 1.1em;
-  }
-  .info-description {
-    font-size: 0.8em;
-  }
-}
-
-@media (max-height: 600px) {
-  .follow-page-wrapper {
-    padding-top: 30px;
-    padding-bottom: 30px;
-    align-items: center; // Center vertically on shorter screens
-  }
-}
-
-/* Ensure icons display correctly - you need to import Font Awesome or similar globally */
-/* Example for Nuxt.js, often done in nuxt.config.js plugins or head */
-/* You might already have this, but if not, ensure Font Awesome CSS is linked in head() above */
 </style>
