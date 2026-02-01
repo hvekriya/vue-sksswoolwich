@@ -8,9 +8,9 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'netlify',
     prerender: {
-      crawlLinks: true,
-      routes: ['/'],
-      ignore: ['/admin'],
+      crawlLinks: false,
+      routes: [],
+      ignore: ['/*'],
       failOnError: false
     }
   },

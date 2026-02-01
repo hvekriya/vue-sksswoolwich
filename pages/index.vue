@@ -41,7 +41,14 @@
               </template>
 
               <div class="flex-1 overflow-y-auto custom-scrollbar">
-                <AnnouncementList />
+                <ClientOnly>
+                  <AnnouncementList />
+                  <template #fallback>
+                    <div class="flex items-center justify-center h-48">
+                      <UIcon name="i-heroicons-arrow-path" class="w-8 h-8 animate-spin text-golden-500" />
+                    </div>
+                  </template>
+                </ClientOnly>
               </div>
             </UCard>
           </div>
