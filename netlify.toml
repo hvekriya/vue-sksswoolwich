@@ -1,14 +1,13 @@
-# Netlify build configuration for Nuxt 3
+# Netlify build configuration for Nuxt 3 (static SPA)
 # https://docs.netlify.com/configure-builds/file-based-configuration/
 
 [build]
-  command = "npm run build"
+  command = "npm run generate"
   publish = "dist"
   environment = { NODE_VERSION = "24" }
 
-# SSR: all requests go to Nitro server (required for Nuxt routing)
+# SPA fallback: client routes resolve to index.html
 [[redirects]]
   from = "/*"
-  to = "/.netlify/functions/server"
+  to = "/index.html"
   status = 200
-  force = true

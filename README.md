@@ -37,12 +37,6 @@ npm run build
 npm run lint
 ```
 
-## If SSR keeps failing (static fallback)
+## Deployment (static SPA)
 
-To switch to static-only (no server, SPA mode):
-
-1. In `nuxt.config.ts`: set `ssr: false` and `nitro.preset: 'netlify-static'`
-2. In `netlify.toml`: change build command to `npm run generate`, publish to `.output/public`
-3. In `netlify.toml`: replace redirects with `from = "/*"` `to = "/index.html"` `status = 200`
-
-All data (Prismic, Firebase, Flickr) will load in the browser. Simpler deployment.
+The site runs as a static SPA (`ssr: false`). Netlify builds with `npm run generate` and publishes `dist`. The admin "Trigger build" button will not work (no server API); use Netlify’s build hooks directly if needed. PWA is disabled until the service worker build issue is fixed.

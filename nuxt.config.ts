@@ -3,15 +3,13 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: false },
 
-  // SSR and static generation
-  ssr: true,
+  // Static SPA – no SSR, all data loads in browser
+  ssr: false,
   nitro: {
-    preset: 'netlify',
+    preset: 'netlify-static',
     prerender: {
-      crawlLinks: false,
-      routes: ['/'],
-      ignore: ['/admin', '/admin/*'],
-      failOnError: false
+      crawlLinks: true,
+      routes: ['/']
     }
   },
 
@@ -41,11 +39,11 @@ export default defineNuxtConfig({
 
   css: ['~/assets/styles/main.css'],
 
-  // Modules
+  // Modules (PWA disabled – SW generation was failing during build)
   modules: [
     '@nuxt/ui',
     '@nuxtjs/google-fonts',
-    '@vite-pwa/nuxt',
+    // '@vite-pwa/nuxt',
     'nuxt-vuefire',
     '@nuxtjs/prismic'
   ],
@@ -106,23 +104,7 @@ export default defineNuxtConfig({
     }
   },
 
-  // PWA configuration – SSR: don't precache HTML, let server handle navigation
-  pwa: {
-    registerType: 'autoUpdate',
-    workbox: {
-      navigateFallback: null,
-      globPatterns: ['**/*.{js,css,ico,png,svg,woff,woff2}'],
-      cleanupOutdatedCaches: true
-    },
-    manifest: {
-      name: 'Woolwich Temple',
-      short_name: 'SKSSWoolwich',
-      theme_color: '#FCC71D',
-      background_color: '#FCC71D',
-      display: 'standalone',
-      start_url: '/'
-    }
-  },
+  // PWA disabled – re-enable @vite-pwa/nuxt in modules when SW build is fixed
 
   // Vite configuration
   vite: {
