@@ -3,5 +3,12 @@
 
 [build]
   command = "npm run build"
-  publish = "dist"
-  environment = { NODE_VERSION = "20" }
+  publish = ".output/public"
+  environment = { NODE_VERSION = "24" }
+
+# SPA/SSR fallback – non-prerendered routes go to Nitro server
+# (static files in .output/public are served first)
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/server"
+  status = 200

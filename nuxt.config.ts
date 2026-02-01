@@ -94,13 +94,15 @@ export default defineNuxtConfig({
   },
 
   // Runtime configuration
+  // Server-only keys (e.g. netlifyBuildHookId) are never exposed to the client
   runtimeConfig: {
+    netlifyBuildHookId: process.env.NETLIFY_BUILD_HOOK_ID || process.env.buildID || '',
     public: {
-      googleApiKey: process.env.GOOGLE_API_KEY,
-      flickrApiKey: process.env.flickrApiKey,
-      flickrUserId: process.env.flickrUserId,
-      flickrUrl: process.env.flickrUrl,
-      googleCalendarApiKey: process.env.google_calendarApiKey
+      googleApiKey: process.env.GOOGLE_API_KEY || '',
+      flickrApiKey: process.env.flickrApiKey || process.env.NUXT_PUBLIC_FLICKR_API_KEY || '',
+      flickrUserId: process.env.flickrUserId || process.env.NUXT_PUBLIC_FLICKR_USER_ID || '',
+      flickrUrl: process.env.flickrUrl || process.env.NUXT_PUBLIC_FLICKR_URL || 'https://api.flickr.com/services/rest',
+      googleCalendarApiKey: process.env.google_calendarApiKey || process.env.NUXT_PUBLIC_GOOGLE_CALENDAR_API_KEY || ''
     }
   },
 

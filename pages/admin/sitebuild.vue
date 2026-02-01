@@ -40,7 +40,11 @@
                             class="rounded-full py-5 font-bold text-lg shadow-xl shadow-golden-500/20"
                             @click="rebuildSite" />
 
-                        <div v-else
+                        <div v-if="errorMsg" class="mb-4 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl">
+                            <p class="text-sm text-red-600 dark:text-red-400">{{ errorMsg }}</p>
+                        </div>
+
+                        <div v-else-if="isBuilding"
                             class="text-center p-8 bg-golden-50 dark:bg-golden-950 rounded-3xl border border-golden-200 dark:border-golden-900 animate-pulse">
                             <UIcon name="i-heroicons-arrow-path" class="w-12 h-12 text-golden-600 animate-spin mb-4" />
                             <h4 class="text-xl font-bold text-golden-800 dark:text-golden-900 mb-2">Build Triggered
@@ -79,24 +83,36 @@
 </template>
 
 <script setup lang="ts">
+import { getAuth } from 'firebase/auth'
+
 definePageMeta({
     middleware: 'auth'
 })
 
-const config = useRuntimeConfig()
 const isBuilding = ref(false)
+const errorMsg = ref('')
 
 async function rebuildSite() {
-    const buildId = config.public.buildID || 'default-build-id'
-    const url = `https://api.netlify.com/build_hooks/${buildId}?trigger_title=Deploy+triggered+by+sksswoolwich+admin`
+    if (!import.meta.client) return
+    errorMsg.value = ''
+    const auth = getAuth(useNuxtApp().$firebaseApp as import('firebase/app').FirebaseApp)
+    const user = auth.currentUser
+    if (!user) {
+        errorMsg.value = 'Please sign in again'
+        return
+    }
 
     try {
-        const response = await $fetch(url, { method: 'POST' })
+        const token = await user.getIdToken()
+        await $fetch('/api/trigger-build', {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${token}` }
+        })
         isBuilding.value = true
-        // Auto-reset after some time to allow re-triggering if needed later
         setTimeout(() => { isBuilding.value = false }, 1000 * 60 * 5)
-    } catch (err) {
+    } catch (err: any) {
         console.error('Build trigger failed:', err)
+        errorMsg.value = err?.data?.statusMessage || err?.message || 'Build trigger failed'
     }
 }
 
