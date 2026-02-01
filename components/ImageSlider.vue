@@ -1,175 +1,153 @@
 <template>
-  <div class="image-slider-component">
-    <template v-for="(slice, index) in fields.slices">
-      <template v-if="slice.slice_type === 'image_gallery'">
-        <hooper
-          :progress="true"
-          :infiniteScroll="true"
-          :autoPlay="true"
-          :playSpeed="4000"
-          :wheelControl="false"
-          class="hooper-cover-style"
-        >
-          <slide
-            v-for="(item, slideIndex) in slice.items"
-            :key="'photo-' + index + '-' + slideIndex"
-          >
-            <prismic-image :field="item.gallery_image" class="slider-image" />
-          </slide>
-          <hooper-navigation slot="hooper-addons"></hooper-navigation>
-          <hooper-pagination slot="hooper-addons"></hooper-pagination>
-        </hooper>
-      </template>
-    </template>
+  <div class="relative h-[60vh] lg:h-[80vh] w-full overflow-hidden">
+    <Swiper
+      :modules="[SwiperAutoplay, SwiperEffectFade, SwiperPagination]"
+      :slides-per-view="1"
+      :loop="slides.length >= 2"
+      :effect="'fade'"
+      :autoplay="
+        slides.length >= 2 ? { delay: 5000, disableOnInteraction: false } : false
+      "
+      :pagination="slides.length > 1 ? { clickable: true } : false"
+      class="h-full w-full"
+    >
+      <SwiperSlide v-for="(slide, index) in slides" :key="index">
+        <div class="relative h-full w-full">
+          <!-- Slide Image -->
+          <img
+            v-if="slide.image?.url"
+            :src="slide.image.url"
+            :alt="slide.image.alt || 'Temple Image'"
+            class="absolute inset-0 h-full w-full object-cover"
+          />
+          <div v-else class="absolute inset-0 bg-gray-900" />
+
+          <!-- Overlay Gradient -->
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent"
+          ></div>
+
+          <!-- Content Overlay -->
+          <div class="absolute inset-0 flex items-center">
+            <div class="container mx-auto px-4 lg:px-8">
+              <div
+                class="max-w-2xl glass-effect p-8 lg:p-12 rounded-3xl animate-fade-in-up"
+              >
+                <!-- Wrapper div only: let PrismicRichText render block type (h1/p/etc) so SSR and client match -->
+                <div
+                  class="text-white text-4xl lg:text-6xl font-serif font-bold mb-6 leading-tight"
+                >
+                  <prismic-rich-text :field="slide.title" />
+                </div>
+                <div class="text-gray-200 text-lg mb-8 leading-relaxed">
+                  <prismic-rich-text :field="slide.description" />
+                </div>
+                <div class="flex flex-wrap gap-4">
+                  <UButton
+                    size="xl"
+                    color="primary"
+                    label="Bhaktiras"
+                    to="https://www.bhaktiras.sksswoolwich.org"
+                  />
+                  <UButton
+                    size="xl"
+                    variant="outline"
+                    color="white"
+                    label="Upcoming Events"
+                    to="/events"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </SwiperSlide>
+    </Swiper>
+
+    <!-- Scroll Indicator -->
+    <div
+      class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 animate-bounce hidden lg:block"
+    >
+      <UIcon name="i-heroicons-chevron-double-down" class="w-8 h-8 text-white/50" />
+    </div>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { Swiper, SwiperSlide } from "swiper/vue";
 import {
-  Hooper,
-  Slide,
-  Navigation as HooperNavigation,
-  Pagination as HooperPagination,
-} from "hooper";
-import "hooper/dist/hooper.css"; // Ensure this is imported for base styles
-export default {
-  name: "ImageSlider",
-  components: {
-    Hooper,
-    Slide,
-    HooperNavigation,
-    HooperPagination, // Added pagination for better UX
+  Autoplay as SwiperAutoplay,
+  EffectFade as SwiperEffectFade,
+  Pagination as SwiperPagination,
+} from "swiper/modules";
+
+// Import Swiper styles in Nuxt are usually handled via build/css but can be manual
+import "swiper/css";
+import "swiper/css/effect-fade";
+import "swiper/css/pagination";
+
+const props = defineProps<{
+  fields: any;
+}>();
+
+// Default single slide when Prismic has no slides (avoids empty hero + Swiper loop warning)
+const defaultSlide = () => ({
+  image: {
+    url:
+      "https://images.prismic.io/sksswoolwich/c1acd8d9-7ccb-4f1b-bcc1-57ceb5ada080_39972331571_6d6de90849_o.png?auto=compress,format",
+    alt: "Woolwich Temple",
   },
-  props: ["fields"],
-};
+  title: [{ type: "heading1", text: "Jay Swaminarayan", spans: [] }],
+  description: [
+    { type: "paragraph", text: "Shree KS Swaminarayan Temple Woolwich", spans: [] },
+  ],
+});
+
+// Extract slides from Prismic: hero_slider/image_slider items, or single hero_section primary, or one default
+const slides = computed(() => {
+  const slices = props.fields?.slices || [];
+  // Multi-slide: hero_slider or image_slider
+  const sliderSlice = slices.find(
+    (s: any) => s.slice_type === "hero_slider" || s.slice_type === "image_slider"
+  );
+  if (sliderSlice?.items?.length) return sliderSlice.items;
+  // Single slide: hero_section (primary = one slide)
+  const heroSection = slices.find((s: any) => s.slice_type === "hero_section");
+  if (heroSection?.primary) {
+    const p = heroSection.primary;
+    return [
+      {
+        image: p.image || {},
+        title: p.title || [],
+        description: p.description || [],
+      },
+    ];
+  }
+  return [defaultSlide()];
+});
 </script>
 
-<style lang="scss" scoped>
-/* Define primary colors - ensure these are consistent with your global styles */
-$primary-gradient: linear-gradient(to right, #8b184c, #da1b60);
-$primary-solid-fallback: #da1b60;
-$secondary-gray: #6c757d;
-$light-gray-bg: #f8f9fa;
-$dark-text: #343a40;
-$card-bg: #ffffff; // Keeping this though not directly used for the slider background
-$border-color: #dee2e6;
+<style scoped>
+.animate-fade-in-up {
+  animation: fadeInUp 1s ease-out forwards;
+}
 
-$font-heading: "Montserrat", sans-serif;
-$font-body: "Open Sans", sans-serif;
-
-@mixin media-breakpoint-up($breakpoint) {
-  @if $breakpoint == sm {
-    @media (min-width: 576px) {
-      @content;
-    }
-  } @else if $breakpoint == md {
-    @media (min-width: 768px) {
-      @content;
-    }
-  } @else if $breakpoint == lg {
-    @media (min-width: 992px) {
-      @content;
-    }
-  } @else if $breakpoint == xl {
-    @media (min-width: 1200px) {
-      @content;
-    }
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-.image-slider-component {
-  width: 100%;
-  margin-top: 40px; // Spacing from page header
-  margin-bottom: 40px; // Spacing before the next content section
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); // Subtle shadow
-
-  @media (max-width: 767px) {
-    margin-top: 30px;
-    margin-bottom: 30px;
-  }
+:deep(.swiper-pagination-bullet) {
+  @apply bg-white/50 w-3 h-3 transition-all duration-300;
 }
 
-.hooper-cover-style {
-  height: 550px; // Default height for large screens
-
-  @media (max-width: 991px) {
-    // Tablets and small desktops
-    height: 450px;
-  }
-
-  @media (max-width: 767px) {
-    // Mobile devices
-    height: 300px;
-  }
-}
-
-/* Style for the actual image within each slide */
-.slider-image {
-  display: block; // Remove any extra space below the image
-  width: 100%;
-  height: 100%;
-  object-fit: cover; // This is the core property for "cover style"
-  object-position: center; // Centers the image within the frame, good for cropping
-}
-
-/* Override default hooper navigation styles to match design */
-.hooper-next,
-.hooper-prev {
-  background-color: rgba($primary-solid-fallback, 0.7); // Semi-transparent background
-  border-radius: 50%; // Make them round
-  color: #fff; // White arrows
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: $primary-solid-fallback; // Solid on hover
-  }
-
-  @media (max-width: 767px) {
-    width: 30px;
-    height: 30px;
-    font-size: 0.8em; // Smaller arrows on mobile
-  }
-}
-
-.hooper-next {
-  right: 15px; // Position from right edge
-}
-
-.hooper-prev {
-  left: 15px; // Position from left edge
-}
-
-/* Style for pagination dots */
-.hooper-pagination {
-  bottom: 15px; // Position from bottom edge
-  padding: 0 10px; // Add some padding around dots
-}
-
-.hooper-indicator {
-  background-color: rgba(
-    $primary-solid-fallback,
-    0.4
-  ); // Lighter semi-transparent default dot
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin: 0 5px; // Spacing between dots
-  transition: background-color 0.3s ease, transform 0.3s ease;
-
-  &.is-active {
-    background-color: $primary-solid-fallback; // Solid primary color for active dot
-    transform: scale(1.2); // Slightly larger active dot
-  }
-
-  &:hover {
-    background-color: rgba($primary-solid-fallback, 0.7); // Darker on hover
-  }
+:deep(.swiper-pagination-bullet-active) {
+  @apply bg-golden-500 w-8 rounded-full;
 }
 </style>

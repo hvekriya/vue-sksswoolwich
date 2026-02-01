@@ -1,84 +1,84 @@
 <template>
-  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-    <div itemscope itemtype="http://schema.org/OpeningHoursSpecification">
-      <meta itemprop="openingHours" content="Mon-Fri Morning 7:00 - 11:00" />
-      <meta itemprop="openingHours" content="Mon-Fri Evening 16:00 - 20:00" />
+  <div class="h-full">
+    <UCard
+      class="glass-effect overflow-hidden border-golden-500/20 h-full flex flex-col"
+      :ui="{
+        header: { base: 'bg-golden-500/10 border-b border-golden-500/20' },
+        body: { padding: 'p-0 flex flex-col flex-1' },
+      }"
+    >
+      <template #header>
+        <div class="flex items-center space-x-2">
+          <UIcon name="i-heroicons-clock" class="w-5 h-5 text-temple-red-500" />
+          <h3 class="font-serif font-bold text-gray-400">Mandir Darshan Timings</h3>
+        </div>
+      </template>
 
-      <legend>
-        <center>Mandir Darshan Timings</center>
-      </legend>
-      <table class="table table-striped">
-        <thead>
-          <tr class="highlighted-row">
-            <th>Weekdays</th>
-            <th></th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Morning Darshan</td>
-            <td>From 7am - 10:30am</td>
-            <td>Evening Darshan</td>
-            <td>From 4pm</td>
-          </tr>
-          <tr>
-            <td>Morning Aarti</td>
-            <td>9:30am</td>
-            <td>Evening Aarti</td>
-            <td>7pm</td>
-          </tr>
-          <tr>
-            <td>Morning Sabha</td>
-            <td>9am - 10:30am</td>
-            <td>Evening Sabha</td>
-            <td>7pm - 8:30pm</td>
-          </tr>
-          <tr class="highlighted-row">
-            <th>Weekend</th>
-            <th></th>
-            <th></th>
-            <th></th>
-          </tr>
-          <tr>
-            <td>Morning Darshan</td>
-            <td>From 7am - 11am</td>
-            <td>Evening Darshan</td>
-            <td>From 4pm</td>
-          </tr>
-          <tr>
-            <td>Morning Aarti</td>
-            <td>9am</td>
-            <td>Evening Aarti</td>
-            <td>6pm</td>
-          </tr>
-          <tr>
-            <td>Morning Sabha</td>
-            <td>9am - 10:30am</td>
-            <td>Evening Sabha</td>
-            <td>6pm - 7:30pm</td>
-          </tr>
-        </tbody>
-      </table>
-      <small>
-        <!--<p>Sunday with Thakarthali and Festival Days with Special Evening Prayers the Aarti time is 7:30PM<p>-->
-        <p>
-          Please note that on festival days the times may vary. Please contact
-          the Temple if you need more information
-        </p>
-      </small>
-    </div>
+      <div class="divide-y divide-gray-100">
+        <!-- Weekdays Section -->
+        <div class="p-6">
+          <h4
+            class="text-xs font-bold text-temple-gray-400 uppercase tracking-widest mb-4"
+          >
+            Weekdays (Mon-Fri)
+          </h4>
+          <div class="grid grid-cols-2 gap-x-8 gap-y-4">
+            <div v-for="time in weekdayTimings" :key="time.label" class="flex flex-col">
+              <span class="text-xs text-gray-400 font-medium tracking-wide">{{
+                time.label
+              }}</span>
+              <span class="text-sm font-bold text-gray-400">{{ time.value }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weekend Section -->
+        <div class="p-6">
+          <h4
+            class="text-xs font-bold text-temple-gray-400 uppercase tracking-widest mb-4"
+          >
+            Weekend (Sat-Sun)
+          </h4>
+          <div class="grid grid-cols-2 gap-x-8 gap-y-4">
+            <div v-for="time in weekendTimings" :key="time.label" class="flex flex-col">
+              <span class="text-xs text-gray-400 font-medium tracking-wide">{{
+                time.label
+              }}</span>
+              <span class="text-sm font-bold text-gray-400">{{ time.value }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <template #footer>
+        <div class="flex items-start space-x-2 text-xs text-gray-400 italic">
+          <UIcon
+            name="i-heroicons-information-circle"
+            class="w-4 h-4 text-temple-red-500 flex-shrink-0"
+          />
+          <p>On festival/bank holidays times may vary.</p>
+        </div>
+      </template>
+    </UCard>
   </div>
 </template>
 
-<script>
-export default {
-  name: "OpeningTimes",
-};
-</script>
+<script setup lang="ts">
+const weekdayTimings = [
+  { label: "Morning Darshan", value: "7:00 AM - 10:30 AM" },
+  { label: "Evening Darshan", value: "4:00 PM - 8:00 PM" },
+  { label: "Morning Aarti", value: "9:30 AM" },
+  { label: "Evening Aarti", value: "7:00 PM" },
+  { label: "Morning Sabha", value: "9:00 AM - 10:30 AM" },
+  { label: "Evening Sabha", value: "7:00 PM - 8:30 PM" },
+];
 
-<style lang="sass" scoped>
-tbody td:nth-child(odd)
-  background-color: var(--fc-neutral-bg-color, rgba(208, 208, 208, 0.3))
-</style>
+const weekendTimings = [
+  { label: "Morning Darshan", value: "7:00 AM - 11:00 AM" },
+  { label: "Evening Darshan", value: "4:00 PM - 8:00 PM" },
+  { label: "Morning Aarti", value: "9:00 AM" },
+  { label: "Evening Aarti", value: "6:00 PM" },
+  { label: "Morning Sabha", value: "9:00 AM - 10:30 AM" },
+  { label: "Evening Sabha", value: "6:00 PM - 7:30 PM" },
+];
+</script>

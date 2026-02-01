@@ -1,314 +1,106 @@
 <template>
-  <div class="wrapper container">
-    <header class="page-header">
-      <h1 class="title">
-        {{ $prismic.asText(fields.title) }}
-      </h1>
-    </header>
+  <div class="wedding-hall-page">
+    <template v-if="doc">
+      <UContainer class="pt-12 pb-8">
+        <h1
+          class="text-4xl lg:text-6xl font-serif font-bold text-gray-900 dark:text-white text-center"
+        >
+          {{ doc.data.title[0]?.text }}
+        </h1>
+      </UContainer>
 
-    <ImageSlider :fields="fields" />
+      <UContainer class="pb-20">
+        <WeddingHallSlider
+          :fields="{ slices: doc.data.body || [] }"
+          class="shadow-2xl overflow-hidden rounded-2xl"
+        />
+      </UContainer>
 
-    <section class="content-section">
-      <prismic-rich-text :field="fields.description" class="description" />
+      <!-- Content Section -->
+      <UContainer class="py-20 lg:py-32">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+          <div class="lg:col-span-8">
+            <div class="prose prose-xl prose-golden dark:prose-invert max-w-none">
+              <prismic-rich-text :field="doc.data.content" />
+            </div>
 
-      <div class="cta-wrapper">
-        <prismic-link :field="fields.ctaLink" class="btn btn-primary">
-          {{ $prismic.asText(fields.ctaText) }}
-        </prismic-link>
-      </div>
+            <div v-if="doc.data.cta_link" class="mt-12">
+              <UButton
+                :to="doc.data.cta_link.url"
+                size="xl"
+                color="golden"
+                class="rounded-full px-10 font-bold py-4 text-lg shadow-xl shadow-golden-500/10"
+              >
+                {{ doc.data.cta_text[0]?.text || "Book Now" }}
+              </UButton>
+            </div>
+          </div>
 
-      <div class="icon-wrapper">
-        <prismic-image :field="fields.icon" class="icon" />
-      </div>
-    </section>
+          <div class="lg:col-span-4 lg:sticky lg:top-28 space-y-8">
+            <div
+              class="p-8 bg-golden-50 dark:bg-golden-950/30 rounded-[2.5rem] border border-golden-100 dark:border-golden-500/10"
+            >
+              <UIcon name="i-heroicons-sparkles" class="w-10 h-10 text-golden-600 mb-6" />
+              <h3 class="text-xl font-serif font-bold text-gray-900 dark:text-white mb-4">
+                Temple Wedding Venue
+              </h3>
+              <p class="text-sm text-gray-400 dark:text-gray-400 leading-relaxed mb-6">
+                Our hall provides a serene and auspicious environment for your special
+                day, combining modern amenities with traditional sanctity.
+              </p>
+              <ul class="space-y-4 text-sm font-medium text-gray-700 dark:text-gray-300">
+                <li class="flex items-center gap-3">
+                  <UIcon name="i-heroicons-check-circle" class="text-golden-600" /> Large
+                  Capacity
+                </li>
+                <li class="flex items-center gap-3">
+                  <UIcon name="i-heroicons-check-circle" class="text-golden-600" />
+                  Audio-Visual Setup
+                </li>
+                <li class="flex items-center gap-3">
+                  <UIcon name="i-heroicons-check-circle" class="text-golden-600" />
+                  Dedicated Parking
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </UContainer>
 
-    <WeddingContact />
-    <br /><br />
+      <!-- Contact Section -->
+      <UContainer class="pb-32">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+          <h2 class="text-4xl font-serif font-bold text-gray-900 dark:text-white mb-4">
+            Ready to start planning?
+          </h2>
+          <p class="text-gray-500">
+            Contact our dedicated events team to check availability and arrange a viewing.
+          </p>
+        </div>
+        <WeddingContact />
+      </UContainer>
+    </template>
   </div>
 </template>
 
-<script>
-import WeddingContact from "../components/WeddingContact";
-import ImageSlider from "../components/ImageSlider";
-export default {
-  name: "WeddingHall",
-  components: {
-    WeddingContact,
-    ImageSlider,
-  },
-  data() {
-    return {
-      documentId: "",
-      fields: {
-        title: null,
-        description: null, // This is document.data.content in your API call
-        ctaLink: null,
-        ctaText: null,
-        icon: null, // Added icon to data
-        slices: [], // This is document.data.body in your API call
-      },
-    };
-  },
-  head() {
-    // Dynamic SEO based on Prismic data
-    const title = this.fields.title
-      ? `${this.$prismic.asText(this.fields.title)} | SKSS Temple Woolwich`
-      : "Wedding Hall | SKSS Temple Woolwich";
-    const description = this.fields.description
-      ? this.$prismic.asText(this.fields.description).substring(0, 160)
-      : "Explore the beautiful wedding hall at SKSS Temple Woolwich for your special event.";
+<script setup lang="ts">
+const { client } = usePrismic();
 
-    return {
-      title: title,
-      meta: [{ hid: "description", name: "description", content: description }],
-    };
-  },
-  methods: {
-    getContent() {
-      this.$prismic.api
-        .getByUID("our-temple", "wedding-hall")
-        .then((document) => {
-          if (document) {
-            this.documentId = document.id;
-            this.fields.title = document.data.title;
-            this.fields.description = document.data.content; // Mapped from 'content' field in Prismic
-            this.fields.ctaLink = document.data.cta_link;
-            this.fields.ctaText = document.data.cta_text;
-            this.fields.icon = document.data.icon; // Assuming you have an 'icon' field in Prismic
-            this.fields.slices = document.data.body;
-          } else {
-            this.$router.push({
-              name: "not-found",
-            });
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching Prismic document:", error);
-          this.$router.push({ name: "not-found" });
-        });
+const { data: doc } = await useAsyncData("wedding-hall", () =>
+  client.getByUID("our-temple", "wedding-hall")
+);
+
+if (!doc.value) {
+  throw createError({ statusCode: 404, message: "Page not found" });
+}
+
+useHead({
+  title: `${doc.value.data.title[0]?.text} | Woolwich Temple`,
+  meta: [
+    {
+      name: "description",
+      content: doc.value.data.content[0]?.text?.substring(0, 160) || "",
     },
-  },
-  created() {
-    this.getContent();
-  },
-  beforeRouteUpdate(to, from, next) {
-    this.getContent();
-    next();
-  },
-};
+  ],
+});
 </script>
-
-<style lang="scss" scoped>
-/* Define primary colors - ensure these are consistent with your global styles */
-$primary-gradient: linear-gradient(to right, #8b184c, #da1b60);
-$primary-solid-fallback: #8b184c;
-$secondary-gray: #6c757d;
-$light-gray-bg: #f8f9fa;
-$dark-text: #343a40;
-$border-color: #dee2e6;
-$card-bg: #ffffff;
-
-$font-heading: "Montserrat", sans-serif;
-$font-body: "Open Sans", sans-serif;
-
-/* Mixins for responsiveness */
-@mixin media-breakpoint-up($breakpoint) {
-  @if $breakpoint == sm {
-    @media (min-width: 576px) {
-      @content;
-    }
-  } @else if $breakpoint == md {
-    @media (min-width: 768px) {
-      @content;
-    }
-  } @else if $breakpoint == lg {
-    @media (min-width: 992px) {
-      @content;
-    }
-  } @else if $breakpoint == xl {
-    @media (min-width: 1200px) {
-      @content;
-    }
-  }
-}
-
-/* --- General Page Structure --- */
-.wrapper {
-  padding-top: 50px;
-  padding-bottom: 50px;
-  min-height: calc(100vh - 100px);
-  font-family: $font-body;
-  color: $dark-text;
-
-  @media (max-width: 767px) {
-    padding-top: 30px;
-    padding-bottom: 30px;
-  }
-}
-
-/* --- Page Header --- */
-.page-header {
-  text-align: center;
-  margin-bottom: 30px;
-  position: relative;
-
-  .title {
-    // Applies to the h1
-    font-family: $font-heading;
-    font-size: 3rem;
-    font-weight: 700;
-    color: $primary-solid-fallback;
-    margin-bottom: 10px;
-    line-height: 1.2;
-  }
-
-  &::after {
-    content: "";
-    display: block;
-    width: 80px;
-    height: 4px;
-    background-color: $primary-solid-fallback;
-    margin: 10px auto 0;
-    border-radius: 2px;
-  }
-}
-
-/* --- Main Content Section (Prismic Description, CTA, Icon) --- */
-.content-section {
-  background-color: $card-bg;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  margin-top: 40px; // Spacing from image slider
-  margin-bottom: 40px; // Spacing before WeddingContact
-
-  @media (max-width: 767px) {
-    padding: 25px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-  }
-
-  @media (max-width: 575px) {
-    padding: 20px 15px; // Reduced padding for very small screens
-  }
-}
-
-/* --- Description (Prismic Rich Text) --- */
-
-.description {
-  line-height: 1.6;
-  margin-bottom: 30px;
-  color: $dark-text;
-
-  // Basic styling for content within Prismic Rich Text
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: $font-heading;
-    color: $dark-text;
-    margin-top: 1.5em;
-    margin-bottom: 0.8em;
-  }
-  p {
-    margin-bottom: 1em;
-  }
-
-  // --- Styling for UL/LI elements from Prismic ---
-  ul {
-    list-style: none; /* Remove default bullet points */
-    padding-left: 0; /* Remove default padding */
-    margin-bottom: 1.5em; /* Spacing below the list */
-    margin-top: 1.5em; /* Spacing above the list */
-  }
-
-  li {
-    position: relative;
-    padding-left: 25px; /* Space for the custom bullet */
-    margin-bottom: 10px; /* Space between list items */
-    line-height: 1.6; /* Ensure good line spacing */
-    font-family: $font-body; // Ensure consistent font
-
-    &:last-child {
-      margin-bottom: 0; // No bottom margin on the last item
-    }
-
-    &::before {
-      content: "\2022"; /* Unicode for a solid circle bullet */
-      color: $primary-solid-fallback; /* Use your primary color for the bullet */
-      position: absolute;
-      left: 0;
-      top: 0;
-      line-height: inherit; // Inherit line-height to align vertically
-    }
-  }
-}
-
-/* --- CTA Button Styling (Reused from Contact Us) --- */
-.cta-wrapper {
-  text-align: center;
-  margin-top: 30px;
-  margin-bottom: 40px; // Spacing before icon or next section
-}
-
-.btn-primary {
-  // Applying the general btn-primary style
-  display: inline-block;
-  padding: 12px 30px;
-  font-weight: 600;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  cursor: pointer;
-  user-select: none;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  background-image: $primary-gradient;
-  background-color: $primary-solid-fallback;
-  color: #fff;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba($primary-solid-fallback, 0.2);
-
-  @media (max-width: 575px) {
-    display: block; // Full width on extra small screens
-    width: 100%;
-    padding: 10px 20px;
-  }
-
-  &:hover {
-    background-image: linear-gradient(to right, darken(#8b184c, 5%), darken(#da1b60, 5%));
-    box-shadow: 0 6px 15px rgba($primary-solid-fallback, 0.3);
-    transform: translateY(-2px);
-  }
-
-  &:active {
-    background-image: linear-gradient(
-      to right,
-      darken(#8b184c, 10%),
-      darken(#da1b60, 10%)
-    );
-    box-shadow: 0 2px 5px rgba($primary-solid-fallback, 0.4);
-    transform: translateY(0);
-  }
-
-  &:disabled {
-    opacity: 0.65;
-    cursor: not-allowed;
-    box-shadow: none;
-  }
-}
-
-/* --- Icon Styling --- */
-.icon-wrapper {
-  text-align: center;
-  margin-top: 40px;
-  margin-bottom: 20px; // Space before WeddingContact
-}
-
-.icon {
-  max-width: 120px; // Control max size of the icon
-  height: auto;
-  display: inline-block; // Center if smaller than max-width
-}
-</style>
