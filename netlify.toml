@@ -1,0 +1,14 @@
+# Netlify build configuration for Nuxt 3
+# https://docs.netlify.com/configure-builds/file-based-configuration/
+
+[build]
+  command = "npm run build"
+  publish = ".output/public"
+  environment = { NODE_VERSION = "20" }
+
+# Redirect SPA-style fallback (handled by Nitro server; uncomment if needed)
+# [[redirects]]
+#   from = "/*"
+#   to = "/.netlify/functions/server"
+#   status = 200
+#   force = true
