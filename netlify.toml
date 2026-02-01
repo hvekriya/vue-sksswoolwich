@@ -6,9 +6,9 @@
   publish = "dist"
   environment = { NODE_VERSION = "24" }
 
-# SPA/SSR fallback – non-prerendered routes go to Nitro server
-# (static files in .output/public are served first)
+# SSR: all requests go to Nitro server (required for Nuxt routing)
 [[redirects]]
   from = "/*"
   to = "/.netlify/functions/server"
   status = 200
+  force = true
