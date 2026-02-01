@@ -15,5 +15,9 @@ yarn-error.log*
 .env.local
 .nuxt
 
+# Firebase Admin (do not commit)
+service-account.json
+*-service-account*.json
+
 # Local Netlify folder
 .netlify

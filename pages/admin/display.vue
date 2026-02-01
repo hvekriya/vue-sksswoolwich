@@ -36,16 +36,27 @@
                             icon="i-heroicons-arrow-up-tray" class="rounded-2xl py-4 font-bold"
                             @click="triggerUpload(slideshowInput)" :loading="uploadingType === 'slideshow'" />
 
-                        <div v-if="slideshow.length" class="grid grid-cols-3 gap-4 mt-6">
-                            <div v-for="(url, idx) in slideshow" :key="idx"
-                                class="relative aspect-video group overflow-hidden rounded-xl bg-gray-100">
-                                <img :src="url" class="absolute inset-0 w-full h-full object-cover" />
-                                <div
-                                    class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <UButton variant="ghost" color="red" icon="i-heroicons-trash" size="sm"
-                                        @click="deleteImage(url, 'slideshow')" />
+                        <div class="mt-6">
+                            <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                                Existing slideshow posters ({{ slideshow.length }})
+                            </h4>
+                            <div v-if="loadingSlideshow" class="space-y-4">
+                                <USkeleton v-for="i in 3" :key="i" class="h-48 rounded-xl" />
+                            </div>
+                            <div v-else-if="slideshow.length" class="space-y-4">
+                                <div v-for="(item, idx) in slideshow" :key="item.fullPath"
+                                    class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
+                                    <div class="aspect-video bg-gray-100 dark:bg-gray-800">
+                                        <img :src="item.url" class="w-full h-full object-contain" alt="Slideshow poster" />
+                                    </div>
+                                    <div class="p-3 flex items-center justify-between gap-3">
+                                        <span class="text-xs text-gray-500">Poster {{ idx + 1 }}</span>
+                                        <UButton variant="solid" color="red" icon="i-heroicons-trash" size="sm"
+                                            label="Delete" @click="confirmDelete(item)" />
+                                    </div>
                                 </div>
                             </div>
+                            <p v-else class="text-sm text-gray-500 italic py-4">No slideshow posters yet. Upload above.</p>
                         </div>
                     </div>
                 </UCard>
@@ -68,20 +79,54 @@
                             icon="i-heroicons-arrow-up-tray" class="rounded-2xl py-4 font-bold"
                             @click="triggerUpload(pinnedInput)" :loading="uploadingType === 'pinned-posters'" />
 
-                        <div v-if="pinnedPosters.length" class="grid grid-cols-3 gap-4 mt-6">
-                            <div v-for="(url, idx) in pinnedPosters" :key="idx"
-                                class="relative aspect-video group overflow-hidden rounded-xl bg-gray-100">
-                                <img :src="url" class="absolute inset-0 w-full h-full object-cover" />
-                                <div
-                                    class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <UButton variant="ghost" color="red" icon="i-heroicons-trash" size="sm"
-                                        @click="deleteImage(url, 'pinned-posters')" />
+                        <div class="mt-6">
+                            <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                                Existing pinned posters ({{ pinnedPosters.length }})
+                            </h4>
+                            <div v-if="loadingPinned" class="space-y-4">
+                                <USkeleton v-for="i in 3" :key="i" class="h-48 rounded-xl" />
+                            </div>
+                            <div v-else-if="pinnedPosters.length" class="space-y-4">
+                                <div v-for="(item, idx) in pinnedPosters" :key="item.fullPath"
+                                    class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
+                                    <div class="aspect-video bg-gray-100 dark:bg-gray-800">
+                                        <img :src="item.url" class="w-full h-full object-contain" alt="Pinned poster" />
+                                    </div>
+                                    <div class="p-3 flex items-center justify-between gap-3">
+                                        <span class="text-xs text-gray-500">Poster {{ idx + 1 }}</span>
+                                        <UButton variant="solid" color="red" icon="i-heroicons-trash" size="sm"
+                                            label="Delete" @click="confirmDelete(item)" />
+                                    </div>
                                 </div>
                             </div>
+                            <p v-else class="text-sm text-gray-500 italic py-4">No pinned posters yet. Upload above.</p>
                         </div>
                     </div>
                 </UCard>
             </div>
+
+            <!-- Delete poster confirmation -->
+            <UModal v-model="isDeleteModalOpen" :ui="{ width: 'sm:max-w-lg', rounded: 'rounded-2xl sm:rounded-3xl' }">
+                <div class="flex flex-col max-h-[90vh] overflow-hidden">
+                    <div class="p-6 sm:p-8 text-center flex-shrink-0">
+                        <div
+                            class="w-16 h-16 bg-red-50 dark:bg-red-950 text-red-600 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">
+                            <UIcon name="i-heroicons-exclamation-triangle" />
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Delete this poster?</h3>
+                        <p class="text-gray-500 text-sm mb-4">This will remove the poster from the TV display. This action cannot be undone.</p>
+                        <div v-if="itemToDelete" class="aspect-video max-w-xs mx-auto rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                            <img :src="itemToDelete.url" class="w-full h-full object-contain" alt="" />
+                        </div>
+                    </div>
+                    <div class="flex gap-3 p-6 sm:p-8 pt-0 flex-shrink-0 border-t border-gray-200 dark:border-gray-700 min-w-0">
+                        <UButton color="gray" variant="soft" label="Cancel" class="flex-1 min-w-0 rounded-xl"
+                            @click="isDeleteModalOpen = false" />
+                        <UButton color="red" label="Delete Forever" class="flex-1 min-w-0 rounded-xl"
+                            :loading="isDeleting" @click="doDelete" />
+                    </div>
+                </div>
+            </UModal>
         </div>
     </AdminLayout>
 </template>
@@ -93,13 +138,26 @@ definePageMeta({
     middleware: 'auth'
 })
 
+type StorageItem = { url: string; fullPath: string }
+
 const storage = useFirebaseStorage()
-const slideshow = ref<string[]>([])
-const pinnedPosters = ref<string[]>([])
+const slideshow = ref<StorageItem[]>([])
+const pinnedPosters = ref<StorageItem[]>([])
+const loadingSlideshow = ref(false)
+const loadingPinned = ref(false)
 const uploadingType = ref<'slideshow' | 'pinned-posters' | null>(null)
 
 const slideshowInput = ref<HTMLInputElement | null>(null)
 const pinnedInput = ref<HTMLInputElement | null>(null)
+
+const isDeleteModalOpen = ref(false)
+const itemToDelete = ref<StorageItem | null>(null)
+const isDeleting = ref(false)
+
+function confirmDelete(item: StorageItem) {
+    itemToDelete.value = item
+    isDeleteModalOpen.value = true
+}
 
 const triggerUpload = (input: HTMLInputElement | null) => {
     input?.click()
@@ -108,15 +166,30 @@ const triggerUpload = (input: HTMLInputElement | null) => {
 async function fetchImages() {
     if (!storage) return
 
-    // Fetch Slideshow
-    const slideRef = storageRef(storage, 'slideshow/')
-    const slideRes = await listAll(slideRef)
-    slideshow.value = await Promise.all(slideRes.items.map(item => getDownloadURL(item)))
+    loadingSlideshow.value = true
+    loadingPinned.value = true
+    try {
+        const slideRef = storageRef(storage, 'slideshow/')
+        const slideRes = await listAll(slideRef)
+        slideshow.value = await Promise.all(
+            slideRes.items.map(async (item) => ({
+                url: await getDownloadURL(item),
+                fullPath: item.fullPath
+            }))
+        )
 
-    // Fetch Pinned
-    const pinnedRef = storageRef(storage, 'pinned-posters/')
-    const pinnedRes = await listAll(pinnedRef)
-    pinnedPosters.value = await Promise.all(pinnedRes.items.map(item => getDownloadURL(item)))
+        const pinnedRef = storageRef(storage, 'pinned-posters/')
+        const pinnedRes = await listAll(pinnedRef)
+        pinnedPosters.value = await Promise.all(
+            pinnedRes.items.map(async (item) => ({
+                url: await getDownloadURL(item),
+                fullPath: item.fullPath
+            }))
+        )
+    } finally {
+        loadingSlideshow.value = false
+        loadingPinned.value = false
+    }
 }
 
 async function uploadImages(event: any, type: 'slideshow' | 'pinned-posters') {
@@ -137,20 +210,20 @@ async function uploadImages(event: any, type: 'slideshow' | 'pinned-posters') {
     }
 }
 
-async function deleteImage(url: string, type: 'slideshow' | 'pinned-posters') {
-    if (!storage) return
+async function doDelete() {
+    if (!itemToDelete.value || !storage) return
+    isDeleting.value = true
     try {
-        // Note: This is simpler if we had the full path, but we can infer it or use Storage metadata
-        // For now, let's just use the URL to find the object if possible or rely on listAll refresh
-        const fileName = decodeURIComponent(url.split('/').pop()?.split('?')[0] || '')
-        const fileRef = storageRef(storage, fileName)
+        const fileRef = storageRef(storage, itemToDelete.value.fullPath)
         await deleteObject(fileRef)
+        isDeleteModalOpen.value = false
+        itemToDelete.value = null
         await fetchImages()
     } catch (err) {
-        // If delete by full URL fails, we might need a better mapping, but usually Storage URLs contain the path
         console.error('Delete error:', err)
-        // Refresh list anyway
         await fetchImages()
+    } finally {
+        isDeleting.value = false
     }
 }
 

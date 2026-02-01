@@ -9,7 +9,7 @@
             alt="Logo"
             class="h-16 w-auto mb-6 brightness-0 invert"
           />
-          <h3 class="text-xl font-serif font-bold mb-4 text-golden-900">
+          <h3 class="text-xl font-serif font-bold mb-4 text-white">
             Shree KS Swaminarayan Temple Woolwich
           </h3>
           <p class="text-gray-900 text-sm leading-relaxed mb-6">
@@ -100,7 +100,6 @@
             >Privacy Policy</NuxtLink
           >
           <NuxtLink to="/terms" class="hover:text-white">Terms of Use</NuxtLink>
-          <NuxtLink to="/admin" class="hover:text-white">Admin</NuxtLink>
         </div>
       </div>
     </div>

@@ -48,7 +48,7 @@
 
 <script setup lang="ts">
 import { z } from 'zod'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import type { FormSubmitEvent } from '#ui/types'
 
 definePageMeta({
@@ -56,7 +56,7 @@ definePageMeta({
     middleware: 'auth'
 })
 
-const auth = useFirebaseAuth()
+const auth = import.meta.client ? getAuth(useNuxtApp().$firebaseApp as import('firebase/app').FirebaseApp) : null
 const loading = ref(false)
 const errorMsg = ref('')
 const router = useRouter()

@@ -57,7 +57,7 @@
       <section class="mb-24">
         <div class="flex items-center justify-between mb-10">
           <div>
-            <h2 class="text-4xl font-serif font-bold text-gray-900 mb-2">
+            <h2 class="text-4xl font-serif font-bold text-gray-400 mb-2">
               Upcoming Events
             </h2>
             <div
@@ -148,6 +148,30 @@ const { client } = usePrismic();
 const { isSameOrAfter } = useFilters();
 const config = useRuntimeConfig();
 
+// Fallback data – always return this from the fetcher on error so no Nuxt error is serialized (avoids composable-on-revive)
+const fallbackPayload = () => ({
+  upcomingEvents: [],
+  recentUploads: [],
+  liveStreamUrl: null,
+  fields: {
+    slices: [
+      {
+        slice_type: "hero_section",
+        primary: {
+          title: [{ type: "heading1", text: "Welcome to Woolwich Temple", spans: [] }],
+          description: [
+            {
+              type: "paragraph",
+              text: "Prismic content is currently unavailable. This is a placeholder.",
+              spans: [],
+            },
+          ],
+        },
+      },
+    ],
+  },
+});
+
 // SEO Data
 useSeoMeta({
   title: "Home | Woolwich Temple",
@@ -157,106 +181,103 @@ useSeoMeta({
     "https://images.prismic.io/sksswoolwich/c1acd8d9-7ccb-4f1b-bcc1-57ceb5ada080_39972331571_6d6de90849_o.png?auto=compress,format",
 });
 
-const { data, error } = await useAsyncData("home-page-data", async () => {
-  if (!client) {
-    console.warn("usePrismic() returned undefined client. Checking nuxtApp.");
-    // Attempts to fix initialization race conditions or context issues
-    const nuxtApp = useNuxtApp();
-    if (nuxtApp.$prismic && nuxtApp.$prismic.client) {
-      // manually assign if needed, or throw specific error
-      return { error: "Prismic client unavailable in setup" };
+const { data } = await useAsyncData("home-page-data", async () => {
+  try {
+    if (!client) {
+      // On client hydration Prismic plugin may not be ready yet; use server payload so initial render shows content
+      if (import.meta.client) {
+        const cached = useNuxtApp().payload?.data?.["home-page-data"];
+        if (cached) return cached;
+      }
+      if (import.meta.dev)
+        console.warn("Prismic client unavailable. Using fallback data.");
+      return fallbackPayload();
     }
+
+    const [document, eventsFromPrismic] = await Promise.all([
+      client.getSingle("home").catch(() => null),
+      client.getAllByType("events").catch(() => []),
+    ]);
+
+    if (!document) {
+      // On client hydration use server payload if we have it (avoid overwriting with fallback)
+      if (import.meta.client) {
+        const cached = useNuxtApp().payload?.data?.["home-page-data"];
+        if (cached) return cached;
+      }
+      if (import.meta.dev)
+        console.warn("Prismic Home document not found. Using fallback data.");
+      return fallbackPayload();
+    }
+
+    const today = new Date().toISOString().split("T")[0];
+    const upcomingEvents = eventsFromPrismic
+      .filter((event: any) => isSameOrAfter(event.data.event_date, today))
+      .sort(
+        (a: any, b: any) =>
+          new Date(a.data.event_date).getTime() - new Date(b.data.event_date).getTime()
+      )
+      .slice(0, 6);
+
+    const flickrConfig = {
+      api_key: config.public.flickrApiKey,
+      user_id: config.public.flickrUserId,
+      format: "json",
+      nojsoncallback: "1",
+    };
+    const flickrUrl = config.public.flickrUrl;
+    const unixTimeStamp = Math.floor(Date.now() / 1000) - 86400 * 5;
+
+    let recentUploads: any[] = [];
+    try {
+      const recentPhotos = await $fetch<any>(flickrUrl, {
+        params: {
+          ...flickrConfig,
+          method: "flickr.photos.search",
+          min_date_upload: unixTimeStamp,
+          per_page: 14,
+          extras: "url_n,url_o,tags",
+        },
+      });
+      recentUploads = recentPhotos?.photos?.photo ?? [];
+    } catch {
+      // Flickr optional; keep Prismic data
+    }
+
+    const liveStreamUrl =
+      document.data?.live_stream_url?.url || document.data?.live_stream_url || null;
+
+    return {
+      upcomingEvents,
+      recentUploads,
+      liveStreamUrl,
+      fields: {
+        slices: document.data.body,
+      },
+    };
+  } catch (e) {
+    if (import.meta.dev) console.warn("Home page data error, using fallback:", e);
+    return fallbackPayload();
   }
-
-  const [document, eventsFromPrismic] = await Promise.all([
-    client?.getSingle("home").catch(() => null),
-    client?.getAllByType("events").catch(() => []),
-  ]);
-
-  if (!document) throw new Error("Prismic Home document not found");
-
-  const today = new Date().toISOString().split("T")[0];
-  const upcomingEvents = eventsFromPrismic
-    .filter((event: any) => isSameOrAfter(event.data.event_date, today))
-    .sort(
-      (a: any, b: any) =>
-        new Date(a.data.event_date).getTime() - new Date(b.data.event_date).getTime()
-    )
-    .slice(0, 6);
-
-  // Flickr API Call
-  // ... (keeping existing flickr logic if needed, but for brevity assuming it's part of the block)
-  // Re-implementing flickr config here since replace_file_content context needs it
-  const config = useRuntimeConfig();
-  const flickrConfig = {
-    api_key: config.public.flickrApiKey,
-    user_id: config.public.flickrUserId,
-    format: "json",
-    nojsoncallback: "1",
-  };
-  const flickrUrl = config.public.flickrUrl;
-  const unixTimeStamp = Math.floor(Date.now() / 1000) - 86400 * 5;
-
-  const recentPhotos = await $fetch<any>(flickrUrl, {
-    params: {
-      ...flickrConfig,
-      method: "flickr.photos.search",
-      min_date_upload: unixTimeStamp,
-      per_page: 14,
-      extras: "url_n,url_o,tags",
-    },
-  });
-
-  // Extract Live Stream URL if available in Prismic Home document
-  const liveStreamUrl =
-    document.data?.live_stream_url?.url || document.data?.live_stream_url || null;
-
-  return {
-    upcomingEvents,
-    recentUploads: recentPhotos.photos.photo,
-    liveStreamUrl,
-    fields: {
-      slices: document.data.body,
-    },
-  };
 });
 
-if (error.value || !data.value) {
-  console.error("Home Page Data Error:", error.value);
-  // Fallback to mock data if Prismic is empty/down
-  data.value = {
-    upcomingEvents: [],
-    recentUploads: [],
-    liveStreamUrl: null,
-    fields: {
-      slices: [
-        {
-          slice_type: "hero_section",
-          primary: {
-            title: [{ type: "heading1", text: "Welcome to Woolwich Temple", spans: [] }],
-            description: [
-              {
-                type: "paragraph",
-                text: "Prismic content is currently unavailable. This is a placeholder.",
-                spans: [],
-              },
-            ],
-          },
-        },
-      ],
-    },
-  };
-}
+// Reactive payload so client sees data when it updates
+const payload = computed(() => (data.value ?? fallbackPayload()) as any);
+const upcomingEvents = computed(() => payload.value.upcomingEvents ?? []);
+const recentUploads = computed(() => payload.value.recentUploads ?? []);
+const fields = computed(() => payload.value.fields);
+const liveStreamUrl = computed(() => payload.value.liveStreamUrl ?? null);
+const isLive = computed(() => !!liveStreamUrl.value);
 
-const {
-  upcomingEvents = [],
-  recentUploads = [],
-  fields,
-  liveStreamUrl,
-} = data.value as any;
-
-// Live Stream State determined by data presence
-const isLive = computed(() => !!liveStreamUrl);
+// On initial client load Prismic plugin may not be ready; refetch once mounted so content loads
+onMounted(() => {
+  if (!import.meta.client) return;
+  const firstDesc =
+    payload.value.fields?.slices?.[0]?.primary?.description?.[0]?.text ?? "";
+  if (firstDesc.includes("Prismic content is currently unavailable")) {
+    refreshNuxtData("home-page-data");
+  }
+});
 </script>
 
 <style scoped>

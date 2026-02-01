@@ -89,13 +89,14 @@
 </template>
 
 <script setup lang="ts">
+import * as prismic from '@prismicio/client'
 const { client } = usePrismic()
 
 const { data } = await useAsyncData('blog-posts', async () => {
   const [weekly, mission] = await Promise.all([
     client.getAllByType('blog', {
       filters: [
-        usePrismic().filter.at('document.tags', ['weekly-wisdom'])
+        prismic.filter.at('document.tags', ['weekly-wisdom'])
       ],
       orderings: {
         field: 'document.first_publication_date',
@@ -114,7 +115,7 @@ const { data } = await useAsyncData('blog-posts', async () => {
   // or just show them separately as categorical.
   return {
     weeklyWisdomPosts: weekly,
-    missionDharmaPosts: mission.filter(p => !p.tags.includes('weekly-wisdom'))
+    missionDharmaPosts: mission.filter((p: { tags: string[] }) => !p.tags?.includes('weekly-wisdom'))
   }
 })
 

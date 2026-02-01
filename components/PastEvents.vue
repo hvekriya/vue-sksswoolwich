@@ -17,9 +17,11 @@
           <div v-else class="h-full w-full bg-gray-100 flex items-center justify-center">
             <UIcon name="i-heroicons-photo" class="w-12 h-12 text-gray-200" />
           </div>
-          
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-          
+
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"
+          ></div>
+
           <!-- Date Badge -->
           <div class="absolute bottom-4 left-4 flex items-center space-x-2 text-white/90">
             <UIcon name="i-heroicons-calendar-days" class="w-4 h-4 text-golden-900" />
@@ -30,15 +32,19 @@
         </div>
 
         <div class="p-6 flex flex-col flex-grow">
-          <h3 class="text-lg font-serif font-bold text-gray-900 mb-3 line-clamp-2 min-h-[3rem] group-hover:text-temple-red-500 transition-colors">
+          <h3
+            class="text-lg font-serif font-bold text-gray-400 mb-3 line-clamp-2 min-h-[3rem] group-hover:text-temple-red-500 transition-colors"
+          >
             <prismic-rich-text :field="event.data.event_title" />
           </h3>
-          
+
           <div class="text-sm text-gray-500 mb-6 line-clamp-2">
             <prismic-rich-text :field="event.data.event_description" />
           </div>
 
-          <div class="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
+          <div
+            class="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between"
+          >
             <UButton
               v-if="event.data.flicker_album_id"
               :to="`/events/${event.uid}/${event.data.flicker_album_id}`"
@@ -62,27 +68,30 @@
       </div>
     </div>
 
-    <div v-if="!pastEvents || pastEvents.length === 0" class="py-20 text-center text-gray-900 italic font-serif">
+    <div
+      v-if="!pastEvents || pastEvents.length === 0"
+      class="py-20 text-center text-gray-900 italic font-serif"
+    >
       No past events to display.
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { format } from 'date-fns'
+import { format } from "date-fns";
 
 const props = defineProps<{
-  pastEvents: any[]
-}>()
+  pastEvents: any[];
+}>();
 
 const formatDate = (date: string | null) => {
-  if (!date) return 'Past Event'
+  if (!date) return "Past Event";
   try {
-    return format(new Date(date), 'MMMM yyyy')
+    return format(new Date(date), "MMMM yyyy");
   } catch (e) {
-    return date
+    return date;
   }
-}
+};
 </script>
 
 <style scoped>

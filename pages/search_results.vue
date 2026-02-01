@@ -64,6 +64,7 @@
 </template>
 
 <script setup lang="ts">
+import * as prismic from '@prismicio/client'
 const route = useRoute()
 const router = useRouter()
 const { client } = usePrismic()
@@ -75,7 +76,7 @@ const { data: articles, pending, refresh } = await useAsyncData('search-results'
 
   const response = await client.getAllByType('our-temple', {
     filters: [
-      usePrismic().filter.fulltext('document', searchQuery.value)
+      prismic.filter.fulltext('document', searchQuery.value)
     ]
   })
   return response

@@ -10,6 +10,7 @@
         :key="index"
         :href="photo.url_o"
         class="gallery-item group relative aspect-square overflow-hidden rounded-2xl glass-effect border-golden-500/10 hover:border-golden-500/40 transition-all duration-500"
+        @click.prevent="openGallery(index)"
       >
         <img
           :src="photo.url_n || ''"
@@ -43,8 +44,14 @@ const props = defineProps<{
 
 const plugins = [lgThumbnail, lgZoom, lgFullscreen]
 
-const onInit = (detail: any) => {
-  console.log('lightGallery has been initialized', detail)
+const lgInstance = ref<{ openGallery: (index?: number) => void } | null>(null)
+
+const onInit = (detail: { instance?: { openGallery: (index?: number) => void } }) => {
+  lgInstance.value = detail.instance ?? null
+}
+
+const openGallery = (index: number) => {
+  lgInstance.value?.openGallery(index)
 }
 </script>
 

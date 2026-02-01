@@ -77,15 +77,24 @@
                         <UInput v-model="formState.link" placeholder="https://..." size="xl" icon="i-heroicons-link" />
                     </UFormGroup>
 
-                    <UFormGroup label="Icon Class (FontAwesome style)">
-                        <UInput v-model="formState.icon" placeholder="fab fa-youtube" size="xl" />
-                        <p class="text-[10px] text-gray-900 mt-1">Common: fab fa-youtube, fab fa-instagram, fas
-                            fa-envelope</p>
+                    <UFormGroup label="Icon">
+                        <USelect
+                            v-model="formState.icon"
+                            :options="iconSelectOptions"
+                            size="xl"
+                            value-attribute="value"
+                            option-attribute="label"
+                            placeholder="Choose an icon"
+                            class="w-full"
+                        >
+                            <template #leading>
+                                <UIcon :name="displayIcon" class="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                            </template>
+                        </USelect>
                     </UFormGroup>
 
-                    <UFormGroup label="Brief Description">
-                        <UTextarea v-model="formState.description" placeholder="Short tagline or info text..." rows="3"
-                            size="xl" />
+                    <UFormGroup label="Description">
+                        <admin-rich-text-editor v-model="formState.description" />
                     </UFormGroup>
 
                     <div class="pt-6">
@@ -135,8 +144,33 @@ const columns = [
 ]
 
 const sortedLinks = computed(() => {
-    return [...links.value].sort((a: any, b: any) => (a.order || 99) - (b.order || 99))
+    return [...links.value].sort((a: any, b: any) => (a.order ?? 99) - (b.order ?? 99))
 })
+
+const defaultIcon = 'i-heroicons-link'
+
+const displayIcon = computed(() => {
+    const icon = formState.icon
+    return (icon && typeof icon === 'string' && icon.trim()) ? icon : defaultIcon
+})
+
+const iconSelectOptions = [
+    { value: 'i-heroicons-link', label: 'Link' },
+    { value: 'i-heroicons-envelope', label: 'Email' },
+    { value: 'i-heroicons-phone', label: 'Phone' },
+    { value: 'i-heroicons-globe-alt', label: 'Website' },
+    { value: 'i-heroicons-map-pin', label: 'Location' },
+    { value: 'i-heroicons-calendar', label: 'Calendar' },
+    { value: 'i-heroicons-megaphone', label: 'Announce' },
+    { value: 'i-heroicons-document-text', label: 'Document' },
+    { value: 'i-simple-icons-youtube', label: 'YouTube' },
+    { value: 'i-simple-icons-instagram', label: 'Instagram' },
+    { value: 'i-simple-icons-facebook', label: 'Facebook' },
+    { value: 'i-simple-icons-x', label: 'X / Twitter' },
+    { value: 'i-simple-icons-whatsapp', label: 'WhatsApp' },
+    { value: 'i-simple-icons-telegram', label: 'Telegram' },
+    { value: 'i-simple-icons-flickr', label: 'Flickr' },
+]
 
 // Modal State
 const isModalOpen = ref(false)
@@ -157,16 +191,16 @@ const itemToDelete = ref<any>(null)
 function openEditor(item?: any) {
     if (item) {
         editingItem.value = item
-        formState.title = item.title
-        formState.link = item.link || ''
-        formState.icon = item.icon || ''
-        formState.description = item.description || ''
-        formState.order = item.order || 1
+        formState.title = item.title ?? ''
+        formState.link = item.link ?? ''
+        formState.icon = (item.icon && String(item.icon).trim()) ? String(item.icon).trim() : defaultIcon
+        formState.description = item.description ?? ''
+        formState.order = item.order ?? 1
     } else {
         editingItem.value = null
         formState.title = ''
         formState.link = ''
-        formState.icon = 'fas fa-link'
+        formState.icon = defaultIcon
         formState.description = ''
         formState.order = (links.value.length + 1)
     }
@@ -207,8 +241,9 @@ async function doDelete() {
     }
 }
 
-const getIconName = (iconClass: string) => {
-    if (!iconClass) return 'i-heroicons-link'
+const getIconName = (iconClass: string | null | undefined) => {
+    if (iconClass == null || typeof iconClass !== 'string' || !iconClass.trim()) return 'i-heroicons-link'
+    if (iconClass.startsWith('i-')) return iconClass
     if (iconClass.includes('youtube')) return 'i-simple-icons-youtube'
     if (iconClass.includes('facebook')) return 'i-simple-icons-facebook'
     if (iconClass.includes('instagram')) return 'i-simple-icons-instagram'

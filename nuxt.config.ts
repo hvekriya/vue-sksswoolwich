@@ -8,7 +8,8 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      routes: ['/']
+      routes: ['/'],
+      ignore: ['/admin']
     }
   },
 
@@ -62,7 +63,7 @@ export default defineNuxtConfig({
   // Firebase configuration
   vuefire: {
     auth: {
-      enabled: false,  // Temporarily disabled for local development
+      enabled: true,
       userCallback: '~/plugins/auth-callback.ts'
     },
     config: {
@@ -81,16 +82,17 @@ export default defineNuxtConfig({
   prismic: {
     endpoint: 'sksswoolwich',
     clientConfig: {
+      accessToken: process.env.VUE_APP_PRISMIC,
       routes: [
         { type: 'events', path: '/events/:uid' },
-        { type: 'our-temple', path: '/our-temple/:uid' }
+        { type: 'our-temple', path: '/our-temple/:uid' },
+        { type: 'blog', path: '/blog/:uid' }
       ]
     }
   },
 
   // Runtime configuration
   runtimeConfig: {
-    prismicAccessToken: process.env.VUE_APP_PRISMIC,
     public: {
       googleApiKey: process.env.GOOGLE_API_KEY,
       flickrApiKey: process.env.flickrApiKey,

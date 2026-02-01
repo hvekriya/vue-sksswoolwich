@@ -10,6 +10,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
+    "check:routes": "sh scripts/check-routes.sh",
     "postinstall": "nuxt prepare",
     "lint:prettier": "prettier --check .",
     "lint": "npm run lint:prettier",
@@ -23,8 +24,9 @@
     "@fullcalendar/timegrid": "^6.1.17",
     "@fullcalendar/vue3": "^6.1.17",
     "@nuxt/ui": "^2.21.0",
+    "@nuxtjs/prismic": "^5.2.0",
     "@prismicio/client": "^7.16.0",
-    "@prismicio/vue": "^4.2.1",
+    "@prismicio/vue": "^6.1.1",
     "@tiptap/starter-kit": "^2.15.1",
     "@tiptap/vue-3": "^2.15.1",
     "@vite-pwa/nuxt": "^0.10.6",
@@ -33,16 +35,18 @@
     "firebase-admin": "^13.6.0",
     "ical.js": "^2.1.0",
     "lightgallery": "^2.9.0",
+    "moment": "^2.30.1",
     "nuxt": "^3.14.159",
     "nuxt-vuefire": "^1.0.5",
     "swiper": "^11.2.0",
     "vue": "^3.5.0",
     "vue-router": "^4.6.4",
+    "vuefire": "^3.2.2",
     "zod": "^3.25.76"
   },
   "devDependencies": {
     "@nuxtjs/google-fonts": "^3.2.0",
-    "@nuxtjs/prismic": "^5.2.0",
+    "sass-embedded": "^1.97.3",
     "vite-plugin-vue-inspector": "^5.3.2"
   }
 }

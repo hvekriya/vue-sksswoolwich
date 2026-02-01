@@ -15,28 +15,24 @@
                 </div>
 
                 <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
-                    <UCard v-for="(item, index) in (sortedAnnouncements as any[]).slice(0, 4)" :key="(item as any).key"
+                    <UCard v-for="item in dashboardAnnouncements" :key="itemId(item)"
                         class="group hover:border-golden-500/40 transition-all shadow-sm hover:shadow-xl rounded-3xl overflow-hidden">
                         <div class="flex gap-6">
                             <div
                                 class="flex-shrink-0 w-12 h-12 bg-golden-50 dark:bg-golden-950 font-serif font-bold text-golden-600 rounded-2xl flex items-center justify-center text-xl">
-                                {{ (item as any).order }}
+                                {{ item.order }}
                             </div>
                             <div class="flex-grow">
-                                <div class="flex items-center gap-2 mb-2">
-                                    <UBadge v-if="(item as any).published" color="green" variant="soft" size="xs"
-                                        label="Live" />
-                                    <UBadge v-else color="gray" variant="soft" size="xs" label="Draft" />
-                                    <h4 class="font-bold text-gray-900 dark:text-white">{{ (item as any).title }}</h4>
-                                </div>
+                                <h4 class="font-bold text-gray-900 dark:text-white mb-2">{{ item.title }}</h4>
                                 <div class="text-sm text-gray-500 line-clamp-2 prose prose-sm dark:prose-invert"
-                                    v-html="(item as any).description"></div>
+                                    v-html="item.description"></div>
                             </div>
                         </div>
                         <template #footer>
                             <div class="flex justify-end gap-2">
                                 <UButton variant="ghost" color="primary" icon="i-heroicons-pencil-square" size="xs"
-                                    @click="navigateTo('/admin/announcements')" />
+                                    aria-label="Edit"
+                                    :to="'/admin/announcements?edit=' + itemId(item)" />
                             </div>
                         </template>
                     </UCard>
@@ -115,6 +111,12 @@ const links = useDatabaseList(dbRef(db, '/link-tree'))
 const sortedAnnouncements = computed(() => {
     return [...announcements.value].sort((a: any, b: any) => (a.order || 99) - (b.order || 99))
 })
+
+const dashboardAnnouncements = computed(() => sortedAnnouncements.value.slice(0, 4))
+
+function itemId(item: { id?: string; key?: string }) {
+    return item?.id ?? item?.key ?? ''
+}
 
 const linksCount = computed(() => links.value.length)
 

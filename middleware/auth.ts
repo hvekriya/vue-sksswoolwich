@@ -1,23 +1,32 @@
-export default defineNuxtRouteMiddleware(async (to, from) => {
-    const user = useCurrentUser()
+import { getAuth, type User } from 'firebase/auth'
 
-    // Wait for the user to be loaded (if any)
-    if (process.client) {
-        const { $auth } = useNuxtApp()
-        // Small delay to ensure firebase is initialized
-        await new Promise(resolve => {
-            const unsubscribe = $auth.onAuthStateChanged((user) => {
-                unsubscribe()
-                resolve(user)
-            })
-        })
-    }
+export default defineNuxtRouteMiddleware(async (to) => {
+  const isAdmin = to.path.startsWith('/admin')
+  const isAuthPage = to.path === '/admin/auth'
 
-    if (!user.value && to.path.startsWith('/admin') && to.path !== '/admin/auth') {
-        return navigateTo('/admin/auth')
+  // Server: no Firebase auth state; require login for any admin route except auth page
+  if (import.meta.server) {
+    if (isAdmin && !isAuthPage) {
+      return navigateTo('/admin/auth')
     }
+    return
+  }
 
-    if (user.value && to.path === '/admin/auth') {
-        return navigateTo('/admin')
-    }
+  // Client: wait for Firebase auth state then decide
+  const nuxtApp = useNuxtApp()
+  const app = nuxtApp.$firebaseApp as import('firebase/app').FirebaseApp
+  const auth = getAuth(app)
+  const user = await new Promise<User | null>((resolve) => {
+    const unsubscribe = auth.onAuthStateChanged((u) => {
+      unsubscribe()
+      resolve(u)
+    })
+  })
+
+  if (!user && isAdmin && !isAuthPage) {
+    return navigateTo('/admin/auth')
+  }
+  if (user && isAuthPage) {
+    return navigateTo('/admin')
+  }
 })
