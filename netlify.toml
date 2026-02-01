@@ -6,9 +6,9 @@
   publish = ".output/public"
   environment = { NODE_VERSION = "20" }
 
-# Redirect SPA-style fallback (handled by Nitro server; uncomment if needed)
-# [[redirects]]
-#   from = "/*"
-#   to = "/.netlify/functions/server"
-#   status = 200
-#   force = true
+# SPA/SSR fallback – non-prerendered routes go to Nitro server
+# (static files in .output/public are served first)
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/server"
+  status = 200
