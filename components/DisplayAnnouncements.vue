@@ -35,9 +35,12 @@
 import { ref as dbRef } from "firebase/database";
 
 // Same data source and logic as AnnouncementList (no published filter)
+// During SSR prerender, useDatabase may not be ready - guard against undefined
 const db = useDatabase();
-const announcementsRef = dbRef(db, "annoucements");
-const { data: announcements, pending } = useDatabaseList(announcementsRef);
+const announcementsRef = db ? dbRef(db, "annoucements") : null;
+const { data: announcements, pending } = announcementsRef
+  ? useDatabaseList(announcementsRef)
+  : { data: ref([]), pending: ref(false) };
 
 const scrollPosition = ref(0);
 const scrollContainer = ref<HTMLElement | null>(null);

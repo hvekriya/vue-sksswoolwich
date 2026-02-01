@@ -10,7 +10,8 @@ export default defineNuxtConfig({
     prerender: {
       crawlLinks: true,
       routes: ['/'],
-      ignore: ['/admin']
+      ignore: ['/admin'],
+      failOnError: false
     }
   },
 
