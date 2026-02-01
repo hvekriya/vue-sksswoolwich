@@ -195,8 +195,8 @@ const { data } = await useAsyncData("home-page-data", async () => {
     }
 
     const [document, eventsFromPrismic] = await Promise.all([
-      client.getSingle("home").catch(() => null),
-      client.getAllByType("events").catch(() => []),
+      client?.getSingle?.("home").catch(() => null) ?? null,
+      client?.getAllByType?.("events").catch(() => []) ?? [],
     ]);
 
     if (!document) {

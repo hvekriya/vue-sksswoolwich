@@ -106,9 +106,14 @@ export default defineNuxtConfig({
     }
   },
 
-  // PWA configuration
+  // PWA configuration – SSR: don't precache HTML, let server handle navigation
   pwa: {
     registerType: 'autoUpdate',
+    workbox: {
+      navigateFallback: null,
+      globPatterns: ['**/*.{js,css,ico,png,svg,woff,woff2}'],
+      cleanupOutdatedCaches: true
+    },
     manifest: {
       name: 'Woolwich Temple',
       short_name: 'SKSSWoolwich',
