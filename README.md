@@ -2,28 +2,6 @@
 
 > [Vue.js](https://vuejs.org) project with content managed in [Prismic](https://prismic.io)
 
-## Deploy to Netlify
-
-1. **Connect the repo**  
-   In [Netlify](https://app.netlify.com): Add new site → Import an existing project → connect your Git provider and select this repo.
-
-2. **Build settings** (usually auto-detected from `netlify.toml`)  
-   - **Build command:** `npm run build`  
-   - **Publish directory:** `.output/public`  
-   - **Node version:** 20 (set in `netlify.toml` or in Netlify → Site settings → Environment → NODE_VERSION).
-
-3. **Environment variables**  
-   In Netlify → Site settings → Environment variables, add the same vars you use in `.env` (do **not** commit `.env`). At minimum:
-   - **Firebase:** `firebase_apiKey`, `firebase_authDomain`, `firebase_databaseURL`, `firebase_projectId`, `firebase_storageBucket`, `firebase_messagingSenderId`, `firebase_appId`, `firebase_measurementId`
-   - **Prismic:** `VUE_APP_PRISMIC`
-   - **Optional:** `GOOGLE_APPLICATION_CREDENTIALS` (for Firebase Admin; use a path or leave unset if you don’t need server-side auth), `GOOGLE_API_KEY`, `flickrApiKey`, `flickrUserId`, `flickrUrl`, `google_calendarApiKey`
-
-4. **Deploy**  
-   Push to your main branch; Netlify will build and deploy. The first deploy may take a few minutes.
-
-5. **Firebase auth in production**  
-   In Google Cloud Console → Credentials → your API key → HTTP referrers, add your Netlify URL (e.g. `https://yoursite.netlify.app/*` and any custom domain like `https://www.sksswoolwich.org/*`).
-
 ## How to launch this project in your local environment
 
 Run the following commands:
