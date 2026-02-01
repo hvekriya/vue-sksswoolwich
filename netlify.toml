@@ -3,7 +3,7 @@
 
 [build]
   command = "npm run build"
-  publish = ".output/public"
+  publish = "dist"
   environment = { NODE_VERSION = "24" }
 
 # SPA/SSR fallback – non-prerendered routes go to Nitro server
