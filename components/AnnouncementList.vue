@@ -51,9 +51,12 @@
 <script setup lang="ts">
 import { ref as dbRef } from "firebase/database";
 
+// During SSR prerender, useDatabase may not be ready - guard against undefined
 const db = useDatabase();
-const announcementsRef = dbRef(db, "annoucements");
-const { data: announcements, pending } = useDatabaseList(announcementsRef);
+const announcementsRef = db ? dbRef(db, "annoucements") : null;
+const { data: announcements, pending } = announcementsRef
+  ? useDatabaseList(announcementsRef)
+  : { data: ref([]), pending: ref(false) };
 
 const sortedAnnouncements = computed(() => {
   if (!announcements.value) return [];
