@@ -151,7 +151,12 @@
 
 <script setup lang="ts">
 import { useFilters } from "~/composables/useFilters";
-const { client } = usePrismic();
+let client: ReturnType<typeof usePrismic>["client"] | null = null;
+try {
+  client = usePrismic()?.client ?? null;
+} catch {
+  client = null;
+}
 const { isSameOrAfter } = useFilters();
 const config = useRuntimeConfig();
 
@@ -190,12 +195,15 @@ useSeoMeta({
 
 const { data } = await useAsyncData("home-page-data", async () => {
   try {
+    // Server: use fallback to avoid Prismic/Firebase/network issues during SSR
+    if (import.meta.server) {
+      return fallbackPayload();
+    }
+
+    // Client: fetch real data
     if (!client) {
-      // On client hydration Prismic plugin may not be ready yet; use server payload so initial render shows content
-      if (import.meta.client) {
-        const cached = useNuxtApp().payload?.data?.["home-page-data"];
-        if (cached) return cached;
-      }
+      const cached = useNuxtApp().payload?.data?.["home-page-data"];
+      if (cached) return cached;
       if (import.meta.dev)
         console.warn("Prismic client unavailable. Using fallback data.");
       return fallbackPayload();

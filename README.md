@@ -36,3 +36,13 @@ npm run build
 ```bash
 npm run lint
 ```
+
+## If SSR keeps failing (static fallback)
+
+To switch to static-only (no server, SPA mode):
+
+1. In `nuxt.config.ts`: set `ssr: false` and `nitro.preset: 'netlify-static'`
+2. In `netlify.toml`: change build command to `npm run generate`, publish to `.output/public`
+3. In `netlify.toml`: replace redirects with `from = "/*"` `to = "/index.html"` `status = 200`
+
+All data (Prismic, Firebase, Flickr) will load in the browser. Simpler deployment.

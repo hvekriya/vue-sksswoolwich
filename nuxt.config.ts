@@ -9,8 +9,8 @@ export default defineNuxtConfig({
     preset: 'netlify',
     prerender: {
       crawlLinks: false,
-      routes: [],
-      ignore: ['/*'],
+      routes: ['/'],
+      ignore: ['/admin', '/admin/*'],
       failOnError: false
     }
   },
