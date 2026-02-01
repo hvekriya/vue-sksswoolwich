@@ -98,7 +98,11 @@ export default defineNuxtConfig({
     public: {
       googleApiKey: process.env.GOOGLE_API_KEY || '',
       flickrApiKey: process.env.flickrApiKey || process.env.NUXT_PUBLIC_FLICKR_API_KEY || '',
-      flickrUserId: process.env.flickrUserId || process.env.NUXT_PUBLIC_FLICKR_USER_ID || '',
+      flickrUserId: (() => {
+        const id = process.env.flickrUserId || process.env.NUXT_PUBLIC_FLICKR_USER_ID || '';
+        if (!id) return '';
+        return id.includes('@') ? id : `${id}@N08`;
+      })(),
       flickrUrl: process.env.flickrUrl || process.env.NUXT_PUBLIC_FLICKR_URL || 'https://api.flickr.com/services/rest',
       googleCalendarApiKey: process.env.google_calendarApiKey || process.env.NUXT_PUBLIC_GOOGLE_CALENDAR_API_KEY || ''
     }

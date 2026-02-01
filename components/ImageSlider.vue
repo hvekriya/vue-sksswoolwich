@@ -35,12 +35,9 @@
               >
                 <!-- Wrapper div only: let PrismicRichText render block type (h1/p/etc) so SSR and client match -->
                 <div
-                  class="text-white text-4xl lg:text-6xl font-serif font-bold mb-6 leading-tight"
+                  class="text-white text-2xl lg:text-4xl font-serif font-bold mb-6 leading-tight"
                 >
                   <prismic-rich-text :field="slide.title" />
-                </div>
-                <div class="text-gray-200 text-lg mb-8 leading-relaxed">
-                  <prismic-rich-text :field="slide.description" />
                 </div>
                 <div class="flex flex-wrap gap-4">
                   <UButton
@@ -103,6 +100,21 @@ const defaultSlide = () => ({
   ],
 });
 
+// Normalize Prismic image (supports various field names and shapes)
+const normalizeImage = (obj: any): { url: string; alt: string } => {
+  const img =
+    obj?.image ||
+    obj?.hero_image ||
+    obj?.banner ||
+    obj?.banner_image ||
+    obj?.slide_image ||
+    obj?.gallery_image ||
+    {};
+  if (typeof img === "string") return { url: img, alt: "Temple" };
+  const url = img?.url || img?.src;
+  return url ? { url, alt: img?.alt || "Temple" } : defaultSlide().image;
+};
+
 // Extract slides from Prismic: hero_slider/image_slider items, or single hero_section primary, or one default
 const slides = computed(() => {
   const slices = props.fields?.slices || [];
@@ -110,18 +122,36 @@ const slides = computed(() => {
   const sliderSlice = slices.find(
     (s: any) => s.slice_type === "hero_slider" || s.slice_type === "image_slider"
   );
-  if (sliderSlice?.items?.length) return sliderSlice.items;
+  if (sliderSlice?.items?.length) {
+    return sliderSlice.items.map((item: any) => ({
+      image: normalizeImage(item),
+      title: item.image_captions || item.image_caption || item.title || [],
+      description: item.description || [],
+    }));
+  }
   // Single slide: hero_section (primary = one slide)
   const heroSection = slices.find((s: any) => s.slice_type === "hero_section");
   if (heroSection?.primary) {
     const p = heroSection.primary;
     return [
       {
-        image: p.image || {},
-        title: p.title || [],
+        image: normalizeImage(p),
+        title: p.image_captions || p.image_caption || p.title || [],
         description: p.description || [],
       },
     ];
+  }
+  // Fallback: image_gallery slice (use gallery images as slides)
+  const gallerySlice = slices.find(
+    (s: any) => s.slice_type === "image_gallery" || s.slice_type === "image-gallery"
+  );
+  if (gallerySlice?.items?.length) {
+    return gallerySlice.items.map((item: any) => ({
+      image: normalizeImage(item),
+      title:
+        item.image_captions || item.image_caption || item.title || item.caption || [],
+      description: item.description || [],
+    }));
   }
   return [defaultSlide()];
 });

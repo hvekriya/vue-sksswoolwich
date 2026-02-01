@@ -15,13 +15,6 @@
           >
             {{ (announcement as any).title }}
           </h4>
-          <UBadge
-            v-if="(announcement as any).published"
-            color="golden"
-            variant="subtle"
-            size="xs"
-            >New</UBadge
-          >
         </div>
         <div
           class="text-sm text-gray-500 leading-relaxed announcement-content"

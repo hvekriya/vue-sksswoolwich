@@ -293,21 +293,23 @@ const flickrPhotosetWebUrl = computed(() =>
     : null
 );
 
-// Fetch Flickr Photos
-const { data: album, pending } = await useFetch<any>(() => config.public.flickrUrl, {
-  params: {
-    api_key: config.public.flickrApiKey,
-    user_id: config.public.flickrUserId,
-    format: "json",
-    nojsoncallback: 1,
-    method: "flickr.photosets.getPhotos",
-    photoset_id: photosetId.value,
-    extras: "url_n,url_o,url_sq,title",
+const album = ref<any>(null);
+const pending = ref(true);
+const { fetchPhotoset } = useFlickr();
+watch(
+  photosetId,
+  async (id: string | undefined) => {
+    if (!id) {
+      album.value = null;
+      pending.value = false;
+      return;
+    }
+    pending.value = true;
+    album.value = await fetchPhotoset(id);
+    pending.value = false;
   },
-  immediate: !!photosetId.value,
-  server: false, // Fetch on client to avoid blocking hydration or dealing with proxy issues if any
-  transform: (data: any) => data?.photoset,
-});
+  { immediate: true }
+);
 
 const formatDate = (date: any, pattern: string) => {
   if (!date) return "";

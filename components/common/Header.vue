@@ -1,7 +1,6 @@
 <template>
   <header
-    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-    :class="[isScrolled ? 'glass-effect py-2' : 'bg-transparent py-4']"
+    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-3 glass-effect border-b border-white/20 dark:border-white/10 shadow-sm"
   >
     <div class="container mx-auto px-4 flex items-center justify-between">
       <!-- Logo -->
@@ -13,14 +12,12 @@
         />
         <div class="hidden sm:block">
           <span
-            class="block text-xs uppercase tracking-wider opacity-80"
-            :class="isScrolled ? 'text-gray-600' : 'text-gray-200'"
+            class="block text-xs uppercase tracking-wider text-gray-600 dark:text-gray-400"
           >
             Shree KS Swaminarayan
           </span>
           <span
-            class="block text-lg font-serif font-bold leading-tight"
-            :class="isScrolled ? 'text-gray-900' : 'text-white'"
+            class="block text-lg font-serif font-bold leading-tight text-gray-900 dark:text-white"
           >
             Woolwich Temple
           </span>
@@ -37,15 +34,14 @@
             :popper="{ placement: 'bottom-start' }"
           >
             <UButton
-              color="white"
+              color="gray"
               variant="ghost"
               :label="item.label"
               :icon="item.icon"
               trailing-icon="i-heroicons-chevron-down-20-solid"
-              class="font-display font-medium px-4 py-2 hover:bg-white/10"
+              class="font-display font-medium px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
               :class="[
-                isScrolled ? 'text-gray-900' : 'text-white',
-                isActive(item.to)
+                isDropdownActive(item)
                   ? 'underline decoration-golden-500 decoration-2 underline-offset-8'
                   : '',
               ]"
@@ -56,13 +52,12 @@
           <UButton
             v-else
             :to="item.to"
-            color="white"
+            color="gray"
             variant="ghost"
             :label="item.label"
             :icon="item.icon"
-            class="font-display font-medium px-4 py-2 hover:bg-white/10"
+            class="font-display font-medium px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
             :class="[
-              isScrolled ? 'text-gray-900' : 'text-white',
               isActive(item.to)
                 ? 'underline decoration-golden-500 decoration-2 underline-offset-8'
                 : '',
@@ -75,21 +70,30 @@
       <!-- Mobile Menu Toggle -->
       <div class="lg:hidden flex items-center space-x-2">
         <UButton
-          color="white"
+          color="gray"
           variant="ghost"
           icon="i-heroicons-bars-3-bottom-right-20-solid"
-          class="p-2"
-          :class="isScrolled ? 'text-gray-900' : 'text-white'"
+          class="p-2 text-gray-700 dark:text-gray-200"
           @click="isMobileMenuOpen = true"
         />
       </div>
     </div>
 
     <!-- Mobile Menu Slide-over -->
-    <USlideover v-model="isMobileMenuOpen">
-      <div class="p-6 h-full flex flex-col bg-white">
+    <USlideover
+      v-model="isMobileMenuOpen"
+      class="mobile-nav-slideover"
+      :ui="{
+        background: '!bg-transparent',
+        base: '!bg-transparent',
+        overlay: { background: 'bg-black/30' }
+      }"
+    >
+      <div
+        class="p-6 h-full flex flex-col min-h-full w-full bg-white/40 dark:bg-black/40 backdrop-blur-lg border-l border-white/20 dark:border-white/10"
+      >
         <div class="flex items-center justify-between mb-8">
-          <span class="text-2xl font-serif font-bold text-temple-red-500">Menu</span>
+          <span class="text-2xl font-serif font-bold text-gray-400">Menu</span>
           <UButton
             color="gray"
             variant="ghost"
@@ -101,29 +105,57 @@
 
         <nav class="flex-1 space-y-2 overflow-y-auto">
           <template v-for="item in navLinks" :key="item.label">
-            <template v-if="item.children">
-              <div class="py-2">
-                <div
-                  class="text-sm font-bold text-gray-900 uppercase tracking-widest px-4 mb-2"
-                >
-                  {{ item.label }}
+            <!-- Expandable dropdown for items with children -->
+            <div v-if="item.children" class="py-1">
+              <button
+                type="button"
+                class="flex items-center justify-between w-full px-4 py-3 rounded-xl hover:bg-white/30 dark:hover:bg-white/10 text-gray-900 dark:text-gray-100 font-medium transition-colors"
+                @click="toggleMobileSubmenu(item.label)"
+              >
+                <span class="flex items-center space-x-3">
+                  <UIcon :name="item.icon" class="w-5 h-5" />
+                  <span>{{ item.label }}</span>
+                </span>
+                <UIcon
+                  :name="
+                    'i-heroicons-chevron-' +
+                    (expandedMenu === item.label ? 'up' : 'down') +
+                    '-20-solid'
+                  "
+                  class="w-5 h-5 flex-shrink-0 transition-transform"
+                />
+              </button>
+              <Transition
+                enter-active-class="transition-all duration-200 ease-out"
+                enter-from-class="max-h-0 opacity-0"
+                enter-to-class="max-h-96 opacity-100"
+                leave-active-class="transition-all duration-150 ease-in"
+                leave-from-class="max-h-96 opacity-100"
+                leave-to-class="max-h-0 opacity-0"
+              >
+                <div v-show="expandedMenu === item.label" class="overflow-hidden">
+                  <NuxtLink
+                    v-for="child in item.children"
+                    :key="child.label"
+                    :to="child.to"
+                    class="block pl-12 pr-4 py-2.5 rounded-xl hover:bg-white/30 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 font-medium text-sm"
+                    @click="closeMobileMenu"
+                  >
+                    {{ child.label }}
+                  </NuxtLink>
                 </div>
-                <NuxtLink
-                  v-for="child in item.children"
-                  :key="child.label"
-                  :to="child.to"
-                  class="block px-4 py-3 rounded-xl hover:bg-gray-100 text-gray-700 font-medium"
-                  @click="closeMobileMenu"
-                >
-                  {{ child.label }}
-                </NuxtLink>
-              </div>
-            </template>
+              </Transition>
+            </div>
+            <!-- Standard link -->
             <NuxtLink
               v-else
               :to="item.to"
-              class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-gray-100 text-gray-700 font-medium"
-              :class="isActive(item.to) ? 'bg-golden-50 text-golden-700' : ''"
+              class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-white/30 dark:hover:bg-white/10 text-gray-900 dark:text-gray-100 font-medium"
+              :class="
+                isActive(item.to)
+                  ? 'bg-golden-50/80 dark:bg-golden-900/30 text-golden-700 dark:text-golden-400'
+                  : ''
+              "
               @click="closeMobileMenu"
             >
               <UIcon :name="item.icon" class="w-5 h-5" />
@@ -133,7 +165,7 @@
         </nav>
 
         <div
-          class="pt-6 border-t border-gray-100 italic text-center text-sm text-gray-900"
+          class="pt-6 border-t border-white/20 dark:border-white/10 italic text-center text-sm text-gray-700 dark:text-gray-300"
         >
           Shree KS Swaminarayan Temple Woolwich
         </div>
@@ -146,27 +178,25 @@
 const { scrollToTop } = useScrollToTop();
 const route = useRoute();
 
-const isScrolled = ref(false);
 const isMobileMenuOpen = ref(false);
-
-const handleScroll = () => {
-  isScrolled.value = window.scrollY > 50;
-};
-
-onMounted(() => {
-  window.addEventListener("scroll", handleScroll);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
-});
-
+const expandedMenu = ref<string | null>(null);
 const isActive = (path: string) => route.path === path;
+const isDropdownActive = (item: { to?: string; children?: unknown[] }) =>
+  item.to ? isActive(item.to) : false;
 
 const closeMobileMenu = () => {
   isMobileMenuOpen.value = false;
+  expandedMenu.value = null;
   scrollToTop();
 };
+
+const toggleMobileSubmenu = (label: string) => {
+  expandedMenu.value = expandedMenu.value === label ? null : label;
+};
+
+watch(isMobileMenuOpen, (open: boolean) => {
+  if (!open) expandedMenu.value = null;
+});
 
 const navLinks = [
   { label: "HOME", to: "/", icon: "i-heroicons-home" },

@@ -29,3 +29,19 @@ h4,
 * {
   @apply transition-colors duration-300;
 }
+
+/* Mobile nav slideover – force glass panel (override Nuxt UI default dark navy) */
+.mobile-nav-slideover .fixed.inset-y-0.right-0,
+.mobile-nav-slideover .fixed.inset-y-0.left-0,
+/* Fallback: slideover panel may be portaled to body */
+body [role="dialog"].fixed.right-0.inset-y-0,
+body [role="dialog"].fixed.left-0.inset-y-0 {
+  background: rgba(255, 255, 255, 0.4) !important;
+  backdrop-filter: blur(16px);
+}
+.dark .mobile-nav-slideover .fixed.inset-y-0.right-0,
+.dark .mobile-nav-slideover .fixed.inset-y-0.left-0,
+.dark body [role="dialog"].fixed.right-0.inset-y-0,
+.dark body [role="dialog"].fixed.left-0.inset-y-0 {
+  background: rgba(0, 0, 0, 0.4) !important;
+}

@@ -1,5 +1,5 @@
 <template>
-    <div class="h-screen overflow-y-auto overflow-x-hidden">
+    <div id="app-scroll" class="h-screen overflow-y-auto overflow-x-hidden">
         <NuxtLayout>
             <NuxtPage />
         </NuxtLayout>

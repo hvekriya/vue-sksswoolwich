@@ -105,7 +105,7 @@
 
                   <div class="pt-6">
                     <UButton
-                      to="https://donate.stripe.com/example"
+                      to="https://donate.stripe.com/7sIaIu2HE20Ca8EcMM"
                       target="_blank"
                       color="golden"
                       size="xl"
@@ -142,7 +142,7 @@
                   <div
                     class="p-8 border border-gray-100 rounded-[2rem] hover:shadow-lg transition-all bg-white relative group"
                   >
-                    <h4 class="font-bold text-xl mb-4">Via Paper Form</h4>
+                    <h4 class="font-bold text-gray-900 text-xl mb-4">Via Paper Form</h4>
                     <p class="text-sm text-gray-500 mb-6">
                       Download, sign, and return the form to the Mandir or your bank
                       branch.
@@ -151,7 +151,7 @@
                       block
                       color="temple-red"
                       variant="soft"
-                      label="Temple Red (Primary Support)"
+                      label="Download Form"
                       icon="i-heroicons-arrow-down-tray"
                       class="mb-4 px-4 rounded-full font-bold"
                     />
@@ -160,7 +160,9 @@
                   <div
                     class="p-8 border border-gray-100 rounded-[2rem] hover:shadow-lg transition-all bg-white"
                   >
-                    <h4 class="font-bold text-xl mb-4">Via Online Banking</h4>
+                    <h4 class="font-bold text-gray-900 text-xl mb-4">
+                      Via Online Banking
+                    </h4>
                     <p class="text-sm text-gray-500 mb-6">
                       Use your bank's app to set up a monthly transfer to the Mandir
                       account.
@@ -170,11 +172,11 @@
                         class="flex justify-between text-sm py-2 border-b border-gray-50"
                       >
                         <span class="text-gray-900 font-medium">Account</span>
-                        <span class="font-mono font-bold">80813745</span>
+                        <span class="text-gray-900 font-mono font-bold">80813745</span>
                       </div>
                       <div class="flex justify-between text-sm py-2">
                         <span class="text-gray-900 font-medium">Sort Code</span>
-                        <span class="font-mono font-bold">20-98-57</span>
+                        <span class="text-gray-900 font-mono font-bold">20-98-57</span>
                       </div>
                     </div>
                   </div>

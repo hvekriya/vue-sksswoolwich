@@ -45,7 +45,10 @@
                   <AnnouncementList />
                   <template #fallback>
                     <div class="flex items-center justify-center h-48">
-                      <UIcon name="i-heroicons-arrow-path" class="w-8 h-8 animate-spin text-golden-500" />
+                      <UIcon
+                        name="i-heroicons-arrow-path"
+                        class="w-8 h-8 animate-spin text-golden-500"
+                      />
                     </div>
                   </template>
                 </ClientOnly>
@@ -108,9 +111,7 @@
           class="relative z-10 flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12"
         >
           <div class="max-w-xl">
-            <h2 class="text-4xl font-serif font-bold mb-4 text-golden-900">
-              Photostream
-            </h2>
+            <h2 class="text-4xl font-serif font-bold mb-4 text-gray-400">Photostream</h2>
             <p class="text-gray-300 text-lg leading-relaxed">
               Explore daily Darshan and recent events through our lens. Can you spot
               yourself in the celebrations?
@@ -170,6 +171,11 @@ const fallbackPayload = () => ({
       {
         slice_type: "hero_section",
         primary: {
+          image: {
+            url:
+              "https://images.prismic.io/sksswoolwich/c1acd8d9-7ccb-4f1b-bcc1-57ceb5ada080_39972331571_6d6de90849_o.png?auto=compress,format",
+            alt: "Woolwich Temple",
+          },
           title: [{ type: "heading1", text: "Welcome to Woolwich Temple", spans: [] }],
           description: [
             {
@@ -234,27 +240,10 @@ const { data } = await useAsyncData("home-page-data", async () => {
       )
       .slice(0, 6);
 
-    const flickrConfig = {
-      api_key: config.public.flickrApiKey,
-      user_id: config.public.flickrUserId,
-      format: "json",
-      nojsoncallback: "1",
-    };
-    const flickrUrl = config.public.flickrUrl;
-    const unixTimeStamp = Math.floor(Date.now() / 1000) - 86400 * 5;
-
     let recentUploads: any[] = [];
     try {
-      const recentPhotos = await $fetch<any>(flickrUrl, {
-        params: {
-          ...flickrConfig,
-          method: "flickr.photos.search",
-          min_date_upload: unixTimeStamp,
-          per_page: 14,
-          extras: "url_n,url_o,tags",
-        },
-      });
-      recentUploads = recentPhotos?.photos?.photo ?? [];
+      const { fetchRecentPhotos } = useFlickr();
+      recentUploads = await fetchRecentPhotos(14);
     } catch {
       // Flickr optional; keep Prismic data
     }
@@ -279,18 +268,30 @@ const { data } = await useAsyncData("home-page-data", async () => {
 // Reactive payload so client sees data when it updates
 const payload = computed(() => (data.value ?? fallbackPayload()) as any);
 const upcomingEvents = computed(() => payload.value.upcomingEvents ?? []);
-const recentUploads = computed(() => payload.value.recentUploads ?? []);
 const fields = computed(() => payload.value.fields);
 const liveStreamUrl = computed(() => payload.value.liveStreamUrl ?? null);
 const isLive = computed(() => !!liveStreamUrl.value);
 
-// On initial client load Prismic plugin may not be ready; refetch once mounted so content loads
-onMounted(() => {
+// Photostream: merge from payload + dedicated client fetch (ensures photos load even if Prismic fails)
+const recentUploadsFromPayload = computed(() => payload.value.recentUploads ?? []);
+const flickrPhotoList = ref<any[]>([]);
+const recentUploads = computed(() => {
+  const fromPayload = recentUploadsFromPayload.value;
+  if (fromPayload?.length) return fromPayload;
+  return flickrPhotoList.value;
+});
+
+// On mount: fetch photostream (independent of Prismic) + refetch page data if needed
+onMounted(async () => {
   if (!import.meta.client) return;
   const firstDesc =
     payload.value.fields?.slices?.[0]?.primary?.description?.[0]?.text ?? "";
   if (firstDesc.includes("Prismic content is currently unavailable")) {
     refreshNuxtData("home-page-data");
+  }
+  if (!recentUploadsFromPayload.value?.length) {
+    const { fetchRecentPhotos } = useFlickr();
+    flickrPhotoList.value = await fetchRecentPhotos(14);
   }
 });
 </script>

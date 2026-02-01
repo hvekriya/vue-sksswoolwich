@@ -102,18 +102,23 @@ const flickrPhotosetWebUrl = computed(
     `https://www.flickr.com/photos/${config.public.flickrUserId}/sets/${albumId.value}/`
 );
 
-const { data: album, pending } = await useFetch<any>(() => config.public.flickrUrl, {
-  params: {
-    api_key: config.public.flickrApiKey,
-    user_id: config.public.flickrUserId,
-    format: "json",
-    nojsoncallback: 1,
-    method: "flickr.photosets.getPhotos",
-    photoset_id: albumId.value,
-    extras: "url_n,url_o,url_sq,title",
+const album = ref<any>(null);
+const pending = ref(true);
+const { fetchPhotoset } = useFlickr();
+watch(
+  albumId,
+  async (id: string | undefined) => {
+    if (!id) {
+      album.value = null;
+      pending.value = false;
+      return;
+    }
+    pending.value = true;
+    album.value = await fetchPhotoset(id);
+    pending.value = false;
   },
-  transform: (data: any) => data?.photoset,
-});
+  { immediate: true }
+);
 
 useHead({
   title: `${album.value?.title || "Gallery"} | Woolwich Temple`,
