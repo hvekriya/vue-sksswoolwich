@@ -55,7 +55,7 @@
           >
             <NuxtLink
               :to="`/events/${event.uid}`"
-              class="flex items-center space-x-2 text-golden-900 font-bold text-sm tracking-wider group/btn"
+              class="flex items-center space-x-2 text-white font-bold text-sm tracking-wider group/btn"
             >
               <span>EVENT DETAILS</span>
               <UIcon
