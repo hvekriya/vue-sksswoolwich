@@ -3,15 +3,13 @@
         <div class="space-y-10">
             <!-- Announcement Management Grid -->
             <section>
-                <div class="flex items-center justify-between mb-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
                     <div>
-                        <h2 class="text-3xl font-serif font-bold text-gray-900 dark:text-white">Active Announcements
-                        </h2>
-                        <p class="text-gray-500 text-sm mt-1">Manage the messages scrolling across the TV and website
-                        </p>
+                        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-gray-900 dark:text-white">Active Announcements</h2>
+                        <p class="text-gray-500 text-sm mt-1">Manage the messages scrolling across the TV and website</p>
                     </div>
                     <UButton to="/admin/announcements" color="golden" icon="i-heroicons-plus" label="New Announcement"
-                        class="rounded-full px-6" />
+                        class="rounded-full px-6 flex-shrink-0 self-start sm:self-auto" />
                 </div>
 
                 <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
