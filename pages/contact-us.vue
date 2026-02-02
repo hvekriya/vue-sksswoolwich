@@ -198,7 +198,7 @@ const { submit: submitNetlify } = useNetlifyForm();
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   loading.value = true;
   try {
-    const { ok, error } = await submitNetlify("contact", {
+    const { ok, error } = await submitNetlify("contactus", {
       name: state.name,
       email: state.email,
       message: state.message,

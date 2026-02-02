@@ -7,7 +7,9 @@
   environment = { NODE_VERSION = "24" }
 
 # SPA fallback: client routes resolve to index.html
+# force = false ensures static files (e.g. form-detection.html) are served when they exist
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+  force = false
