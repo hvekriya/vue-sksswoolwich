@@ -24,8 +24,17 @@
         </div>
       </NuxtLink>
 
-      <!-- Desktop Navigation -->
-      <nav class="hidden lg:flex items-center space-x-1">
+      <!-- Desktop: Color mode toggle + Nav -->
+      <div class="hidden lg:flex items-center gap-2">
+        <UButton
+          color="gray"
+          variant="ghost"
+          :icon="colorMode.value === 'dark' ? 'i-heroicons-sun' : 'i-heroicons-moon'"
+          :aria-label="colorMode.value === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+          class="p-2 rounded-full text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+          @click="toggleColorMode"
+        />
+        <nav class="flex items-center space-x-1">
         <template v-for="item in navLinks" :key="item.label">
           <!-- Dropdown for multi-level -->
           <UDropdown
@@ -65,10 +74,19 @@
             @click="scrollToTop"
           />
         </template>
-      </nav>
+        </nav>
+      </div>
 
-      <!-- Mobile Menu Toggle -->
+      <!-- Mobile: Color mode toggle + Menu button -->
       <div class="lg:hidden flex items-center space-x-2">
+        <UButton
+          color="gray"
+          variant="ghost"
+          :icon="colorMode.value === 'dark' ? 'i-heroicons-sun' : 'i-heroicons-moon'"
+          :aria-label="colorMode.value === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+          class="p-2 text-gray-700 dark:text-gray-200"
+          @click="toggleColorMode"
+        />
         <UButton
           color="gray"
           variant="ghost"
@@ -93,14 +111,24 @@
         class="p-6 h-full flex flex-col min-h-full w-full bg-white/40 dark:bg-black/40 backdrop-blur-lg border-l border-white/20 dark:border-white/10"
       >
         <div class="flex items-center justify-between mb-8">
-          <span class="text-2xl font-serif font-bold text-gray-400">Menu</span>
-          <UButton
-            color="gray"
-            variant="ghost"
-            icon="i-heroicons-x-mark-20-solid"
-            class="-my-1"
-            @click="isMobileMenuOpen = false"
-          />
+          <span class="text-2xl font-serif font-bold text-temple-red-500">Menu</span>
+          <div class="flex items-center gap-2">
+            <UButton
+              color="gray"
+              variant="ghost"
+              :icon="colorMode.value === 'dark' ? 'i-heroicons-sun' : 'i-heroicons-moon'"
+              :aria-label="colorMode.value === 'dark' ? 'Light mode' : 'Dark mode'"
+              class="-my-1"
+              @click="toggleColorMode"
+            />
+            <UButton
+              color="gray"
+              variant="ghost"
+              icon="i-heroicons-x-mark-20-solid"
+              class="-my-1"
+              @click="isMobileMenuOpen = false"
+            />
+          </div>
         </div>
 
         <nav class="flex-1 space-y-2 overflow-y-auto">
@@ -177,6 +205,11 @@
 <script setup lang="ts">
 const { scrollToTop } = useScrollToTop();
 const route = useRoute();
+const colorMode = useColorMode();
+
+function toggleColorMode() {
+  colorMode.preference = colorMode.value === "dark" ? "light" : "dark";
+}
 
 const isMobileMenuOpen = ref(false);
 const expandedMenu = ref<string | null>(null);
