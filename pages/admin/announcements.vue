@@ -20,37 +20,39 @@
                 :actions="[{ label: 'Open IndiaTyping', to: 'https://gujarati.indiatyping.com/', target: '_blank', color: 'golden', variant: 'outline' }]"
                 class="rounded-3xl" />
 
-            <!-- Announcements List -->
-            <UCard class="rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden" :ui="{ body: { padding: 'p-0' } }">
-                <div class="overflow-x-auto">
-                    <UTable :rows="sortedAnnouncements" :columns="columns" class="w-full min-w-[600px]"
-                        :ui="{ th: { base: 'text-[10px] uppercase tracking-widest text-gray-900 font-bold bg-gray-50 dark:bg-gray-800/50' }, td: { base: 'py-4 sm:py-6' } }">
-                        <template #order-data="{ row }">
-                            <span class="font-mono font-bold text-golden-600">{{ row.order }}</span>
-                        </template>
+            <!-- Announcements List (Card Grid) -->
+            <div v-if="sortedAnnouncements.length" class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                <UCard v-for="item in sortedAnnouncements" :key="itemId(item)"
+                    class="group hover:border-golden-500/40 transition-all shadow-sm hover:shadow-xl rounded-2xl sm:rounded-3xl overflow-hidden">
+                    <div class="flex gap-4 sm:gap-6">
+                        <div
+                            class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-golden-50 dark:bg-golden-950 font-serif font-bold text-golden-600 rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-xl">
+                            {{ item.order }}
+                        </div>
+                        <div class="flex-grow min-w-0">
+                            <h4 class="font-bold text-gray-900 dark:text-white mb-1 sm:mb-2 truncate">{{ item.title }}</h4>
+                            <div class="text-sm text-gray-500 line-clamp-2 prose prose-sm dark:prose-invert"
+                                v-html="item.description"></div>
+                        </div>
+                    </div>
+                    <template #footer>
+                        <div class="flex justify-end gap-2">
+                            <UButton variant="ghost" color="primary" icon="i-heroicons-pencil-square" size="xs"
+                                label="Edit" class="rounded-full"
+                                @click="openEditor(item)" />
+                            <UButton variant="ghost" color="red" icon="i-heroicons-trash" size="xs"
+                                label="Delete" class="rounded-full"
+                                @click="confirmDelete(item)" />
+                        </div>
+                    </template>
+                </UCard>
+            </div>
 
-                        <template #title-data="{ row }">
-                            <div class="max-w-md min-w-[200px]">
-                                <p class="font-bold text-gray-900 dark:text-white mb-1">{{ row.title }}</p>
-                                <div class="text-xs text-gray-900 line-clamp-1 prose prose-xs dark:prose-invert"
-                                    v-html="row.description"></div>
-                            </div>
-                        </template>
-
-                        <template #actions-data="{ row }">
-                            <div class="flex items-center gap-2">
-                                <UButton variant="ghost" color="gray" icon="i-heroicons-pencil-square" size="sm"
-                                    aria-label="Edit" @click="openEditor(row)" />
-                                <UButton variant="ghost" color="red" icon="i-heroicons-trash" size="sm"
-                                    aria-label="Delete" @click="confirmDelete(row)" />
-                            </div>
-                        </template>
-                    </UTable>
-                </div>
-
-                <div v-if="!announcements.length" class="p-12 sm:p-20 text-center">
-                    <UIcon name="i-heroicons-megaphone" class="w-12 h-12 text-gray-200 mb-4 mx-auto" />
-                    <p class="text-gray-900">No announcements found. Add your first one above!</p>
+            <!-- Empty State -->
+            <UCard v-else class="rounded-2xl sm:rounded-3xl shadow-xl">
+                <div class="p-8 sm:p-12 text-center">
+                    <UIcon name="i-heroicons-megaphone" class="w-12 h-12 text-gray-300 dark:text-gray-600 mb-4 mx-auto" />
+                    <p class="text-gray-500">No announcements found. Add your first one above!</p>
                 </div>
             </UCard>
         </div>
@@ -120,15 +122,13 @@ definePageMeta({
 const db = useDatabase()
 const announcements = useDatabaseList(dbRef(db, '/annoucements'))
 
-const columns = [
-    { key: 'order', label: '#' },
-    { key: 'title', label: 'Content' },
-    { key: 'actions', label: '' }
-]
-
 const sortedAnnouncements = computed(() => {
     return [...announcements.value].sort((a: any, b: any) => (a.order || 99) - (b.order || 99))
 })
+
+function itemId(item: { id?: string; key?: string }) {
+    return item?.id ?? item?.key ?? ''
+}
 
 // Modal State
 const isModalOpen = ref(false)

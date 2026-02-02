@@ -1,0 +1,27 @@
+/**
+ * STATIC FALLBACK – use this if SSR keeps failing.
+ *
+ * To switch to static-only mode:
+ * 1. Copy this file to nuxt.config.static.ts (or merge these changes into nuxt.config.ts)
+ * 2. In netlify.toml: change build command to "npm run generate" and publish to ".output/public"
+ * 3. In netlify.toml: replace redirects with SPA fallback:
+ *    [[redirects]]
+ *      from = "/*"
+ *      to = "/index.html"
+ *      status = 200
+ * 4. In package.json: add script "generate": "nuxt generate"
+ *
+ * This disables SSR and serves a client-rendered SPA. All data (Prismic, Firebase, Flickr)
+ * loads in the browser. Simpler deployment, no server function needed.
+ */
+export default defineNuxtConfig({
+  ssr: false,
+  nitro: {
+    preset: 'netlify-static',
+    prerender: {
+      crawlLinks: true,
+      routes: ['/'],
+    },
+  },
+  // ... rest of your config
+})
