@@ -151,10 +151,19 @@ const state = reactive({
   message: undefined,
 });
 
+const { submit: submitNetlify } = useNetlifyForm();
+
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   loading.value = true;
   try {
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    const { ok, error } = await submitNetlify("wedding-enquiry", {
+      name: state.name,
+      email: state.email,
+      phone: state.phone,
+      eventDate: state.eventDate,
+      message: state.message,
+    });
+    if (!ok) throw new Error(error);
     toast.add({
       title: "Enquiry Received",
       description: "Our events team will contact you shortly to discuss your booking.",

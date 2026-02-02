@@ -193,10 +193,17 @@ const state = reactive({
   message: undefined,
 });
 
+const { submit: submitNetlify } = useNetlifyForm();
+
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   loading.value = true;
   try {
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    const { ok, error } = await submitNetlify("contact", {
+      name: state.name,
+      email: state.email,
+      message: state.message,
+    });
+    if (!ok) throw new Error(error);
     toast.add({
       title: "Message Sent",
       description: "We have received your message and will get back to you shortly.",

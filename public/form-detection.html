@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Form Detection</title></head>
+<body>
+<!-- Hidden forms for Netlify Forms detection (SPA workaround).
+     Netlify parses these at deploy time. Vue components submit via AJAX with matching form-name. -->
+<form name="activity-signup" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display:none">
+  <input type="hidden" name="form-name" value="activity-signup" />
+  <input type="text" name="name" />
+  <input type="email" name="email" />
+  <input type="tel" name="phone" />
+  <input type="text" name="selectedActivities" />
+  <textarea name="message"></textarea>
+  <input type="text" name="bot-field" />
+</form>
+<form name="contactus" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display:none">
+  <input type="hidden" name="form-name" value="contactus" />
+  <input type="text" name="name" />
+  <input type="email" name="email" />
+  <textarea name="message"></textarea>
+  <input type="text" name="bot-field" />
+</form>
+<form name="wedding-hall" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display:none">
+  <input type="hidden" name="form-name" value="wedding-hall" />
+  <input type="text" name="name" />
+  <input type="email" name="email" />
+  <input type="tel" name="phone" />
+  <input type="text" name="eventDate" />
+  <textarea name="message"></textarea>
+  <input type="text" name="bot-field" />
+</form>
+</body>
+</html>

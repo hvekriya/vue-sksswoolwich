@@ -234,19 +234,25 @@ const state = reactive({
   message: undefined,
 });
 
+const { submit: submitNetlify } = useNetlifyForm();
+
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   loading.value = true;
   try {
-    // In a real netlify environment, we would post to index.html with form-name
-    // For now, we simulate success
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    const { ok, error } = await submitNetlify("activity-signup", {
+      name: state.name,
+      email: state.email,
+      phone: state.phone,
+      selectedActivities: state.selectedActivities,
+      message: state.message ?? "",
+    });
+    if (!ok) throw new Error(error);
     toast.add({
       title: "Success!",
       description: "Your registration has been submitted. We will contact you soon.",
       icon: "i-heroicons-check-circle",
       color: "primary",
     });
-    // Reset form
     Object.assign(state, {
       name: undefined,
       email: undefined,
