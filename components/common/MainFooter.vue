@@ -96,10 +96,21 @@
       >
         <p>&copy; {{ new Date().getFullYear() }} Woolwich Temple. All rights reserved.</p>
         <div class="flex space-x-6 mt-4 md:mt-0">
-          <NuxtLink to="/privacy-policy" class="hover:text-white"
-            >Privacy Policy</NuxtLink
+          <NuxtLink
+            to="https://sksswoolwich.cdn.prismic.io/sksswoolwich/e1d9742d-a7ff-4fbc-bfdb-d2913465066c_Complaints+Policy+and+Procedures.pdf"
+            class="hover:text-white"
+            >Complaints Policy</NuxtLink
           >
-          <NuxtLink to="/terms" class="hover:text-white">Terms of Use</NuxtLink>
+          <NuxtLink
+            to="https://sksswoolwich.cdn.prismic.io/sksswoolwich/9f87356c-dc03-4175-8355-840a3cb6b7fd_SKSSTW+Complaints+Form.pdf"
+            class="hover:text-white"
+            >Complaints Form</NuxtLink
+          >
+          <NuxtLink
+            to="https://sksswoolwich.cdn.prismic.io/sksswoolwich/4c041e32-62d7-440c-87eb-870b028bf3f9_Photography+and+Video+Policy.pdf"
+            class="hover:text-white"
+            >Photography and Video Policy</NuxtLink
+          >
         </div>
       </div>
     </div>

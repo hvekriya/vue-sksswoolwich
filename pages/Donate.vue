@@ -154,6 +154,9 @@
                       label="Download Form"
                       icon="i-heroicons-arrow-down-tray"
                       class="mb-4 px-4 rounded-full font-bold"
+                      :to="'https://sksswoolwich.cdn.prismic.io/sksswoolwich/3fb4e9de-49a3-43b6-9696-35db02c3fc28_standing_order.pdf'"
+                      target="_blank"
+                      download="standing_order.pdf"
                     />
                   </div>
 

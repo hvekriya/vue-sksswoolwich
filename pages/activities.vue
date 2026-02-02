@@ -174,6 +174,18 @@ const activityInfo = [
       "Classical Indian dance form that expresses spiritual themes and folklore.",
   },
   {
+    title: "Bhajan Class",
+    time: "Mondays @ 7:00 PM",
+    icon: "i-heroicons-musical-note",
+    description: "Devotional singing and music to deepen your spiritual connection.",
+  },
+  {
+    title: "Satsang Together Yuvak Mandal Sabha (16+)",
+    time: "Mondays @ 7:00 PM",
+    icon: "i-heroicons-user-group",
+    description: "Youth-focused spiritual gathering for ages 16 and above.",
+  },
+  {
     title: "Tabla Class",
     time: "Tuesdays @ 7:00 PM",
     icon: "i-heroicons-musical-note",
@@ -186,15 +198,22 @@ const activityInfo = [
     icon: "i-heroicons-academic-cap",
     description: "Supplementary classes in Maths, English, and Gujarati for all ages.",
   },
+  {
+    title: "Satsang Classes",
+    time: "Saturdays @ 6:00 PM",
+    icon: "i-heroicons-book-open",
+    description:
+      "Religious classes for ages 6–16 to learn about Hinduism, Swaminarayan, and how to be a good human.",
+  },
 ];
 
 const activities = [
   { label: "Bharatanatyam Class", value: "bharatanatyam" },
-  { label: "Satsang Together", value: "satsang_together" },
-  { label: "Tabla Class", value: "tabla" },
   { label: "Bhajan Class", value: "bhajan" },
+  { label: "Satsang Together Yuvak Mandal Sabha (16+)", value: "satsang_together" },
+  { label: "Tabla Class", value: "tabla" },
+  { label: "Satsang Classes (Age 6–16)", value: "satsang_classes" },
   { label: "Academic Classes", value: "academic" },
-  { label: "Satsang Classes", value: "satsang_classes" },
 ];
 
 const schema = z.object({
