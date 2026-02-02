@@ -1,7 +1,7 @@
 <template>
   <div class="recent-uploads-container">
     <light-gallery
-      :settings="{ speed: 500, plugins: plugins }"
+      :settings="{ speed: 500, plugins: plugins, mobileSettings: { controls: true, showCloseIcon: true, download: true } }"
       :onInit="onInit"
       class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4"
     >

@@ -45,7 +45,7 @@
       <!-- LightGallery -->
       <light-gallery
         v-else-if="album?.photo?.length"
-        :settings="{ speed: 500, plugins: [lgThumbnail, lgZoom, lgFullscreen] }"
+        :settings="{ speed: 500, plugins: [lgThumbnail, lgZoom, lgFullscreen], mobileSettings: { controls: true, showCloseIcon: true, download: true } }"
         class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6"
       >
         <a
