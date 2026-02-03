@@ -33,6 +33,12 @@
               <div
                 class="max-w-2xl glass-effect p-8 lg:p-12 rounded-3xl animate-fade-in-up"
               >
+                <span
+                  class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider rounded-full bg-white/20 px-4 py-1.5 text-white backdrop-blur-md shadow-lg border border-white/20 mb-6"
+                >
+                  <UIcon name="i-heroicons-sparkles" class="w-4 h-4" />
+                  {{ greeting }}
+                </span>
                 <!-- Wrapper div only: let PrismicRichText render block type (h1/p/etc) so SSR and client match -->
                 <div
                   class="text-white text-2xl lg:text-4xl font-serif font-bold mb-6 leading-tight"
@@ -71,6 +77,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import {
   Autoplay as SwiperAutoplay,
@@ -154,6 +161,30 @@ const slides = computed(() => {
     }));
   }
   return [defaultSlide()];
+});
+
+const now = ref<Date | null>(null);
+let refreshTimer: ReturnType<typeof window.setInterval> | null = null;
+
+onMounted(() => {
+  now.value = new Date();
+  refreshTimer = window.setInterval(() => {
+    now.value = new Date();
+  }, 60 * 1000);
+});
+
+onBeforeUnmount(() => {
+  if (refreshTimer) window.clearInterval(refreshTimer);
+});
+
+const greeting = computed(() => {
+  const date = now.value ?? new Date();
+  const hour = date.getHours();
+  if (hour < 5) return "Peaceful Night Blessings";
+  if (hour < 12) return "Good Morning – Join Darshan";
+  if (hour < 17) return "Good Afternoon – Stay Inspired";
+  if (hour < 21) return "Good Evening – Satsang Awaits";
+  return "Night Reflections – Jay Swaminarayan";
 });
 </script>
 

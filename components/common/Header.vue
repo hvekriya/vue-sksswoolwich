@@ -115,7 +115,10 @@
         class="p-6 h-full flex flex-col min-h-full w-full bg-white/40 dark:bg-black/40 backdrop-blur-lg border-l border-white/20 dark:border-white/10"
       >
         <div class="flex items-center justify-between mb-8">
-          <span class="text-2xl font-serif font-bold text-temple-red-500">Menu</span>
+          <span
+            class="text-2xl font-serif font-bold text-temple-red-500 dark:text-gray-400"
+            >Menu</span
+          >
           <div class="flex items-center gap-2">
             <UButton
               color="gray"

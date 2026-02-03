@@ -250,8 +250,19 @@ const { data } = await useAsyncData("home-page-data", async () => {
       // Flickr optional; keep Prismic data
     }
 
-    const liveStreamUrl =
+    let liveStreamUrl =
       document.data?.live_stream_url?.url || document.data?.live_stream_url || null;
+
+    // Fallback: video slice with live_stream_enabled and live_stream_link.url
+    if (!liveStreamUrl && document.data?.body?.length) {
+      const videoSlice = document.data.body.find(
+        (s: any) => s.slice_type === "video" && s.primary?.live_stream_enabled === true
+      );
+      const link = videoSlice?.primary?.live_stream_link;
+      if (link?.url) {
+        liveStreamUrl = link.url;
+      }
+    }
 
     return {
       upcomingEvents,
