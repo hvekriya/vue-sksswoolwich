@@ -19,7 +19,7 @@
           <span
             class="block text-lg font-serif font-bold leading-tight text-gray-900 dark:text-white"
           >
-            Woolwich Temple
+            Temple Woolwich
           </span>
         </div>
       </NuxtLink>
@@ -30,50 +30,52 @@
           color="gray"
           variant="ghost"
           :icon="colorMode.value === 'dark' ? 'i-heroicons-sun' : 'i-heroicons-moon'"
-          :aria-label="colorMode.value === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+          :aria-label="
+            colorMode.value === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+          "
           class="p-2 rounded-full text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
           @click="toggleColorMode"
         />
         <nav class="flex items-center space-x-1">
-        <template v-for="item in navLinks" :key="item.label">
-          <!-- Dropdown for multi-level -->
-          <UDropdown
-            v-if="item.children"
-            :items="[item.children]"
-            :popper="{ placement: 'bottom-start' }"
-          >
+          <template v-for="item in navLinks" :key="item.label">
+            <!-- Dropdown for multi-level -->
+            <UDropdown
+              v-if="item.children"
+              :items="[item.children]"
+              :popper="{ placement: 'bottom-start' }"
+            >
+              <UButton
+                color="gray"
+                variant="ghost"
+                :label="item.label"
+                :icon="item.icon"
+                trailing-icon="i-heroicons-chevron-down-20-solid"
+                class="font-display font-medium px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                :class="[
+                  isDropdownActive(item)
+                    ? 'underline decoration-golden-500 decoration-2 underline-offset-8'
+                    : '',
+                ]"
+              />
+            </UDropdown>
+
+            <!-- Standard Link -->
             <UButton
+              v-else
+              :to="item.to"
               color="gray"
               variant="ghost"
               :label="item.label"
               :icon="item.icon"
-              trailing-icon="i-heroicons-chevron-down-20-solid"
               class="font-display font-medium px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
               :class="[
-                isDropdownActive(item)
+                isActive(item.to)
                   ? 'underline decoration-golden-500 decoration-2 underline-offset-8'
                   : '',
               ]"
+              @click="scrollToTop"
             />
-          </UDropdown>
-
-          <!-- Standard Link -->
-          <UButton
-            v-else
-            :to="item.to"
-            color="gray"
-            variant="ghost"
-            :label="item.label"
-            :icon="item.icon"
-            class="font-display font-medium px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
-            :class="[
-              isActive(item.to)
-                ? 'underline decoration-golden-500 decoration-2 underline-offset-8'
-                : '',
-            ]"
-            @click="scrollToTop"
-          />
-        </template>
+          </template>
         </nav>
       </div>
 
@@ -83,7 +85,9 @@
           color="gray"
           variant="ghost"
           :icon="colorMode.value === 'dark' ? 'i-heroicons-sun' : 'i-heroicons-moon'"
-          :aria-label="colorMode.value === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+          :aria-label="
+            colorMode.value === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+          "
           class="p-2 text-gray-700 dark:text-gray-200"
           @click="toggleColorMode"
         />
@@ -104,7 +108,7 @@
       :ui="{
         background: '!bg-transparent',
         base: '!bg-transparent',
-        overlay: { background: 'bg-black/30' }
+        overlay: { background: 'bg-black/30' },
       }"
     >
       <div

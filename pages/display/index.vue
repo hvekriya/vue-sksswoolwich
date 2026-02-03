@@ -4,7 +4,7 @@
       <div class="grid grid-cols-12 h-screen">
         <!-- Left Column: Two slides stacked (top + bottom) -->
         <div
-          class="col-span-8 flex flex-col bg-black border-r border-white/5 shadow-2xl z-10"
+          class="col-span-6 flex flex-col bg-black border-r border-white/5 shadow-2xl z-10"
         >
           <div class="h-1/2 w-full overflow-hidden border-b border-white/5">
             <Swiper
@@ -55,7 +55,7 @@
         </div>
 
         <!-- Right Column: announcements with auto-scroll (same data as home page) -->
-        <div class="col-span-4 bg-gray-900 flex flex-col min-h-0">
+        <div class="col-span-6 bg-gray-900 flex flex-col min-h-0">
           <header class="p-6 sm:p-8 pb-4 shrink-0">
             <h3 class="text-xl sm:text-2xl font-serif font-bold text-golden-500">
               Announcements
@@ -69,7 +69,7 @@
 
       <template #fallback>
         <div class="grid grid-cols-12 h-screen">
-          <div class="col-span-8 flex flex-col bg-black border-r border-white/5">
+          <div class="col-span-6 flex flex-col bg-black border-r border-white/5">
             <div class="h-1/2 flex items-center justify-center bg-gray-900">
               <div
                 class="w-24 h-24 border-2 border-golden-500/30 border-t-golden-500 rounded-full animate-spin"
@@ -77,7 +77,7 @@
             </div>
             <div class="h-1/2 flex items-center justify-center bg-gray-900" />
           </div>
-          <div class="col-span-4 bg-gray-900 flex flex-col min-h-0">
+          <div class="col-span-6 bg-gray-900 flex flex-col min-h-0">
             <header class="p-6 sm:p-8 pb-4 shrink-0">
               <h3 class="text-xl sm:text-2xl font-serif font-bold text-golden-500">
                 Announcements
