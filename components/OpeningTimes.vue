@@ -1,16 +1,18 @@
 <template>
   <div class="h-full">
     <UCard
-      class="glass-effect overflow-hidden border-golden-500/20 h-full flex flex-col"
+      class="glass-effect border-golden-500/20 h-full flex flex-col"
       :ui="{
-        header: { base: 'bg-golden-500/10 border-b border-golden-500/20' },
-        body: { padding: 'p-0 flex flex-col flex-1' },
+        body: { padding: 'p-0 overflow-hidden flex flex-col flex-1' },
+        header: { base: 'bg-golden-500/5' },
       }"
     >
       <template #header>
         <div class="flex items-center space-x-2">
           <UIcon name="i-heroicons-clock" class="w-5 h-5 text-temple-red-500" />
-          <h3 class="font-serif font-bold text-gray-400">Mandir Darshan Timings</h3>
+          <h3 class="font-serif font-bold text-temple-red-500 dark:text-gray-400">
+            Mandir Darshan Timings
+          </h3>
         </div>
       </template>
 

@@ -36,7 +36,9 @@
                     name="i-heroicons-megaphone"
                     class="w-5 h-5 text-temple-red-500"
                   />
-                  <h3 class="font-serif font-bold text-gray-400">Announcements</h3>
+                  <h3 class="font-serif font-bold text-temple-red-500 dark:text-gray-400">
+                    Announcements
+                  </h3>
                 </div>
               </template>
 

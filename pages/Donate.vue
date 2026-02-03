@@ -15,7 +15,7 @@
           <h1 class="text-5xl lg:text-7xl font-serif font-bold text-white mb-8">
             Ways to <span class="text-golden-500">Donate</span>
           </h1>
-          <p class="text-gray-900 text-lg font-light leading-relaxed">
+          <p class="text-gray-400 text-lg font-light leading-relaxed">
             Your generous contributions help us maintain the Mandir, support our diverse
             community services, and preserve our spiritual heritage for future
             generations.
@@ -39,7 +39,9 @@
                       class="w-8 h-8 text-golden-600"
                     />
                   </div>
-                  <h3 class="text-3xl font-serif font-bold text-white">Bank Transfer</h3>
+                  <h3 class="text-3xl font-serif font-bold text-gray-900 dark:text-white">
+                    Bank Transfer
+                  </h3>
                 </div>
 
                 <p class="text-gray-600">
