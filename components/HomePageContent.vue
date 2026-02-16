@@ -137,7 +137,6 @@ function fallbackPayload() {
 }
 
 const { data } = await useAsyncData('home-page-data', async () => {
-  if (import.meta.server) return fallbackPayload()
   const cms = useCms()
   const { isSameOrAfter } = useFilters()
   try {
