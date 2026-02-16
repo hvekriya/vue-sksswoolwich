@@ -89,7 +89,8 @@ export default defineNuxtConfig({
         return id.includes('@') ? id : `${id}@N08`;
       })(),
       flickrUrl: process.env.flickrUrl || process.env.NUXT_PUBLIC_FLICKR_URL || 'https://api.flickr.com/services/rest',
-      googleCalendarApiKey: process.env.google_calendarApiKey || process.env.NUXT_PUBLIC_GOOGLE_CALENDAR_API_KEY || ''
+      googleCalendarApiKey: process.env.google_calendarApiKey || process.env.NUXT_PUBLIC_GOOGLE_CALENDAR_API_KEY || '',
+      gaMeasurementId: process.env.firebase_measurementId,
     }
   },
 
