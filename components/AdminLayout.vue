@@ -110,12 +110,20 @@
 </template>
 
 <script setup lang="ts">
-import { getAuth, signOut } from 'firebase/auth'
+import { getAuth, signOut, type User } from 'firebase/auth'
 
 const route = useRoute()
 const router = useRouter()
-const user = useCurrentUser()
+const user = ref<User | null>(null)
 const auth = import.meta.client ? getAuth(useNuxtApp().$firebaseApp as import('firebase/app').FirebaseApp) : null
+
+if (import.meta.client && auth) {
+  user.value = auth.currentUser
+  auth.onAuthStateChanged((u: User | null) => {
+    user.value = u
+  })
+}
+
 const sidebarOpen = ref(false)
 
 const menuItems = [

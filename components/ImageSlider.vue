@@ -13,11 +13,13 @@
     >
       <SwiperSlide v-for="(slide, index) in slides" :key="index">
         <div class="relative h-full w-full">
-          <!-- Slide Image -->
+          <!-- Slide Image: first slide is LCP candidate so high priority, no lazy load -->
           <img
             v-if="slide.image?.url"
             :src="slide.image.url"
             :alt="slide.image.alt || 'Temple Image'"
+            :fetchpriority="index === 0 ? 'high' : undefined"
+            :loading="index === 0 ? 'eager' : 'lazy'"
             class="absolute inset-0 h-full w-full object-cover"
           />
           <div v-else class="absolute inset-0 bg-gray-900" />

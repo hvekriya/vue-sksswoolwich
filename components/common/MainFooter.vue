@@ -12,7 +12,7 @@
           <h3 class="text-xl font-serif font-bold mb-4 text-white">
             Shree KS Swaminarayan Temple Woolwich
           </h3>
-          <p class="text-gray-900 text-sm leading-relaxed mb-6">
+          <p class="text-gray-400 text-sm leading-relaxed mb-6">
             A spiritual home dedicated to the teachings of Lord Swaminarayan, serving the
             community through devotion, education, and service.
           </p>

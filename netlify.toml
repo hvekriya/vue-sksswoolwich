@@ -1,15 +1,11 @@
-# Netlify build configuration for Nuxt 3 (static SPA)
+# Netlify build configuration for Nuxt 3 (SSR / serverless)
 # https://docs.netlify.com/configure-builds/file-based-configuration/
+# https://nitro.unjs.io/deploy/providers/netlify
 
 [build]
-  command = "npm run generate"
+  command = "npm run build"
   publish = "dist"
   environment = { NODE_VERSION = "24" }
 
-# SPA fallback: client routes resolve to index.html
-# force = false ensures static files (e.g. form-detection.html) are served when they exist
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  force = false
+# Nitro with preset netlify generates serverless functions; no SPA redirect needed
+# (the server handles all routes)

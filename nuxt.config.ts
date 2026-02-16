@@ -3,14 +3,14 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: false },
 
-  // Static SPA – no SSR, all data loads in browser
-  ssr: false,
+  // Server-side rendering on Netlify (Nitro serverless functions)
+  ssr: true,
   nitro: {
-    preset: 'netlify-static',
+    preset: 'netlify',
+    // Optional: prerender specific routes at build time for speed
     prerender: {
-      crawlLinks: true,
-      routes: ['/']
-    }
+      routes: ['/'],
+    },
   },
 
   // App configuration
@@ -59,10 +59,10 @@ export default defineNuxtConfig({
     download: false
   },
 
-  // Firebase configuration
+  // Firebase configuration (auth disabled here so Auth SDK/iframe loads only on /admin)
   vuefire: {
     auth: {
-      enabled: true,
+      enabled: false,
       userCallback: '~/plugins/auth-callback.ts'
     },
     config: {
@@ -96,10 +96,25 @@ export default defineNuxtConfig({
 
   // PWA disabled – re-enable @vite-pwa/nuxt in modules when SW build is fixed
 
-  // Vite configuration
+  // Vite configuration – split large vendors to reduce main bundle and improve caching
+  // Important: run Lighthouse against PRODUCTION build (npm run build && npm run preview), not dev server
   vite: {
     build: {
-      cssCodeSplit: true
+      minify: 'esbuild',
+      cssCodeSplit: true,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              if (id.includes('firebase') && !id.includes('firebase-admin')) return 'firebase'
+              if (id.includes('swiper')) return 'swiper'
+              if (id.includes('lightgallery')) return 'lightgallery'
+              if (id.includes('@nuxt/ui') || id.includes('@nuxtjs/')) return 'nuxt-ui'
+              if (id.includes('vuefire') || id.includes('vue-fire')) return 'vuefire'
+            }
+          }
+        }
+      }
     },
     css: {
       // lightningcss: false
