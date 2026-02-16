@@ -19,6 +19,7 @@ yarn-error.log*
 # Firebase Admin (do not commit)
 service-account.json
 *-service-account*.json
+*-firebase-adminsdk-*.json
 
 # Local Netlify folder
 .netlify

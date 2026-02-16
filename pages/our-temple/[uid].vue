@@ -106,11 +106,11 @@
 </template>
 
 <script setup lang="ts">
-const { client } = usePrismic();
+const cms = useCms();
 const route = useRoute();
 
 const { data: doc } = await useAsyncData(`our-temple-${route.params.uid}`, () =>
-  client.getByUID("our-temple", route.params.uid as string)
+  cms.getOurTempleByUid(route.params.uid as string)
 );
 
 if (!doc.value) {

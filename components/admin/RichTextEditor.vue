@@ -39,6 +39,16 @@
         type="button"
         variant="ghost"
         size="xs"
+        :color="editor.isActive('link') ? 'primary' : 'gray'"
+        icon="i-heroicons-link"
+        aria-label="Link"
+        @click="setLink"
+      />
+      <span class="w-px h-5 bg-gray-200 dark:bg-gray-600 mx-1" />
+      <UButton
+        type="button"
+        variant="ghost"
+        size="xs"
         :color="editor.isActive('bulletList') ? 'primary' : 'gray'"
         icon="i-heroicons-list-bullet"
         aria-label="Bullet list"
@@ -81,6 +91,7 @@
 <script setup lang="ts">
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
+import Link from '@tiptap/extension-link'
 import { watch } from 'vue'
 
 const props = defineProps<{
@@ -92,7 +103,13 @@ const emit = defineEmits<{
 }>()
 
 const editor = useEditor({
-  extensions: [StarterKit],
+  extensions: [
+    StarterKit,
+    Link.configure({
+      openOnClick: false,
+      HTMLAttributes: { target: '_blank', rel: 'noopener noreferrer' }
+    })
+  ],
   content: props.modelValue || '<p></p>',
   editorProps: {
     attributes: {
@@ -103,6 +120,20 @@ const editor = useEditor({
     emit('update:modelValue', editor.getHTML())
   }
 })
+
+function setLink() {
+  const e = editor.value
+  if (!e) return
+  const previous = e.getAttributes('link')?.href ?? ''
+  const url = window.prompt('Enter URL', previous || 'https://')
+  if (url == null) return
+  if (url === '') {
+    e.chain().focus().extendMarkRange('link').unsetLink().run()
+    return
+  }
+  const href = /^[a-z]+:\/\//i.test(url) ? url : `https://${url}`
+  e.chain().focus().extendMarkRange('link').setLink({ href }).run()
+}
 
 watch(
   () => props.modelValue,
@@ -131,5 +162,11 @@ onBeforeUnmount(() => {
   float: left;
   height: 0;
   pointer-events: none;
+}
+
+.rich-text-editor :deep(.ProseMirror a) {
+  color: var(--color-primary-500);
+  text-decoration: underline;
+  cursor: pointer;
 }
 </style>

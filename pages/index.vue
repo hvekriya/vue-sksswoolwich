@@ -154,12 +154,8 @@
 
 <script setup lang="ts">
 import { useFilters } from "~/composables/useFilters";
-let client: ReturnType<typeof usePrismic>["client"] | null = null;
-try {
-  client = usePrismic()?.client ?? null;
-} catch {
-  client = null;
-}
+
+const cms = useCms();
 const { isSameOrAfter } = useFilters();
 const config = useRuntimeConfig();
 
@@ -182,7 +178,7 @@ const fallbackPayload = () => ({
           description: [
             {
               type: "paragraph",
-              text: "Prismic content is currently unavailable. This is a placeholder.",
+              text: "CMS content is currently unavailable. This is a placeholder.",
               spans: [],
             },
           ],
@@ -203,38 +199,26 @@ useSeoMeta({
 
 const { data } = await useAsyncData("home-page-data", async () => {
   try {
-    // Server: use fallback to avoid Prismic/Firebase/network issues during SSR
+    // Server: use fallback to avoid Firebase/network issues during SSR
     if (import.meta.server) {
       return fallbackPayload();
     }
 
-    // Client: fetch real data
-    if (!client) {
-      const cached = useNuxtApp().payload?.data?.["home-page-data"];
-      if (cached) return cached;
-      if (import.meta.dev)
-        console.warn("Prismic client unavailable. Using fallback data.");
-      return fallbackPayload();
-    }
-
-    const [document, eventsFromPrismic] = await Promise.all([
-      client?.getSingle?.("home").catch(() => null) ?? null,
-      client?.getAllByType?.("events").catch(() => []) ?? [],
+    const [document, eventsFromCms] = await Promise.all([
+      cms.getHome().catch(() => null),
+      cms.getAllEvents().catch(() => []),
     ]);
 
     if (!document) {
-      // On client hydration use server payload if we have it (avoid overwriting with fallback)
-      if (import.meta.client) {
-        const cached = useNuxtApp().payload?.data?.["home-page-data"];
-        if (cached) return cached;
-      }
+      const cached = useNuxtApp().payload?.data?.["home-page-data"];
+      if (cached) return cached;
       if (import.meta.dev)
-        console.warn("Prismic Home document not found. Using fallback data.");
+        console.warn("CMS Home document not found. Using fallback data.");
       return fallbackPayload();
     }
 
     const today = new Date().toISOString().split("T")[0];
-    const upcomingEvents = eventsFromPrismic
+    const upcomingEvents = eventsFromCms
       .filter((event: any) => isSameOrAfter(event.data.event_date, today))
       .sort(
         (a: any, b: any) =>
@@ -247,13 +231,12 @@ const { data } = await useAsyncData("home-page-data", async () => {
       const { fetchRecentPhotos } = useFlickr();
       recentUploads = await fetchRecentPhotos(14);
     } catch {
-      // Flickr optional; keep Prismic data
+      // Flickr optional
     }
 
     let liveStreamUrl =
       document.data?.live_stream_url?.url || document.data?.live_stream_url || null;
 
-    // Fallback: video slice with live_stream_enabled and live_stream_link.url
     if (!liveStreamUrl && document.data?.body?.length) {
       const videoSlice = document.data.body.find(
         (s: any) => s.slice_type === "video" && s.primary?.live_stream_enabled === true
@@ -269,7 +252,7 @@ const { data } = await useAsyncData("home-page-data", async () => {
       recentUploads,
       liveStreamUrl,
       fields: {
-        slices: document.data.body,
+        slices: document.data.body ?? [],
       },
     };
   } catch (e) {
@@ -299,7 +282,7 @@ onMounted(async () => {
   if (!import.meta.client) return;
   const firstDesc =
     payload.value.fields?.slices?.[0]?.primary?.description?.[0]?.text ?? "";
-  if (firstDesc.includes("Prismic content is currently unavailable")) {
+  if (firstDesc.includes("content is currently unavailable")) {
     refreshNuxtData("home-page-data");
   }
   if (!recentUploadsFromPayload.value?.length) {

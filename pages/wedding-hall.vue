@@ -84,10 +84,10 @@
 </template>
 
 <script setup lang="ts">
-const { client } = usePrismic();
+const cms = useCms();
 
 const { data: doc } = await useAsyncData("wedding-hall", () =>
-  client.getByUID("our-temple", "wedding-hall")
+  cms.getOurTempleByUid("wedding-hall")
 );
 
 if (!doc.value) {

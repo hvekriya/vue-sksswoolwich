@@ -155,20 +155,15 @@
 </template>
 
 <script setup lang="ts">
-let client: ReturnType<typeof usePrismic>["client"] | null = null;
-try {
-  client = usePrismic()?.client ?? null;
-} catch {
-  client = null;
-}
+const cms = useCms();
 
 const defaultStreamUrl =
   "https://www.youtube.com/embed/live_stream?channel=UC8T_9l66vKq-k7Nre6PToFA";
 
 const { data } = await useAsyncData("live-stream-url", async () => {
   try {
-    if (import.meta.server || !client) return defaultStreamUrl;
-    const doc = await client.getSingle("home").catch(() => null);
+    if (import.meta.server) return defaultStreamUrl;
+    const doc = await cms.getHome().catch(() => null);
     if (!doc) return defaultStreamUrl;
 
     let url = doc.data?.live_stream_url?.url || doc.data?.live_stream_url || null;

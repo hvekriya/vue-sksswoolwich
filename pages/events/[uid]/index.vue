@@ -272,14 +272,14 @@ import "lightgallery/css/lg-thumbnail.css";
 import "lightgallery/css/lg-zoom.css";
 import "lightgallery/css/lg-fullscreen.css";
 
-const { client } = usePrismic();
+const cms = useCms();
 const route = useRoute();
 const config = useRuntimeConfig();
 const toast = useToast();
 
 const { data: eventDetails, error } = await useAsyncData(
   `event-${route.params.uid}`,
-  () => client.getByUID("events", route.params.uid as string)
+  () => cms.getEventByUid(route.params.uid as string)
 );
 
 if (error.value || !eventDetails.value) {

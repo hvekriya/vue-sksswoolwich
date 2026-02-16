@@ -120,6 +120,7 @@ const sidebarOpen = ref(false)
 
 const menuItems = [
     { label: 'Dashboard', to: '/admin', icon: 'i-heroicons-squares-2x2' },
+    { label: 'CMS Content', to: '/admin/cms', icon: 'i-heroicons-document-text' },
     { label: 'Announcements', to: '/admin/announcements', icon: 'i-heroicons-megaphone' },
     { label: 'TV Display', to: '/admin/display', icon: 'i-heroicons-tv' },
     { label: 'Follow Links', to: '/admin/links', icon: 'i-heroicons-share' },
@@ -128,7 +129,9 @@ const menuItems = [
 
 const currentPageTitle = computed(() => {
     const item = menuItems.find(i => i.to === route.path)
-    return item?.label || 'Administration'
+    if (item) return item.label
+    if (route.path.startsWith('/admin/cms')) return 'CMS'
+    return 'Administration'
 })
 
 const currentPageIcon = computed(() => {

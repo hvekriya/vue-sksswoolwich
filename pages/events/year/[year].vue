@@ -37,65 +37,67 @@
 </template>
 
 <script setup lang="ts">
-import * as prismic from '@prismicio/client'
-
-const { client } = usePrismic()
-const route = useRoute()
-const year = route.params.year as string
+const cms = useCms();
+const route = useRoute();
+const year = route.params.year as string;
 
 const { data: pastEvents } = await useAsyncData(`events-${year}`, async () => {
-  const startOfYear = `${year}-01-01`
-  const endOfYear = `${year}-12-31`
+  const startOfYear = `${year}-01-01`;
+  const endOfYear = `${year}-12-31`;
 
   try {
-    const response = await client.getAllByType('events', {
-      filters: [
-        prismic.filter.dateAfter('my.events.event_date', startOfYear),
-        prismic.filter.dateBefore('my.events.event_date', endOfYear)
-      ],
-      orderings: {
-        field: 'my.events.event_date',
-        direction: 'desc'
-      }
-    })
-
-    if (response && response.length > 0) return response
-    throw new Error('No events found') // Trigger mock fallback
+    const all = await cms.getAllEvents();
+    const inYear = all.filter((e: any) => {
+      const d = e.data.event_date;
+      return d >= startOfYear && d <= endOfYear;
+    });
+    inYear.sort(
+      (a: any, b: any) =>
+        new Date(b.data.event_date).getTime() - new Date(a.data.event_date).getTime()
+    );
+    if (inYear.length > 0) return inYear;
+    throw new Error('No events found');
   } catch (e) {
-    // Return mock data for UI verification if API fails or returns empty
-    console.warn('Fetching events failed or empty, using mock data for verification.')
+    console.warn('Fetching events failed or empty, using mock data for verification.');
     return [
       {
         id: 'mock-1',
         uid: 'mock-event-1',
         url: '/events/mock-event-1',
         data: {
-          title: [{ type: 'heading1', text: `Mock Event in ${year}` }],
+          event_title: [{ type: 'heading1', text: `Mock Event in ${year}` }],
           event_date: `${year}-05-15`,
-          description: [{ type: 'paragraph', text: 'This is a sample event to demonstrate the layout because no real data was found.' }],
-          main_image: {
+          event_description: [
+            {
+              type: 'paragraph',
+              text: 'This is a sample event to demonstrate the layout because no real data was found.',
+            },
+          ],
+          poster: {
             url: 'https://images.unsplash.com/photo-1561582808-0125f6b86a87?auto=format&fit=crop&q=80&w=800',
-            alt: ' Temple Event'
-          }
-        }
+            alt: 'Temple Event',
+          },
+        },
       },
       {
         id: 'mock-2',
         uid: 'mock-event-2',
         url: '/events/mock-event-2',
         data: {
-          title: [{ type: 'heading1', text: `Another Celebration ${year}` }],
+          event_title: [{ type: 'heading1', text: `Another Celebration ${year}` }],
           event_date: `${year}-08-20`,
-          description: [{ type: 'paragraph', text: 'Another beautiful event from our archives.' }],
-          main_image: {
+          event_description: [
+            { type: 'paragraph', text: 'Another beautiful event from our archives.' },
+          ],
+          poster: {
             url: 'https://images.unsplash.com/photo-1606216794074-735e91aaad6e?auto=format&fit=crop&q=80&w=800',
-            alt: 'Celebration'
-          }
-        }
-      }
-    ]
+            alt: 'Celebration',
+          },
+        },
+      },
+    ];
   }
-})
+});
 
 useHead({
   title: `Events in ${year} | Woolwich Temple`,

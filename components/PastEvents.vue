@@ -46,8 +46,8 @@
             class="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between"
           >
             <UButton
-              v-if="event.data.flicker_album_id"
-              :to="`/events/${event.uid}/${event.data.flicker_album_id}`"
+              v-if="event.data.flickr_photoset_id"
+              :to="`/events/${event.uid}/${event.data.flickr_photoset_id}`"
               icon="i-heroicons-camera"
               label="View Gallery"
               variant="soft"

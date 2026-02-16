@@ -64,23 +64,26 @@
 </template>
 
 <script setup lang="ts">
-import * as prismic from '@prismicio/client'
-const route = useRoute()
-const router = useRouter()
-const { client } = usePrismic()
+const route = useRoute();
+const router = useRouter();
+const cms = useCms();
 
-const searchQuery = ref(route.query.search as string || '')
+const searchQuery = ref((route.query.search as string) || "");
 
-const { data: articles, pending, refresh } = await useAsyncData('search-results', async () => {
-  if (!searchQuery.value) return []
+const { data: articles, pending, refresh } = await useAsyncData(
+  () => `search-results-${String(route.query.search || "")}`,
+  async () => {
+    if (!searchQuery.value) return [];
 
-  const response = await client.getAllByType('our-temple', {
-    filters: [
-      prismic.filter.fulltext('document', searchQuery.value)
-    ]
-  })
-  return response
-})
+    const all = await cms.getAllOurTemple();
+    const q = searchQuery.value.toLowerCase();
+    return all.filter((doc: any) => {
+      const title = doc.data.title?.map((t: any) => t.text).join(" ") ?? "";
+      const content = doc.data.content?.map((c: any) => c.text).join(" ") ?? "";
+      return (title + " " + content).toLowerCase().includes(q);
+    });
+  }
+);
 
 const refreshSearch = () => {
   router.push({ query: { search: searchQuery.value } })

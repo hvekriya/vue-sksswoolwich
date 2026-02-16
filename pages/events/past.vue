@@ -55,43 +55,32 @@
 </template>
 
 <script setup lang="ts">
-import * as prismic from "@prismicio/client";
-
-const { client } = usePrismic();
+const cms = useCms();
 const route = useRoute();
 
-// Define activeYear ref, assuming it's managed by PastYears component or route params
-// For this change, we'll assume it's available, e.g., from a composable or prop.
-// If not provided by the user, a placeholder ref is needed for the code to be syntactically correct.
 const activeYear = ref(route.params.year ? route.params.year.toString() : "All");
 
 const { data: pastEvents } = await useAsyncData(
   "past-events-list",
   async () => {
-    const filterYear = route.params.year ? parseInt(route.params.year as string) : null;
     const today = new Date().toISOString().split("T")[0];
-
-    const predicates = [
-      prismic.filter.at("document.type", "events"),
-      prismic.filter.dateBefore("my.events.event_date", today),
-    ];
+    const all = await cms.getAllEvents();
+    let past = all.filter((e: any) => e.data.event_date < today);
+    past.sort(
+      (a: any, b: any) =>
+        new Date(b.data.event_date).getTime() - new Date(a.data.event_date).getTime()
+    );
 
     if (activeYear.value !== "All") {
       const startOfYear = `${activeYear.value}-01-01`;
       const endOfYear = `${activeYear.value}-12-31`;
-      predicates.push(prismic.filter.dateAfter("my.events.event_date", startOfYear));
-      predicates.push(prismic.filter.dateBefore("my.events.event_date", endOfYear));
+      past = past.filter(
+        (e: any) =>
+          e.data.event_date >= startOfYear && e.data.event_date <= endOfYear
+      );
     }
 
-    const response = await client.get({
-      filters: predicates,
-      orderings: {
-        field: "my.events.event_date",
-        direction: "desc",
-      },
-    });
-
-    return response.results;
+    return past;
   },
   {
     watch: [() => route.params.year],

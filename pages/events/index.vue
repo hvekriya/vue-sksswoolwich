@@ -71,24 +71,24 @@
 </template>
 
 <script setup lang="ts">
-const { client } = usePrismic();
+const cms = useCms();
 const { isSameOrAfter } = useFilters();
 const route = useRoute();
 
 const isActive = (path: string) => route.path === path;
 
 const { data: upcomingEvents } = await useAsyncData("upcoming-events-list", async () => {
-  const eventsFromPrismic = await client.getAllByType("events", {
-    orderings: {
-      field: "my.events.event_date",
-      direction: "asc",
-    },
-  });
-
+  const eventsFromCms = await cms.getAllEvents();
   const today = new Date().toISOString().split("T")[0];
-  return eventsFromPrismic.filter((event: any) =>
+  const upcoming = eventsFromCms.filter((event: any) =>
     isSameOrAfter(event.data.event_date, today)
   );
+  // Show soonest first for upcoming events
+  upcoming.sort(
+    (a: any, b: any) =>
+      new Date(a.data.event_date).getTime() - new Date(b.data.event_date).getTime()
+  );
+  return upcoming;
 });
 
 useHead({
