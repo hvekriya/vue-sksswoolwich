@@ -45,7 +45,6 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     // '@vite-pwa/nuxt',
     'nuxt-vuefire',
-    '@nuxtjs/prismic'
   ],
 
   // Theme configuration (Nuxt UI) handled in app.config.ts
@@ -78,21 +77,7 @@ export default defineNuxtConfig({
     }
   },
 
-  // Prismic configuration
-  prismic: {
-    endpoint: 'sksswoolwich',
-    clientConfig: {
-      accessToken: process.env.VUE_APP_PRISMIC,
-      routes: [
-        { type: 'events', path: '/events/:uid' },
-        { type: 'our-temple', path: '/our-temple/:uid' },
-        { type: 'blog', path: '/blog/:uid' }
-      ]
-    }
-  },
-
-  // Runtime configuration
-  // Server-only keys (e.g. netlifyBuildHookId) are never exposed to the client
+  // Runtime configuration (env keys from build/deploy)
   runtimeConfig: {
     netlifyBuildHookId: process.env.NETLIFY_BUILD_HOOK_ID || process.env.buildID || '',
     public: {
@@ -120,7 +105,5 @@ export default defineNuxtConfig({
     }
   },
 
-  build: {
-    transpile: ['@prismicio/vue']
-  }
+  build: {}
 })

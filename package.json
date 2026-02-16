@@ -1,7 +1,7 @@
 {
   "name": "woolwich-temple",
   "version": "3.0.0",
-  "description": "Vue.js project with content managed in Prismic - Nuxt 3",
+  "description": "Vue.js project - Nuxt 3 (CMS: Firebase)",
   "author": "hvekriya",
   "type": "module",
   "private": true,
@@ -24,9 +24,6 @@
     "@fullcalendar/timegrid": "^6.1.17",
     "@fullcalendar/vue3": "^6.1.17",
     "@nuxt/ui": "^2.21.0",
-    "@nuxtjs/prismic": "^5.2.0",
-    "@prismicio/client": "^7.16.0",
-    "@prismicio/vue": "^6.1.1",
     "@tiptap/extension-link": "^2.15.1",
     "@tiptap/starter-kit": "^2.15.1",
     "@tiptap/vue-3": "^2.15.1",

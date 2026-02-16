@@ -43,10 +43,10 @@
             <h3
               class="text-2xl font-serif font-bold text-white mb-3 group-hover:text-golden-900 transition-colors"
             >
-              <prismic-rich-text :field="event.data.event_title" />
+              <CmsRichText :field="event.data.event_title" />
             </h3>
             <div class="text-gray-300 text-sm line-clamp-3 leading-relaxed">
-              <prismic-rich-text :field="event.data.event_description_short" />
+              <CmsRichText :field="event.data.event_description_short" />
             </div>
           </div>
 

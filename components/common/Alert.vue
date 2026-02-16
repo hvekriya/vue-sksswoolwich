@@ -10,7 +10,7 @@
       :ui="{ rounded: 'rounded-2xl' }"
     >
       <template #description>
-        <prismic-rich-text :field="alert.primary.alert_message" />
+        <CmsRichText :field="alert.primary.alert_message" />
       </template>
     </UAlert>
   </div>

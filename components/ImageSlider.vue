@@ -43,7 +43,7 @@
                 <div
                   class="text-white text-2xl lg:text-4xl font-serif font-bold mb-6 leading-tight"
                 >
-                  <prismic-rich-text :field="slide.title" />
+                  <CmsRichText :field="slide.title" />
                 </div>
                 <div class="flex flex-wrap gap-4">
                   <UButton

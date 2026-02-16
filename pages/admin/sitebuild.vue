@@ -5,8 +5,7 @@
             <div>
                 <h1 class="text-4xl font-serif font-bold text-gray-900 dark:text-white mb-4">Site Infrastructure</h1>
                 <p class="text-gray-500 text-lg">
-                    Trigger a fresh deployment of the website to synchronize content from external sources like Prismic,
-                    Flickr, and YouTube.
+                    Trigger a fresh deployment of the website to synchronize content from external sources (CMS, blog, Flickr, etc.).
                 </p>
             </div>
 
@@ -26,8 +25,7 @@
                         <div>
                             <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Production Rebuild</h3>
                             <p class="text-sm text-gray-500 leading-relaxed mb-6">
-                                Use this feature if you have made changes to external data (like Flickr albums or
-                                Prismic pages) and they aren't appearing on the live site yet.
+                                Use this feature if you have made changes to external data (e.g. Flickr albums or blog) and they aren't appearing on the live site yet.
                                 <span class="text-temple-red-500 font-bold">Note:</span> This process takes approximately
                                 3-5 minutes.
                             </p>

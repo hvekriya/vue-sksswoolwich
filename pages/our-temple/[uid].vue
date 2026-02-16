@@ -51,7 +51,7 @@
             </nav>
 
             <div class="prose prose-xl prose-golden dark:prose-invert max-w-none">
-              <prismic-rich-text :field="doc.data.content" />
+              <CmsRichText :field="doc.data.content" />
             </div>
 
             <!-- CTA Section -->

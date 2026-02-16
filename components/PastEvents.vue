@@ -35,11 +35,11 @@
           <h3
             class="text-lg font-serif font-bold text-gray-400 mb-3 line-clamp-2 min-h-[3rem] group-hover:text-temple-red-500 transition-colors"
           >
-            <prismic-rich-text :field="event.data.event_title" />
+            <CmsRichText :field="event.data.event_title" />
           </h3>
 
           <div class="text-sm text-gray-500 mb-6 line-clamp-2">
-            <prismic-rich-text :field="event.data.event_description" />
+            <CmsRichText :field="event.data.event_description" />
           </div>
 
           <div

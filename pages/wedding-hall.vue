@@ -21,7 +21,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
           <div class="lg:col-span-8">
             <div class="prose prose-xl prose-golden dark:prose-invert max-w-none">
-              <prismic-rich-text :field="doc.data.content" />
+              <CmsRichText :field="doc.data.content" />
             </div>
 
             <div v-if="doc.data.cta_link" class="mt-12">

@@ -81,10 +81,6 @@
                             <UBadge color="green" variant="soft" label="Connected" />
                         </div>
                         <div class="flex items-center justify-between text-sm">
-                            <span class="text-gray-500">Prismic API</span>
-                            <UBadge color="green" variant="soft" label="Healthy" />
-                        </div>
-                        <div class="flex items-center justify-between text-sm">
                             <span class="text-gray-500">TV Auto-Scroll</span>
                             <UBadge color="blue" variant="soft" label="Active" />
                         </div>

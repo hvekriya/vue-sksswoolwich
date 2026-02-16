@@ -11,7 +11,7 @@
  *      status = 200
  * 4. In package.json: add script "generate": "nuxt generate"
  *
- * This disables SSR and serves a client-rendered SPA. All data (Prismic, Firebase, Flickr)
+ * This disables SSR and serves a client-rendered SPA. All data (Firebase CMS, blog, Flickr)
  * loads in the browser. Simpler deployment, no server function needed.
  */
 export default defineNuxtConfig({

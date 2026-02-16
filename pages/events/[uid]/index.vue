@@ -63,7 +63,7 @@
           <!-- Main Content -->
           <div class="lg:col-span-8">
             <div class="prose prose-lg prose-golden dark:prose-invert max-w-none mb-12">
-              <prismic-rich-text :field="eventDetails.data.event_description" />
+              <CmsRichText :field="eventDetails.data.event_description" />
             </div>
 
             <!-- Detailed Posters Section -->

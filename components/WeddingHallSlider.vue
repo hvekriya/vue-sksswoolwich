@@ -24,10 +24,10 @@
           <div class="absolute bottom-0 left-0 right-0 p-6 lg:p-10 text-white">
             <div class="max-w-2xl">
               <div v-if="slide.title?.length" class="text-2xl lg:text-4xl font-serif font-bold mb-2 leading-tight">
-                <prismic-rich-text :field="slide.title" />
+                <CmsRichText :field="slide.title" />
               </div>
               <div v-if="slide.description?.length" class="text-white/90 text-sm lg:text-base leading-relaxed line-clamp-2">
-                <prismic-rich-text :field="slide.description" />
+                <CmsRichText :field="slide.description" />
               </div>
             </div>
           </div>
