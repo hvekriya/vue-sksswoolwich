@@ -10,6 +10,19 @@ import { useFirestore } from 'vuefire'
 
 const CMS_HOME_ID = 'home'
 
+function stripUndefined(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(stripUndefined)
+  if (value && typeof value === 'object') {
+    const out: Record<string, unknown> = {}
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+      if (v === undefined) continue
+      out[k] = stripUndefined(v)
+    }
+    return out
+  }
+  return value
+}
+
 /** Flatten event for Firestore: store strings and simple image fields */
 export function eventFlatToFirestore(data: EventDataFlat): Record<string, unknown> {
   return {
@@ -61,7 +74,8 @@ export function useCmsAdmin() {
   async function saveHome(data: { body?: unknown[]; live_stream_url?: string }): Promise<void> {
     const ref = doc(db, 'cms_home', CMS_HOME_ID)
     const current = (await getDoc(ref)).data() ?? {}
-    await setDoc(ref, { ...current, ...data })
+    // Firestore rejects `undefined` anywhere in the object tree
+    await setDoc(ref, stripUndefined({ ...current, ...data }) as Record<string, unknown>)
   }
 
   return {

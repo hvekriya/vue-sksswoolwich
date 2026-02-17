@@ -93,6 +93,7 @@
 import type { HomeDataFlat } from '~/lib/cms-flatten'
 import { homeDataToFlat } from '~/lib/cms-flatten'
 import { htmlToBlocks } from '~/lib/cms-normalize'
+import { normalizeEmbeddableVideoUrl } from '~/lib/youtube'
 
 definePageMeta({ middleware: 'auth' })
 
@@ -138,7 +139,8 @@ function buildBody(): import('~/types/cms').HomeSlice[] {
     primary: {
       image: {
         url: form.hero_image_url || '',
-        alt: form.hero_image_alt || undefined,
+        // Firestore does not allow `undefined` values
+        alt: form.hero_image_alt || '',
       },
       title: htmlToBlocks(form.hero_title),
       description: htmlToBlocks(form.hero_description),
@@ -171,10 +173,18 @@ function buildBody(): import('~/types/cms').HomeSlice[] {
 async function save() {
   saving.value = true
   try {
+    const normalizedLive = normalizeEmbeddableVideoUrl(form.live_stream_url || '')
+    if ((form.live_stream_url || '').trim() && normalizedLive.error) {
+      throw new Error(normalizedLive.error)
+    }
+    // Update the form value so the CMS stores the embeddable version
+    form.live_stream_url = normalizedLive.url
+
     const body = buildBody()
     await cmsAdmin.saveHome({
       body,
-      live_stream_url: form.live_stream_url?.trim() || undefined,
+      // Store empty string to hide live stream (Firestore rejects `undefined`)
+      live_stream_url: (normalizedLive.url || '').trim(),
     })
     toast.add({ title: 'Home page saved', color: 'green' })
   } catch (e: any) {

@@ -40,13 +40,9 @@
       <p class="text-gray-600 text-sm mb-4">
         Join us live for Morning and Evening Aarti, and special Satsang programs.
       </p>
-      <UButton block color="primary" label="Watch Now" icon="i-heroicons-tv" />
+      <UButton block color="primary" label="Watch Now" icon="i-heroicons-tv" to="/live" />
     </div>
   </UCard>
 </template>
 
-<script setup lang="ts">
-const props = defineProps<{
-  fields: any;
-}>();
-</script>
+<script setup lang="ts"></script>

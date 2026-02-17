@@ -48,7 +48,7 @@
             <div class="relative aspect-video">
               <iframe
                 width="100%"
-                height="100%"
+                height="400px"
                 :src="liveStreamUrl"
                 title="Live Darshan Stream"
                 frameborder="0"
@@ -60,7 +60,7 @@
           </UCard>
 
           <div class="mt-8 flex flex-wrap gap-4 items-center justify-between">
-            <div class="flex items-center gap-6">
+            <!-- <div class="flex items-center gap-6">
               <div class="flex items-center gap-2">
                 <UIcon name="i-heroicons-users" class="text-gray-500" />
                 <span class="text-sm font-medium text-gray-300">Live Community</span>
@@ -69,11 +69,11 @@
                 <UIcon name="i-heroicons-chat-bubble-left-right" class="text-gray-500" />
                 <span class="text-sm font-medium text-gray-300">Active Chat</span>
               </div>
-            </div>
+            </div> -->
 
             <div class="flex gap-4">
               <UButton
-                to="https://www.youtube.com/channel/UC8T_9l66vKq-k7Nre6PToFA"
+                to="https://www.youtube.com/woolwichtemple"
                 target="_blank"
                 color="white"
                 variant="soft"
@@ -155,6 +155,8 @@
 </template>
 
 <script setup lang="ts">
+import { normalizeEmbeddableVideoUrl } from "~/lib/youtube";
+
 const cms = useCms();
 
 const defaultStreamUrl =
@@ -166,17 +168,21 @@ const { data } = await useAsyncData("live-stream-url", async () => {
     const doc = await cms.getHome().catch(() => null);
     if (!doc) return defaultStreamUrl;
 
-    let url = doc.data?.live_stream_url?.url || doc.data?.live_stream_url || null;
+    const liveField = doc.data?.live_stream_url as string | { url?: string } | undefined;
+    let url = typeof liveField === "string" ? liveField : liveField?.url || null;
 
     if (!url && doc.data?.body?.length) {
       const videoSlice = doc.data.body.find(
         (s: any) => s.slice_type === "video" && s.primary?.live_stream_enabled === true
       );
-      const link = videoSlice?.primary?.live_stream_link;
+      const link = (videoSlice?.primary as
+        | { live_stream_link?: { url?: string } }
+        | undefined)?.live_stream_link;
       if (link?.url) url = link.url;
     }
 
-    return url || defaultStreamUrl;
+    const normalized = normalizeEmbeddableVideoUrl(url || "");
+    return normalized.url || defaultStreamUrl;
   } catch {
     return defaultStreamUrl;
   }

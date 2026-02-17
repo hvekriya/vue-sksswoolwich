@@ -7,10 +7,6 @@ export default defineNuxtConfig({
   ssr: true,
   nitro: {
     preset: 'netlify',
-    // Optional: prerender specific routes at build time for speed
-    prerender: {
-      routes: ['/'],
-    },
   },
 
   // App configuration

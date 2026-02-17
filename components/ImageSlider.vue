@@ -96,16 +96,23 @@ const props = defineProps<{
   fields: any;
 }>();
 
-// Default single slide when Prismic has no slides (avoids empty hero + Swiper loop warning)
+// Default single slide when CMS has no slides (avoids empty hero + Swiper loop warning)
 const defaultSlide = () => ({
   image: {
+    // Fallback hero image from Firebase Storage
     url:
-      "https://images.prismic.io/sksswoolwich/c1acd8d9-7ccb-4f1b-bcc1-57ceb5ada080_39972331571_6d6de90849_o.png?auto=compress,format",
-    alt: "Woolwich Temple",
+      "https://firebasestorage.googleapis.com/v0/b/sksswoolwich.appspot.com/o/cms%2Fcms_home%2Fhome%2Fhero.jpg?alt=media&token=fcee1582-c55c-4a20-86b3-fae87e6fbb06",
+    alt: "Welcome to SKSS Temple Woolwich",
   },
-  title: [{ type: "heading1", text: "Jay Swaminarayan", spans: [] }],
+  title: [
+    { type: "heading1", text: "Jay Swaminarayan", spans: [] },
+  ],
   description: [
-    { type: "paragraph", text: "Shree KS Swaminarayan Temple Woolwich", spans: [] },
+    {
+      type: "paragraph",
+      text: "Shree KS Swaminarayan Temple Woolwich",
+      spans: [],
+    },
   ],
 });
 
@@ -121,7 +128,7 @@ const normalizeImage = (obj: any): { url: string; alt: string } => {
     {};
   if (typeof img === "string") return { url: img, alt: "Temple" };
   const url = img?.url || img?.src;
-  return url ? { url, alt: img?.alt || "Temple" } : defaultSlide().image;
+  return url ? { url, alt: img?.alt || "Temple" } : { url: "", alt: "" };
 };
 
 // Extract slides from Prismic: hero_slider/image_slider items, or single hero_section primary, or one default
@@ -162,21 +169,22 @@ const slides = computed(() => {
       description: item.description || [],
     }));
   }
+  // No hard-coded image fallback: show a blank hero until Firebase CMS loads.
   return [defaultSlide()];
 });
 
 const now = ref<Date | null>(null);
-let refreshTimer: ReturnType<typeof window.setInterval> | null = null;
+let refreshTimer: ReturnType<typeof setInterval> | null = null;
 
 onMounted(() => {
   now.value = new Date();
-  refreshTimer = window.setInterval(() => {
+  refreshTimer = setInterval(() => {
     now.value = new Date();
   }, 60 * 1000);
 });
 
 onBeforeUnmount(() => {
-  if (refreshTimer) window.clearInterval(refreshTimer);
+  if (refreshTimer) clearInterval(refreshTimer);
 });
 
 const greeting = computed(() => {

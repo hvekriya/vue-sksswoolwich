@@ -110,6 +110,7 @@
 
 <script setup lang="ts">
 import { useFilters } from '~/composables/useFilters'
+import { normalizeEmbeddableVideoUrl } from '~/lib/youtube'
 
 const payloadState = useState<ReturnType<typeof fallbackPayload> | null>('home-page-payload', () => null)
 
@@ -124,11 +125,11 @@ function fallbackPayload() {
           slice_type: 'hero_section',
           primary: {
             image: {
-              url: 'https://images.prismic.io/sksswoolwich/c1acd8d9-7ccb-4f1b-bcc1-57ceb5ada080_39972331571_6d6de90849_o.png?auto=compress,format',
-              alt: 'Woolwich Temple',
+              url: '',
+              alt: '',
             },
-            title: [{ type: 'heading1', text: 'Welcome to Woolwich Temple', spans: [] }],
-            description: [{ type: 'paragraph', text: 'Loading…', spans: [] }],
+            title: [],
+            description: [],
           },
         },
       ],
@@ -136,19 +137,20 @@ function fallbackPayload() {
   }
 }
 
-const { data } = await useAsyncData('home-page-data', async () => {
+const { data, refresh } = await useAsyncData('home-page-data', async () => {
   const cms = useCms()
   const { isSameOrAfter } = useFilters()
   try {
+    // If the page already fetched home slices for the hero, reuse them to avoid a second Firestore call.
+    const existingSlices = payloadState.value?.fields?.slices
+    const hasRealHero = !!existingSlices?.some(
+      (s: any) => s?.slice_type === 'hero_section' && s?.primary?.image?.url
+    )
     const [document, eventsFromCms] = await Promise.all([
-      cms.getHome().catch(() => null),
+      hasRealHero ? Promise.resolve(null) : cms.getHome().catch(() => null),
       cms.getAllEvents().catch(() => []),
     ])
-    if (!document) {
-      const cached = useNuxtApp().payload?.data?.['home-page-data']
-      if (cached) return cached
-      return fallbackPayload()
-    }
+
     const today = new Date().toISOString().split('T')[0]
     const upcomingEvents = eventsFromCms
       .filter((e: any) => isSameOrAfter(e.data.event_date, today))
@@ -159,15 +161,35 @@ const { data } = await useAsyncData('home-page-data', async () => {
       const { fetchRecentPhotos } = useFlickr()
       recentUploads = await fetchRecentPhotos(14)
     } catch {}
-    let liveStreamUrl = document.data?.live_stream_url?.url || document.data?.live_stream_url || null
+    // If we don't have a fresh home document (e.g. we reused hero slices), still return events and recent uploads.
+    if (!document) {
+      const liveFromState = payloadState.value?.liveStreamUrl ?? null
+      const slicesForFields =
+        hasRealHero && existingSlices?.length ? existingSlices : fallbackPayload().fields.slices
+
+      return {
+        upcomingEvents,
+        recentUploads,
+        liveStreamUrl: liveFromState,
+        fields: { slices: slicesForFields },
+      }
+    }
+
+    // We have a document: compute live stream URL and slices from it.
+    const liveField = document.data?.live_stream_url as string | { url?: string } | undefined
+    let liveStreamUrl = typeof liveField === 'string' ? liveField : liveField?.url || null
     if (!liveStreamUrl && document.data?.body?.length) {
       const videoSlice = document.data.body.find((s: any) => s.slice_type === 'video' && s.primary?.live_stream_enabled)
-      if (videoSlice?.primary?.live_stream_link?.url) liveStreamUrl = videoSlice.primary.live_stream_link.url
+      const link = (videoSlice?.primary as { live_stream_link?: { url?: string } } | undefined)?.live_stream_link
+      if (link?.url) liveStreamUrl = link.url
     }
+
+    const normalized = normalizeEmbeddableVideoUrl(typeof liveStreamUrl === 'string' ? liveStreamUrl : '')
+
     return {
       upcomingEvents,
       recentUploads,
-      liveStreamUrl,
+      liveStreamUrl: normalized.url || null,
       fields: { slices: document.data.body ?? [] },
     }
   } catch (e) {
@@ -177,7 +199,7 @@ const { data } = await useAsyncData('home-page-data', async () => {
 
 watch(
   data,
-  (v) => {
+  (v: any) => {
     if (v) payloadState.value = v
   },
   { immediate: true }
@@ -191,6 +213,15 @@ const flickrPhotoList = ref<any[]>([])
 const recentUploads = computed(() => payload.value.recentUploads?.length ? payload.value.recentUploads : flickrPhotoList.value)
 
 onMounted(async () => {
+  // If SSR returned fallback data, refresh on client to get Firebase CMS data.
+  const heroUrl =
+    payloadState.value?.fields?.slices?.find((s: any) => s?.slice_type === 'hero_section')?.primary
+      ?.image?.url || ''
+  if (!heroUrl) {
+    try {
+      await refresh()
+    } catch {}
+  }
   if (!payload.value.recentUploads?.length) {
     try {
       const { fetchRecentPhotos } = useFlickr()
