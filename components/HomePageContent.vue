@@ -60,16 +60,23 @@
           class="rounded-full shadow-lg shadow-golden-500/20"
         />
       </div>
-      <Suspense>
-        <template #default>
-          <LazyUpcomingEvents :upcoming-events="upcomingEvents" />
-        </template>
+      <ClientOnly>
+        <Suspense>
+          <template #default>
+            <LazyUpcomingEvents :upcoming-events="upcomingEvents" />
+          </template>
+          <template #fallback>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <USkeleton v-for="i in 3" :key="i" class="h-96 w-full rounded-3xl" />
+            </div>
+          </template>
+        </Suspense>
         <template #fallback>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="upcoming-events-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <USkeleton v-for="i in 3" :key="i" class="h-96 w-full rounded-3xl" />
           </div>
         </template>
-      </Suspense>
+      </ClientOnly>
     </section>
 
     <section

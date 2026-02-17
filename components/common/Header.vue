@@ -29,10 +29,8 @@
         <UButton
           color="gray"
           variant="ghost"
-          :icon="colorMode.value === 'dark' ? 'i-heroicons-sun' : 'i-heroicons-moon'"
-          :aria-label="
-            colorMode.value === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
-          "
+          :icon="themeIcon"
+          :aria-label="themeAriaLabel"
           class="p-2 rounded-full text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
           @click="toggleColorMode"
         />
@@ -84,10 +82,8 @@
         <UButton
           color="gray"
           variant="ghost"
-          :icon="colorMode.value === 'dark' ? 'i-heroicons-sun' : 'i-heroicons-moon'"
-          :aria-label="
-            colorMode.value === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
-          "
+          :icon="themeIcon"
+          :aria-label="themeAriaLabel"
           class="p-2 text-gray-700 dark:text-gray-200"
           @click="toggleColorMode"
         />
@@ -123,8 +119,8 @@
             <UButton
               color="gray"
               variant="ghost"
-              :icon="colorMode.value === 'dark' ? 'i-heroicons-sun' : 'i-heroicons-moon'"
-              :aria-label="colorMode.value === 'dark' ? 'Light mode' : 'Dark mode'"
+              :icon="themeIcon"
+              :aria-label="themeAriaLabelShort"
               class="-my-1"
               @click="toggleColorMode"
             />
@@ -213,6 +209,29 @@
 const { scrollToTop } = useScrollToTop();
 const route = useRoute();
 const colorMode = useColorMode();
+
+// Avoid hydration mismatch: server and first client render use same icon (moon).
+// After mount we sync with actual colorMode and keep in sync when it changes.
+const effectiveDark = ref(false);
+onMounted(() => {
+  effectiveDark.value = colorMode.value === "dark";
+});
+watch(
+  () => colorMode.value,
+  (v: string) => {
+    effectiveDark.value = v === "dark";
+  },
+  { immediate: false }
+);
+const themeIcon = computed(() =>
+  effectiveDark.value ? "i-heroicons-sun" : "i-heroicons-moon"
+);
+const themeAriaLabel = computed(() =>
+  effectiveDark.value ? "Switch to light mode" : "Switch to dark mode"
+);
+const themeAriaLabelShort = computed(() =>
+  effectiveDark.value ? "Light mode" : "Dark mode"
+);
 
 function toggleColorMode() {
   colorMode.preference = colorMode.value === "dark" ? "light" : "dark";
