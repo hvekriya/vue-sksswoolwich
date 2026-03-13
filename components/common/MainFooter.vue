@@ -71,7 +71,7 @@
                 name="i-heroicons-map-pin"
                 class="w-5 h-5 text-golden-500 flex-shrink-0"
               />
-              <span>St Margaret's Grove, <br />Plumstead, London <br />SE18 7RA</span>
+              <span>St Margaret's Grove, <br />Plumstead, London <br />SE18 7RL</span>
             </li>
             <li class="flex items-center space-x-3 text-gray-400">
               <UIcon
