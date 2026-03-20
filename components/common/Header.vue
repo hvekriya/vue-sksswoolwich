@@ -1,8 +1,17 @@
 <template>
+  <!--
+    No backdrop-filter on the bar: browsers often composite blur as a full-width layer behind rounded corners.
+    Solid frosted tint + shadow only; header shell is transparent with no blur/filter.
+  -->
   <header
-    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-3 glass-effect border-b border-white/20 dark:border-white/10 shadow-sm"
+    class="site-header fixed top-0 left-0 right-0 z-50 pointer-events-none bg-transparent pt-4 pb-3 px-4 sm:px-6"
   >
-    <div class="container mx-auto px-4 flex items-center justify-between">
+    <div
+      class="pointer-events-auto mx-auto w-full max-w-7xl overflow-hidden rounded-2xl border border-white/40 bg-white/90 shadow-[0_8px_32px_rgba(0,0,0,0.08),inset_0_1px_0_0_rgba(255,255,255,0.9)] dark:border-white/10 dark:bg-gray-950/90 dark:shadow-[0_12px_40px_rgba(0,0,0,0.35),inset_0_1px_0_0_rgba(255,255,255,0.06)] sm:rounded-3xl"
+    >
+      <div
+        class="flex items-center justify-between gap-4 px-4 py-3 sm:px-6 sm:py-3.5"
+      >
       <!-- Logo -->
       <NuxtLink to="/" class="flex items-center space-x-3 group" @click="scrollToTop">
         <img
@@ -10,9 +19,9 @@
           alt="Woolwich Temple"
           class="h-12 w-auto transition-transform group-hover:scale-110"
         />
-        <div class="hidden sm:block">
+        <div class="hidden sm:block min-w-0">
           <span
-            class="block text-xs uppercase tracking-wider text-gray-600 dark:text-gray-400"
+            class="block text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400"
           >
             Shree KS Swaminarayan
           </span>
@@ -31,10 +40,10 @@
           variant="ghost"
           :icon="themeIcon"
           :aria-label="themeAriaLabel"
-          class="p-2 rounded-full text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+          class="shrink-0 rounded-full p-2 text-slate-500 hover:bg-white/60 hover:text-gray-900 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white"
           @click="toggleColorMode"
         />
-        <nav class="flex items-center space-x-1">
+        <nav class="flex flex-1 items-center justify-end gap-0.5 lg:gap-1">
           <template v-for="item in navLinks" :key="item.label">
             <!-- Dropdown for multi-level -->
             <UDropdown
@@ -48,10 +57,10 @@
                 :label="item.label"
                 :icon="item.icon"
                 trailing-icon="i-heroicons-chevron-down-20-solid"
-                class="font-display font-medium px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                class="font-display font-medium px-3 py-2 text-slate-600 hover:bg-white/70 dark:text-slate-300 dark:hover:bg-white/10"
                 :class="[
                   isDropdownActive(item)
-                    ? 'underline decoration-golden-500 decoration-2 underline-offset-8'
+                    ? 'underline decoration-golden-500 decoration-2 underline-offset-8 text-gray-900 dark:text-white'
                     : '',
                 ]"
               />
@@ -65,10 +74,10 @@
               variant="ghost"
               :label="item.label"
               :icon="item.icon"
-              class="font-display font-medium px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+              class="font-display font-medium px-3 py-2 text-slate-600 hover:bg-white/70 dark:text-slate-300 dark:hover:bg-white/10"
               :class="[
                 isActive(item.to)
-                  ? 'underline decoration-golden-500 decoration-2 underline-offset-8'
+                  ? 'underline decoration-golden-500 decoration-2 underline-offset-8 text-gray-900 dark:text-white'
                   : '',
               ]"
               @click="scrollToTop"
@@ -78,22 +87,24 @@
       </div>
 
       <!-- Mobile: Color mode toggle + Menu button -->
-      <div class="lg:hidden flex items-center space-x-2">
+      <div class="flex shrink-0 items-center gap-1 lg:hidden">
         <UButton
           color="gray"
           variant="ghost"
           :icon="themeIcon"
           :aria-label="themeAriaLabel"
-          class="p-2 text-gray-700 dark:text-gray-200"
+          class="rounded-full p-2 text-slate-600 hover:bg-white/60 dark:text-slate-300 dark:hover:bg-white/10"
           @click="toggleColorMode"
         />
         <UButton
           color="gray"
           variant="ghost"
           icon="i-heroicons-bars-3-bottom-right-20-solid"
-          class="p-2 text-gray-700 dark:text-gray-200"
+          aria-label="Open menu"
+          class="rounded-full p-2 text-slate-600 hover:bg-white/60 dark:text-slate-300 dark:hover:bg-white/10"
           @click="isMobileMenuOpen = true"
         />
+      </div>
       </div>
     </div>
 

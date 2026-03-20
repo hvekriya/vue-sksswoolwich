@@ -1,41 +1,27 @@
 <template>
   <div class="live-darshan-page min-h-screen text-white">
-    <!-- Immersive Header -->
-    <header class="relative py-12 lg:py-20 overflow-hidden">
-      <div class="absolute inset-0 opacity-30">
-        <div
-          class="absolute -top-24 -left-24 w-[40rem] h-[40rem] bg-golden-500/10 rounded-full blur-[160px]"
-        ></div>
-        <div
-          class="absolute -bottom-24 -right-24 w-[40rem] h-[40rem] bg-temple-red-500/10 rounded-full blur-[160px]"
-        ></div>
+    <CommonPageHero>
+      <div
+        class="inline-flex items-center space-x-3 bg-red-600/20 text-red-400 px-4 py-2 rounded-full mb-8 border border-red-500/30"
+      >
+        <span class="relative flex h-3 w-3">
+          <span
+            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"
+          ></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+        </span>
+        <span class="text-xs font-bold tracking-[0.2em] uppercase text-red-200"
+          >Live from the Mandir</span
+        >
       </div>
-
-      <UContainer class="relative z-10 text-center">
-        <div
-          class="inline-flex items-center space-x-3 bg-red-600/20 text-red-500 px-4 py-2 rounded-full mb-8 border border-red-500/30"
-        >
-          <span class="relative flex h-3 w-3">
-            <span
-              class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-900 opacity-75"
-            ></span>
-            <span class="relative inline-flex rounded-full h-3 w-3 bg-red-600"></span>
-          </span>
-          <span class="text-xs font-bold tracking-[0.2em] uppercase"
-            >Live from the Mandir</span
-          >
-        </div>
-        <h1 class="text-5xl lg:text-7xl font-serif font-bold mb-6">
-          Daily <span class="text-golden-900">Live Katha</span>
-        </h1>
-        <p
-          class="text-gray-900 dark:text-gray-400 text-lg max-w-2xl mx-auto font-light leading-relaxed"
-        >
-          Bringing the divine atmosphere of the Mandir into your home. Join us for daily
-          rituals, Aarti, and spiritual discourses.
-        </p>
-      </UContainer>
-    </header>
+      <h1 class="text-5xl lg:text-7xl font-serif font-bold text-white mb-6">
+        Daily <span class="text-golden-500">Live Katha</span>
+      </h1>
+      <p class="text-gray-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">
+        Bringing the divine atmosphere of the Mandir into your home. Join us for daily
+        rituals, Aarti, and spiritual discourses.
+      </p>
+    </CommonPageHero>
 
     <!-- Main Content -->
     <UContainer class="pb-24">

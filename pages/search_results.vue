@@ -1,24 +1,23 @@
 <template>
   <div class="search-results pb-24">
-    <!-- Immersive Header -->
-    <section class="relative h-[40vh] flex flex-col justify-end pb-12 overflow-hidden">
-      <div class="absolute inset-0 z-0">
-        <div class="absolute inset-0 bg-gray-950/20 dark:bg-black/40"></div>
-        <div
-          class="absolute inset-0 bg-gradient-to-t from-gray-50 dark:from-black via-gray-50/80 dark:via-black/80 to-transparent">
-        </div>
+    <CommonPageHero>
+      <h1 class="text-5xl lg:text-7xl font-serif font-bold text-white mb-4">
+        Search <span class="text-golden-500">Results</span>
+      </h1>
+      <p class="text-gray-400 text-lg max-w-2xl mx-auto font-light leading-relaxed mb-8">
+        Find articles and pages from our temple community.
+      </p>
+      <div class="max-w-xl mx-auto w-full">
+        <UInput
+          v-model="searchQuery"
+          placeholder="Search our wisdom..."
+          size="xl"
+          icon="i-heroicons-magnifying-glass"
+          class="rounded-full shadow-2xl bg-white/95 dark:bg-gray-900/95"
+          @keyup.enter="refreshSearch"
+        />
       </div>
-
-      <UContainer class="relative z-10 text-center">
-        <h1 class="text-4xl lg:text-6xl font-serif font-bold text-gray-900 dark:text-white mb-6">
-          Search <span class="text-golden-500">Results</span>
-        </h1>
-        <div class="max-w-xl mx-auto relative group">
-          <UInput v-model="searchQuery" placeholder="Search our wisdom..." size="xl" icon="i-heroicons-magnifying-glass"
-            class="rounded-full shadow-2xl" @keyup.enter="refreshSearch" />
-        </div>
-      </UContainer>
-    </section>
+    </CommonPageHero>
 
     <UContainer class="py-12 relative z-20">
       <div v-if="articles?.length" class="space-y-8">

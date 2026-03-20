@@ -1,90 +1,102 @@
 <template>
-  <div class="relative h-[50vh] lg:h-[65vh] w-full overflow-hidden rounded-[2rem]">
-    <Swiper
-      :modules="[SwiperAutoplay, SwiperEffectFade, SwiperPagination]"
-      :slides-per-view="1"
-      :loop="slides.length >= 2"
-      :effect="'fade'"
-      :autoplay="slides.length >= 2 ? { delay: 4500, disableOnInteraction: false } : false"
-      :pagination="slides.length > 1 ? { clickable: true } : false"
-      class="h-full w-full"
+  <!-- Client-only: Storage list + Swiper (same behaviour as /display) -->
+  <ClientOnly>
+    <div
+      :class="[
+        'relative w-full overflow-hidden',
+        hero
+          ? 'h-full min-h-full'
+          : 'h-[50vh] rounded-[2rem] lg:h-[65vh]',
+      ]"
     >
-      <SwiperSlide v-for="(slide, index) in slides" :key="index">
-        <div class="relative h-full w-full">
+      <Swiper
+        :key="swiperKey"
+        :modules="[SwiperAutoplay, SwiperEffectFade]"
+        :slides-per-view="1"
+        :loop="urls.length > 1"
+        effect="fade"
+        :autoplay="{
+          delay: 10000,
+          disableOnInteraction: false,
+        }"
+        class="h-full w-full"
+      >
+        <SwiperSlide v-for="(url, idx) in urls" :key="'wedding-slide-' + idx">
           <img
-            v-if="slide.image?.url"
-            :src="slide.image.url"
-            :alt="slide.image.alt || 'Wedding Hall'"
-            class="absolute inset-0 h-full w-full object-cover"
+            :src="url"
+            class="h-full w-full object-cover"
+            alt=""
           />
-          <div v-else class="absolute inset-0 bg-gray-800" />
-
-          <!-- Overlay: optional title/description from Prismic -->
-          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-          <div class="absolute bottom-0 left-0 right-0 p-6 lg:p-10 text-white">
-            <div class="max-w-2xl">
-              <div v-if="slide.title?.length" class="text-2xl lg:text-4xl font-serif font-bold mb-2 leading-tight">
-                <CmsRichText :field="slide.title" />
-              </div>
-              <div v-if="slide.description?.length" class="text-white/90 text-sm lg:text-base leading-relaxed line-clamp-2">
-                <CmsRichText :field="slide.description" />
-              </div>
-            </div>
+        </SwiperSlide>
+        <SwiperSlide v-if="!urls.length">
+          <div
+            class="flex h-full w-full flex-col items-center justify-center gap-3 bg-gray-900 px-4"
+          >
+            <img
+              src="https://www.sksswoolwich.org/img/WoolwichMandirLogo.png"
+              class="w-48 opacity-20"
+              alt=""
+            />
+            <p
+              v-if="loadError && isDev"
+              class="max-w-md text-center text-xs text-red-400/90"
+            >
+              Could not load slideshow (check Storage rules allow list + read for this folder).
+            </p>
           </div>
-        </div>
-      </SwiperSlide>
-    </Swiper>
-  </div>
+        </SwiperSlide>
+      </Swiper>
+    </div>
+
+    <template #fallback>
+      <div
+        :class="[
+          'flex w-full items-center justify-center bg-gray-900',
+          hero ? 'min-h-[68vh] lg:min-h-[75vh]' : 'h-[50vh] rounded-[2rem] lg:h-[65vh]',
+        ]"
+      >
+        <div
+          class="h-12 w-12 animate-spin rounded-full border-2 border-golden-500/30 border-t-golden-500"
+        />
+      </div>
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">
-import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Autoplay as SwiperAutoplay, EffectFade as SwiperEffectFade, Pagination as SwiperPagination } from 'swiper/modules'
+import { Swiper, SwiperSlide } from "swiper/vue";
+import {
+  Autoplay as SwiperAutoplay,
+  EffectFade as SwiperEffectFade,
+} from "swiper/modules";
 
-import 'swiper/css'
-import 'swiper/css/effect-fade'
-import 'swiper/css/pagination'
+import "swiper/css";
+import "swiper/css/effect-fade";
 
-const props = defineProps<{
-  fields: any
-}>()
-
-const defaultSlide = () => ({
-  image: { url: 'https://images.prismic.io/sksswoolwich/c1acd8d9-7ccb-4f1b-bcc1-57ceb5ada080_39972331571_6d6de90849_o.png?auto=compress,format', alt: 'Wedding Hall' },
-  title: [],
-  description: [],
-})
-
-const slides = computed(() => {
-  const slices = props.fields?.slices || []
-  // Hero / image slider (multi-slide with title/description)
-  const sliderSlice = slices.find((s: any) => s.slice_type === 'hero_slider' || s.slice_type === 'image_slider')
-  if (sliderSlice?.items?.length) return sliderSlice.items
-  // Image Gallery slice – items are { image } (and optional caption/title)
-  const gallerySlice = slices.find((s: any) => s.slice_type === 'image_gallery' || s.slice_type === 'image-gallery')
-  if (gallerySlice?.items?.length) {
-    return gallerySlice.items.map((item: any) => ({
-      image: item.image || item.gallery_image || {},
-      title: item.title || item.caption || [],
-      description: item.description || [],
-    }))
+const props = withDefaults(
+  defineProps<{
+    /** Storage folder path (no leading slash), e.g. cms/wedding-hall */
+    storagePath?: string;
+    /** Set true if images live in subfolders under that path */
+    storageRecursive?: boolean;
+    /** Full-bleed hero: no rounded corners, fills parent height */
+    hero?: boolean;
+  }>(),
+  {
+    storagePath: "cms/wedding-hall",
+    storageRecursive: true,
+    hero: false,
   }
-  // Single hero section
-  const heroSection = slices.find((s: any) => s.slice_type === 'hero_section')
-  if (heroSection?.primary) {
-    const p = heroSection.primary
-    return [{ image: p.image || {}, title: p.title || [], description: p.description || [] }]
-  }
-  return [defaultSlide()]
-})
+);
+
+const isDev = import.meta.dev;
+
+const { urls, loadError } = useStorageFolderSlideUrls(props.storagePath, {
+  imageOnly: true,
+  recursive: props.storageRecursive,
+});
+
+const swiperKey = computed(() =>
+  urls.value.length ? `n-${urls.value.length}-${urls.value[0]?.slice(-24)}` : "empty"
+);
 </script>
-
-<style scoped>
-:deep(.swiper-pagination-bullet) {
-  @apply bg-white/50 w-3 h-3 transition-all duration-300;
-}
-
-:deep(.swiper-pagination-bullet-active) {
-  @apply bg-golden-500 w-8 rounded-full;
-}
-</style>

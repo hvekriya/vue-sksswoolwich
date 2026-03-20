@@ -13,7 +13,7 @@
 
     <CommonHeader />
 
-    <main class="flex-grow pt-20 lg:pt-24 pb-12">
+    <main class="flex-grow pt-28 lg:pt-32 pb-12">
       <slot />
     </main>
 

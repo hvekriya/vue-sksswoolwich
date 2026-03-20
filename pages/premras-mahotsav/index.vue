@@ -1,22 +1,24 @@
 <template>
   <div class="special-event-page pb-24">
-    <!-- Dramatic Banner -->
-    <section class="relative bg-gray-900 overflow-hidden">
-      <div class="absolute inset-0 opacity-40">
-        <img 
+    <CommonPageHero>
+      <template #media>
+        <img
           src="https://images.prismic.io/sksswoolwich/438225dd-fd4b-46cb-85ad-e15a9d4ecf62_PGPM+Banner.png?auto=compress,format"
-          class="w-full h-full object-cover scale-105"
+          alt=""
+          class="absolute inset-0 h-full w-full scale-105 object-cover"
         />
-        <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/20 to-transparent"></div>
-      </div>
-      
-      <UContainer class="relative z-10 py-32 lg:py-48 text-center pt-64">
-        <UBadge color="golden" variant="soft" label="Special Event" class="mb-4 rounded-full px-4" />
-        <h1 class="text-5xl lg:text-8xl font-serif font-bold text-white mb-8 drop-shadow-2xl">
-          Premras Ghanshyam <span class="text-golden-500">Mahotsav</span>
-        </h1>
-      </UContainer>
-    </section>
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/70 to-gray-900/80"
+        />
+      </template>
+      <UBadge color="golden" variant="soft" label="Special Event" class="mb-4 rounded-full px-4" />
+      <h1 class="text-5xl lg:text-7xl font-serif font-bold text-white mb-6 drop-shadow-2xl">
+        Premras Ghanshyam <span class="text-golden-500">Mahotsav</span>
+      </h1>
+      <p class="text-gray-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">
+        Register your family for the upcoming Mahotsav celebrations at Woolwich Mandir.
+      </p>
+    </CommonPageHero>
 
     <!-- Registration Section -->
     <UContainer class="-mt-20 relative z-20">

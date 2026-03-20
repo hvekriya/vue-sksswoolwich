@@ -27,18 +27,29 @@
 <script setup lang="ts">
 const route = useRoute()
 
-const currentYearFilter = computed(() => (route.params.year as string) || 'All Years')
+const currentYear = new Date().getFullYear()
+
+const currentYearFilter = computed(() => {
+  if (route.path.startsWith('/events/year/') && route.params.year) {
+    return String(route.params.year)
+  }
+  if (route.path === '/events/past' && route.query.all === '1') {
+    return 'All Years'
+  }
+  if (route.path === '/events/past') {
+    return String(currentYear)
+  }
+  return 'All Years'
+})
 
 const startYear = 2020
-const currentYear = new Date().getFullYear()
 
 const dropdownItems = computed(() => {
   const years = []
-  // Add "All Years" option
   years.push({
     label: 'All Years',
-    to: '/events/past',
-    click: () => { /* Handle click if needed beyond navigation */ }
+    to: '/events/past?all=1',
+    click: () => { /* navigation via `to` */ }
   })
   
   for (let year = currentYear; year >= startYear; year--) {

@@ -1,33 +1,31 @@
 <template>
   <div class="events-page-wrapper">
-    <!-- Header Section -->
-    <section class="relative bg-gray-900 overflow-hidden py-20 lg:py-32">
-      <!-- Background Ornament -->
-      <div class="absolute inset-0 opacity-10 pointer-events-none">
-        <div
-          class="absolute -top-24 -left-24 w-96 h-96 bg-golden-500 rounded-full blur-[120px]"
-        ></div>
-        <div
-          class="absolute -bottom-24 -right-24 w-96 h-96 bg-temple-red-500 rounded-full blur-[120px]"
-        ></div>
-      </div>
-
-      <UContainer>
-        <div class="text-center relative z-10">
-          <h1 class="text-5xl lg:text-7xl font-serif font-bold text-white mb-6">
-            Mandir <span class="text-golden-500">Events</span>
-          </h1>
-          <p class="text-gray-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">
-            Join us in celebrating our rich spiritual heritage and community spirit
-            through our various festivals and events.
-          </p>
+    <!-- Header Section: Flickr slider behind hero copy -->
+    <CommonPageHero>
+      <template #media>
+        <div class="absolute inset-0 min-h-full w-full">
+          <ClientOnly>
+            <EventsHeroFlickrSlider :count="24" />
+            <template #fallback>
+              <div class="absolute inset-0 bg-gray-950" />
+            </template>
+          </ClientOnly>
         </div>
-      </UContainer>
-    </section>
+      </template>
+      <h1 class="text-5xl lg:text-7xl font-serif font-bold text-white mb-6">
+        Mandir <span class="text-golden-500">Events</span>
+      </h1>
+      <p
+        class="mx-auto max-w-2xl text-lg font-light leading-relaxed text-white drop-shadow-md"
+      >
+        Join us in celebrating our rich spiritual heritage and community spirit through
+        our various festivals and events.
+      </p>
+    </CommonPageHero>
 
-    <!-- Navigation Sub-Menu -->
+    <!-- Navigation Sub-Menu (scrolls with page — not sticky) -->
     <div
-      class="sticky top-16 lg:top-20 z-40 bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-gray-100 dark:border-gray-800"
+      class="border-b border-gray-100 bg-white/95 dark:border-gray-800 dark:bg-gray-950/95"
     >
       <UContainer>
         <div class="flex items-center justify-center space-x-1 py-4">
@@ -37,7 +35,7 @@
             color="golden"
             label="Upcoming Events"
             class="px-6 rounded-full font-bold"
-            :class="isActive('/events') ? 'bg-golden-50 text-golden-700' : ''"
+            :class="upcomingActive ? 'bg-golden-50 text-golden-700' : ''"
           />
           <UButton
             to="/events/past"
@@ -45,7 +43,7 @@
             color="gray"
             label="Past Events"
             class="px-6 rounded-full font-bold"
-            :class="isActive('/events/past') ? 'bg-golden-50 text-golden-700' : ''"
+            :class="pastActive ? 'bg-golden-50 text-golden-700' : ''"
           />
         </div>
       </UContainer>
@@ -59,7 +57,7 @@
           </h2>
           <div class="w-16 h-1 bg-golden-500 rounded-full mt-2"></div>
         </div>
-        <p class="text-white-500 max-w-md">
+        <p class="max-w-md text-gray-600 dark:text-gray-400">
           Explore our upcoming festivals, satsangs, and community activities scheduled for
           the coming weeks.
         </p>
@@ -73,9 +71,7 @@
 <script setup lang="ts">
 const cms = useCms();
 const { isSameOrAfter } = useFilters();
-const route = useRoute();
-
-const isActive = (path: string) => route.path === path;
+const { upcomingActive, pastActive } = useEventsSubnav();
 
 const { data: upcomingEvents } = await useAsyncData("upcoming-events-list", async () => {
   const eventsFromCms = await cms.getAllEvents();

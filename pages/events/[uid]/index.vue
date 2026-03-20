@@ -1,62 +1,57 @@
 <template>
   <div class="event-detail-page">
     <template v-if="eventDetails">
-      <!-- Hero Section with Background Poster -->
-      <section class="relative min-h-[50vh] flex items-end py-20 overflow-hidden">
-        <div class="absolute inset-0 z-0">
+      <CommonPageHero layout="wide-left">
+        <template #media>
           <img
             v-if="eventDetails.data.poster?.url"
             :src="eventDetails.data.poster.url"
-            class="w-full h-full object-cover blur-xl scale-110 opacity-30"
+            alt=""
+            class="absolute inset-0 h-full w-full scale-110 object-cover opacity-40 blur-xl"
           />
           <div
-            class="absolute inset-0 bg-gradient-to-t from-white dark:from-gray-950 via-white/80 dark:via-gray-950/80 to-transparent"
-          ></div>
-        </div>
+            class="absolute inset-0 bg-gradient-to-b from-gray-950 via-gray-900/92 to-gray-900"
+          />
+        </template>
+        <nav class="mb-8 flex items-center space-x-2 text-sm font-medium text-gray-400">
+          <NuxtLink to="/events" class="text-golden-500 transition-colors hover:text-golden-400"
+            >Events</NuxtLink
+          >
+          <UIcon name="i-heroicons-chevron-right" class="w-4 h-4 text-gray-500" />
+          <span class="line-clamp-1 max-w-[200px] truncate text-gray-300">
+            {{ eventDetails.data.event_title[0]?.text }}
+          </span>
+        </nav>
 
-        <UContainer class="relative z-10 w-full">
-          <!-- Breadcrumbs -->
-          <nav class="mb-8 flex items-center space-x-2 text-sm font-medium text-gray-500">
-            <NuxtLink to="/events" class="hover:text-golden-600 transition-colors"
-              >Events</NuxtLink
-            >
-            <UIcon name="i-heroicons-chevron-right" class="w-4 h-4" />
-            <span
-              class="text-gray-900 dark:text-gray-100 line-clamp-1 truncate max-w-[200px]"
-            >
-              {{ eventDetails.data.event_title[0]?.text }}
+        <h1 class="mb-6 text-4xl font-serif font-bold leading-tight text-white lg:text-6xl">
+          {{ eventDetails.data.event_title[0]?.text }}
+        </h1>
+
+        <div class="flex flex-wrap items-center gap-4 text-gray-300">
+          <div
+            class="flex items-center space-x-2 rounded-full border border-white/20 bg-white/10 px-4 py-2"
+          >
+            <UIcon name="i-heroicons-calendar-days" class="h-5 w-5 text-golden-400" />
+            <span class="font-bold text-golden-400">
+              {{ formatDate(eventDetails.data.event_date, "MMMM do, yyyy") }}
             </span>
-          </nav>
-
-          <div class="max-w-4xl">
-            <h1
-              class="text-4xl lg:text-6xl font-serif font-bold text-gray-900 dark:text-white mb-6 leading-tight"
-            >
-              {{ eventDetails.data.event_title[0]?.text }}
-            </h1>
-
-            <div
-              class="flex flex-wrap gap-4 items-center text-gray-600 dark:text-gray-900"
-            >
-              <div
-                class="flex items-center space-x-2 bg-golden-50 dark:bg-golden-950/30 px-4 py-2 rounded-full border border-golden-200/50 dark:border-golden-500/20"
-              >
-                <UIcon name="i-heroicons-calendar-days" class="w-5 h-5 text-golden-600" />
-                <span class="font-bold text-golden-700 dark:text-golden-900">
-                  {{ formatDate(eventDetails.data.event_date, "MMMM do, yyyy") }}
-                </span>
-              </div>
-              <div
-                v-if="eventDetails.data.event_location"
-                class="flex items-center space-x-2 px-4 py-2 text-gray-700 dark:text-gray-300"
-              >
-                <UIcon name="i-heroicons-map-pin" class="w-5 h-5 text-temple-red-500" />
-                <span>{{ eventDetails.data.event_location }}</span>
-              </div>
-            </div>
           </div>
-        </UContainer>
-      </section>
+          <div
+            v-if="isEventToday(eventDetails.data.event_date)"
+            class="flex items-center gap-2 rounded-full bg-emerald-500 px-4 py-2 text-sm font-bold uppercase tracking-wide text-white shadow-md"
+          >
+            <UIcon name="i-heroicons-sparkles" class="h-5 w-5" aria-hidden="true" />
+            Happening today
+          </div>
+          <div
+            v-if="eventDetails.data.event_location"
+            class="flex items-center space-x-2 px-4 py-2 text-gray-300"
+          >
+            <UIcon name="i-heroicons-map-pin" class="h-5 w-5 text-temple-red-400" />
+            <span>{{ eventDetails.data.event_location }}</span>
+          </div>
+        </div>
+      </CommonPageHero>
 
       <UContainer class="py-16">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -152,14 +147,14 @@
                   v-for="(photo, index) in album.photo"
                   :key="index"
                   :href="photo.url_o"
-                  class="group relative aspect-square overflow-hidden rounded-2xl glass-effect border-golden-500/10 hover:border-golden-500/40 transition-all duration-300"
+                  class="group/thumb relative aspect-square overflow-hidden rounded-2xl glass-effect border-golden-500/10 hover:border-golden-500/40 transition-all duration-300"
                 >
                   <img
                     :src="photo.url_n"
-                    class="h-full w-full object-cover transition-transform group-hover:scale-110"
+                    class="h-full w-full object-cover transition-transform group-hover/thumb:scale-110"
                   />
                   <div
-                    class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+                    class="pointer-events-none absolute inset-0 bg-black/40 opacity-0 transition-opacity group-hover/thumb:opacity-100 flex items-center justify-center"
                   >
                     <UIcon
                       name="i-heroicons-magnifying-glass-plus"
@@ -183,7 +178,7 @@
 
           <!-- Sidebar -->
           <div class="lg:col-span-4">
-            <div class="sticky top-28 space-y-8">
+            <div class="sticky top-28 lg:top-32 space-y-8">
               <!-- Share Card -->
               <UCard
                 class="glass-effect overflow-hidden rounded-3xl border-golden-500/20"
@@ -276,6 +271,7 @@ const cms = useCms();
 const route = useRoute();
 const config = useRuntimeConfig();
 const toast = useToast();
+const { isEventToday } = useFilters();
 
 const { data: eventDetails, error } = await useAsyncData(
   `event-${route.params.uid}`,

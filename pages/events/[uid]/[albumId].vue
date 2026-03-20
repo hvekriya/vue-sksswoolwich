@@ -10,7 +10,7 @@
             color="white"
             label="Back to Memory Archive"
             class="-ml-4 mb-4"
-            @click="navigateTo(`/events/past`)"
+            :to="memoryArchivePath"
           />
           <h1 class="text-3xl md:text-5xl font-serif font-bold text-golden-900">
             {{ album?.title || "Event Gallery" }}
@@ -52,19 +52,19 @@
           v-for="(photo, index) in album.photo"
           :key="index"
           :href="photo.url_o"
-          class="group relative aspect-square overflow-hidden rounded-3xl bg-gray-900 glass-effect border-white/5 hover:border-golden-500/40 transition-all duration-500 shadow-lg"
+          class="group/thumb relative aspect-square overflow-hidden rounded-3xl bg-gray-900 glass-effect border-white/5 hover:border-golden-500/40 transition-all duration-500 shadow-lg"
         >
           <img
             :src="photo.url_n"
-            class="h-full w-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700 group-hover:scale-110"
+            class="h-full w-full object-cover opacity-60 transition-all duration-700 group-hover/thumb:opacity-100 group-hover/thumb:scale-110"
             :alt="photo.title"
           />
           <div
-            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+            class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 transition-opacity group-hover/thumb:opacity-100 flex items-center justify-center"
           >
             <UIcon
               name="i-heroicons-magnifying-glass-plus"
-              class="w-8 h-8 text-golden-900 scale-75 group-hover:scale-100 transition-transform"
+              class="w-8 h-8 text-golden-900 scale-75 group-hover/thumb:scale-100 transition-transform"
             />
           </div>
         </a>
@@ -95,6 +95,28 @@ definePageMeta({
 
 const route = useRoute();
 const config = useRuntimeConfig();
+const cms = useCms();
+
+const eventUid = computed(() => String(route.params.uid ?? ""));
+
+/** Year archive for this event (same as where the listing came from); avoids /events/past redirect + layout issues */
+const { data: eventForNav } = await useAsyncData(
+  () => `event-album-nav-${eventUid.value}`,
+  () => {
+    const uid = eventUid.value;
+    if (!uid) return Promise.resolve(null);
+    return cms.getEventByUid(uid);
+  },
+  { watch: [eventUid] }
+);
+
+const memoryArchivePath = computed(() => {
+  const dateStr = eventForNav.value?.data?.event_date;
+  if (typeof dateStr === "string" && /^\d{4}/.test(dateStr)) {
+    return `/events/year/${dateStr.slice(0, 4)}`;
+  }
+  return `/events/year/${new Date().getFullYear()}`;
+});
 
 const albumId = computed(() => route.params.albumId as string);
 const flickrPhotosetWebUrl = computed(

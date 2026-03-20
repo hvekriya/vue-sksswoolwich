@@ -1,33 +1,20 @@
 <template>
   <div class="activities-page">
-    <section class="relative bg-gray-950 overflow-hidden py-24 lg:py-32">
-      <div class="absolute inset-0 opacity-30">
-        <div
-          class="absolute -top-24 -left-24 w-[40rem] h-[40rem] bg-golden-500/10 rounded-full blur-[160px]"
-        ></div>
-        <div
-          class="absolute -bottom-24 -right-24 w-[40rem] h-[40rem] bg-temple-red-500/10 rounded-full blur-[160px]"
-        ></div>
-      </div>
-
-      <UContainer>
-        <div class="relative z-10 text-center max-w-3xl mx-auto">
-          <UBadge
-            color="golden"
-            variant="soft"
-            label="Community Classes"
-            class="mb-6 rounded-full px-6"
-          />
-          <h1 class="text-5xl lg:text-7xl font-serif font-bold text-white mb-8">
-            Sign up for <span class="text-golden-500">Weekly Activities</span>
-          </h1>
-          <p class="text-gray-400 text-lg leading-relaxed font-light">
-            Enhance your spiritual and cultural journey by joining our diverse range of
-            classes and community programs.
-          </p>
-        </div>
-      </UContainer>
-    </section>
+    <CommonPageHero tone="950">
+      <UBadge
+        color="golden"
+        variant="soft"
+        label="Community Classes"
+        class="mb-6 rounded-full px-6"
+      />
+      <h1 class="text-5xl lg:text-7xl font-serif font-bold text-white mb-8">
+        Sign up for <span class="text-golden-500">Weekly Activities</span>
+      </h1>
+      <p class="text-gray-400 text-lg leading-relaxed font-light max-w-2xl mx-auto">
+        Enhance your spiritual and cultural journey by joining our diverse range of
+        classes and community programs.
+      </p>
+    </CommonPageHero>
 
     <UContainer class="py-20">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">

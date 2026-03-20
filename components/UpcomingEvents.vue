@@ -6,17 +6,29 @@
         :key="index"
         class="event-card group relative flex flex-col glass-effect rounded-[2rem] overflow-hidden border-golden-500/10 hover:border-golden-500/40 transition-all duration-500"
       >
-        <!-- Date Badge -->
+        <!-- Date badge: high-contrast “ticket” style (stands out on poster) -->
         <div
-          class="absolute top-6 left-6 z-20 glass-effect bg-black/30 backdrop-blur-md px-4 py-3 rounded-2xl flex flex-col items-center min-w-[70px] border-white/20"
+          class="absolute top-6 left-6 z-20 bg-white/95 backdrop-blur-sm px-4 py-3 rounded-2xl flex flex-col items-center min-w-[76px] border-2 border-golden-500 shadow-xl shadow-black/20 ring-1 ring-golden-400/40"
         >
-          <span class="text-3xl font-serif font-bold text-golden-900 leading-none">
+          <span class="text-3xl font-serif font-bold text-temple-red-600 leading-none">
             {{ formatDate(event.data.event_date, "dd") }}
           </span>
           <span
-            class="text-[10px] uppercase tracking-[0.2em] text-white/80 font-bold mt-1"
+            class="text-[10px] uppercase tracking-[0.2em] text-golden-700 font-bold mt-1"
           >
             {{ formatDate(event.data.event_date, "MMM") }}
+          </span>
+        </div>
+
+        <div
+          v-if="isEventToday(event.data.event_date)"
+          class="absolute top-6 right-6 z-20"
+        >
+          <span
+            class="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/95 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-white shadow-lg ring-2 ring-emerald-400/50"
+          >
+            <UIcon name="i-heroicons-sparkles" class="w-3.5 h-3.5" aria-hidden="true" />
+            Happening today
           </span>
         </div>
 
@@ -90,6 +102,8 @@
 
 <script setup lang="ts">
 import { format } from "date-fns";
+
+const { isEventToday } = useFilters();
 
 const props = defineProps<{
   upcomingEvents: any[];

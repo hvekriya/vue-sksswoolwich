@@ -38,20 +38,23 @@ export function useFlickr() {
     })
   }
 
-  const fetchRecentPhotos = async (perPage = 14) => {
+  const fetchRecentPhotos = async (
+    perPage = 14,
+    extras = 'url_n,url_o,url_sq,tags'
+  ) => {
     try {
       let data = await fetchFlickr({
         method: 'flickr.photos.search',
         min_date_upload: Math.floor(Date.now() / 1000) - 86400 * 365,
         per_page: perPage,
-        extras: 'url_n,url_o,url_sq,tags',
+        extras,
       })
       let photos = data?.photos?.photo ?? []
       if (photos.length === 0) {
         data = await fetchFlickr({
           method: 'flickr.people.getPublicPhotos',
           per_page: perPage,
-          extras: 'url_n,url_o,url_sq,tags',
+          extras,
         })
         photos = data?.photos?.photo ?? []
       }

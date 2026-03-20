@@ -10,16 +10,18 @@
         :key="index"
         role="button"
         tabindex="0"
-        class="gallery-item group relative aspect-square overflow-hidden rounded-2xl glass-effect border-golden-500/10 hover:border-golden-500/40 transition-all duration-500 cursor-pointer"
+        class="gallery-item group/thumb relative aspect-square overflow-hidden rounded-2xl glass-effect border-golden-500/10 hover:border-golden-500/40 transition-all duration-500 cursor-pointer"
         @click="openGallery(index)"
         @keydown.enter.prevent="openGallery(index)"
       >
         <img
           :src="photo.url_n || ''"
-          class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+          class="h-full w-full object-cover transition-transform duration-700 group-hover/thumb:scale-110"
           :alt="photo.title || 'Gallery Image'"
         />
-        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+        <div
+          class="pointer-events-none absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300 group-hover/thumb:opacity-100 flex items-center justify-center"
+        >
           <UIcon name="i-heroicons-magnifying-glass-plus" class="w-8 h-8 text-golden-900" />
         </div>
       </div>

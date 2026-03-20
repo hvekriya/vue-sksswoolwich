@@ -4,11 +4,11 @@
       <div class="grid grid-cols-1 lg:grid-cols-12">
         <!-- Form Section -->
         <div class="lg:col-span-7 p-8 lg:p-12">
-          <h2
-            class="text-3xl font-serif font-bold text-gray-400 mb-8 border-l-4 border-golden-500 pl-4"
+          <h3
+            class="mb-8 border-l-4 border-golden-500 pl-4 font-serif text-2xl font-bold text-gray-900 dark:text-white lg:text-3xl"
           >
-            Enquiry Form
-          </h2>
+            Enquiry form
+          </h3>
           <UForm :schema="schema" :state="state" class="space-y-6" @submit="onSubmit">
             <UFormGroup label="Full Name" name="name">
               <UInput

@@ -16,10 +16,10 @@
               class="h-full w-full"
             >
               <SwiperSlide v-for="(url, idx) in slideshow" :key="'top-' + idx">
-                <img :src="url" class="w-full h-full object-contain" alt="" />
+                <img :src="url" class="h-full w-full object-contain" alt="" />
               </SwiperSlide>
               <SwiperSlide v-if="!slideshow.length">
-                <div class="flex items-center justify-center h-full bg-gray-900">
+                <div class="flex h-full w-full items-center justify-center bg-gray-900">
                   <img
                     src="https://www.sksswoolwich.org/img/WoolwichMandirLogo.png"
                     class="w-48 opacity-20"
@@ -39,10 +39,10 @@
               class="h-full w-full"
             >
               <SwiperSlide v-for="(url, idx) in pinnedPosters" :key="'bot-' + idx">
-                <img :src="url" class="w-full h-full object-contain" alt="" />
+                <img :src="url" class="h-full w-full object-contain" alt="" />
               </SwiperSlide>
               <SwiperSlide v-if="!pinnedPosters.length">
-                <div class="flex items-center justify-center h-full bg-gray-900">
+                <div class="flex h-full w-full items-center justify-center bg-gray-900">
                   <img
                     src="https://www.sksswoolwich.org/img/WoolwichMandirLogo.png"
                     class="w-48 opacity-20"
@@ -61,7 +61,7 @@
               Announcements
             </h3>
           </header>
-          <div class="flex-1 min-h-0 overflow-hidden px-6 sm:px-8">
+          <div class="flex-1 min-h-0 overflow-hidden px-6 sm:p-8">
             <DisplayAnnouncements />
           </div>
         </div>
@@ -72,7 +72,7 @@
           <div class="col-span-6 flex flex-col bg-black border-r border-white/5">
             <div class="h-1/2 flex items-center justify-center bg-gray-900">
               <div
-                class="w-24 h-24 border-2 border-golden-500/30 border-t-golden-500 rounded-full animate-spin"
+                class="h-24 w-24 animate-spin rounded-full border-2 border-golden-500/30 border-t-golden-500"
               />
             </div>
             <div class="h-1/2 flex items-center justify-center bg-gray-900" />
@@ -83,7 +83,7 @@
                 Announcements
               </h3>
             </header>
-            <div class="flex-1 flex items-center justify-center px-6 sm:px-8">
+            <div class="flex flex-1 items-center justify-center px-6 sm:p-8">
               <p class="text-gray-500">Loading…</p>
             </div>
           </div>
@@ -94,7 +94,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref as storageRef, listAll, getDownloadURL } from "firebase/storage";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import {
   Autoplay as SwiperAutoplay,
@@ -109,34 +108,11 @@ definePageMeta({
   ssr: false, // Client-only to avoid hydration mismatch (Swiper, Firebase)
 });
 
-const slideshow = ref<string[]>([]);
-const pinnedPosters = ref<string[]>([]);
-
-async function fetchPosters() {
-  const firebaseStorage = useFirebaseStorage();
-  if (!firebaseStorage) return;
-  try {
-    const slideRef = storageRef(firebaseStorage, "slideshow/");
-    const slideRes = await listAll(slideRef);
-    slideshow.value = await Promise.all(
-      slideRes.items.map((item) => getDownloadURL(item))
-    );
-
-    const pinnedRef = storageRef(firebaseStorage, "pinned-posters/");
-    const pinnedRes = await listAll(pinnedRef);
-    pinnedPosters.value = await Promise.all(
-      pinnedRes.items.map((item) => getDownloadURL(item))
-    );
-  } catch (e) {
-    if (import.meta.dev) console.warn("Display: could not load slides", e);
-  }
-}
-
-onMounted(() => {
-  fetchPosters();
-  setTimeout(() => {
-    if (!slideshow.value.length && !pinnedPosters.value.length) fetchPosters();
-  }, 500);
+const { urls: slideshow } = useStorageFolderSlideUrls("slideshow/", {
+  imageOnly: false,
+});
+const { urls: pinnedPosters } = useStorageFolderSlideUrls("pinned-posters/", {
+  imageOnly: false,
 });
 
 useHead({

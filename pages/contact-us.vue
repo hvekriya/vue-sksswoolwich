@@ -1,28 +1,15 @@
 <template>
   <div class="contact-page">
     <!-- Hero Section -->
-    <section class="relative bg-gray-950 overflow-hidden py-24 lg:py-32">
-      <div class="absolute inset-0 opacity-30">
-        <div
-          class="absolute -top-24 -left-24 w-[40rem] h-[40rem] bg-golden-500/10 rounded-full blur-[160px]"
-        ></div>
-        <div
-          class="absolute -bottom-24 -right-24 w-[40rem] h-[40rem] bg-temple-red-500/10 rounded-full blur-[160px]"
-        ></div>
-      </div>
-
-      <UContainer>
-        <div class="relative z-10 text-center">
-          <h1 class="text-5xl lg:text-7xl font-serif font-bold text-white mb-8">
-            Get in <span class="text-golden-500">Touch</span>
-          </h1>
-          <p class="text-gray-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">
-            Whether you have a question about our festivals, want to plan a group visit,
-            or need spiritual guidance, our doors and hearts are always open.
-          </p>
-        </div>
-      </UContainer>
-    </section>
+    <CommonPageHero tone="950">
+      <h1 class="text-5xl lg:text-7xl font-serif font-bold text-white mb-8">
+        Get in <span class="text-golden-500">Touch</span>
+      </h1>
+      <p class="text-gray-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">
+        Whether you have a question about our festivals, want to plan a group visit, or
+        need spiritual guidance, our doors and hearts are always open.
+      </p>
+    </CommonPageHero>
 
     <!-- Content Section -->
     <section class="relative -mt-16 z-20 pb-24">

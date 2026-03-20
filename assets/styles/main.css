@@ -7,6 +7,17 @@
   @apply bg-white/40 dark:bg-black/40 backdrop-blur-lg border border-white/20 dark:border-white/10 shadow-2xl;
 }
 
+/* Site header: never use backdrop-filter here (avoids full-viewport blur layer behind the pill) */
+.site-header {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Pull first hero under floating header (pairs with main pt-28 lg:pt-32 in default layout) */
+.hero-under-nav {
+  @apply -mt-28 lg:-mt-32;
+}
+
 .text-gradient-gold {
   @apply bg-clip-text text-transparent bg-gradient-to-r from-golden-900 via-golden-500 to-golden-600;
 }

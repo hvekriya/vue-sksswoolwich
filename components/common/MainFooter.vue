@@ -14,7 +14,12 @@
           </h3>
           <p class="text-gray-400 text-sm leading-relaxed mb-6">
             A spiritual home dedicated to the teachings of Lord Swaminarayan, serving the
-            community through devotion, education, and service.
+            community through devotion, education, and service. Under
+            <a
+              href="https://www.swaminarayan.faith/"
+              class="text-golden-500 hover:text-golden-600 transition-colors"
+              >Shree Nar Narayan Dev Temple Bhuj</a
+            >. <UIcon name="i-heroicons-arrow-top-right-on-square" class="w-4 h-4" />
           </p>
           <div class="flex space-x-4">
             <UButton
@@ -92,26 +97,48 @@
       </div>
 
       <div
-        class="border-t border-gray-800 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm"
+        class="mt-8 border-t border-gray-800 pt-8 text-sm text-gray-500 flex flex-col gap-6 md:flex-row md:items-start md:justify-between md:gap-8"
       >
-        <p>&copy; {{ new Date().getFullYear() }} Woolwich Temple. All rights reserved.</p>
-        <div class="flex space-x-6 mt-4 md:mt-0">
-          <NuxtLink
-            to="https://sksswoolwich.cdn.prismic.io/sksswoolwich/e1d9742d-a7ff-4fbc-bfdb-d2913465066c_Complaints+Policy+and+Procedures.pdf"
-            class="hover:text-white"
-            >Complaints Policy</NuxtLink
+        <p class="max-w-3xl text-balance text-center md:text-left">
+          &copy; {{ new Date().getFullYear() }} Shree Kutch Satsang Swaminarayan Temple
+          Woolwich. All rights reserved. Charity Registration No. 292934.
+        </p>
+        <nav aria-label="Legal and policies">
+          <ul
+            class="m-0 flex list-none flex-col items-center gap-y-2 p-0 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-6 sm:gap-y-2 md:justify-end"
           >
-          <NuxtLink
-            to="https://sksswoolwich.cdn.prismic.io/sksswoolwich/9f87356c-dc03-4175-8355-840a3cb6b7fd_SKSSTW+Complaints+Form.pdf"
-            class="hover:text-white"
-            >Complaints Form</NuxtLink
-          >
-          <NuxtLink
-            to="https://sksswoolwich.cdn.prismic.io/sksswoolwich/4c041e32-62d7-440c-87eb-870b028bf3f9_Photography+and+Video+Policy.pdf"
-            class="hover:text-white"
-            >Photography and Video Policy</NuxtLink
-          >
-        </div>
+            <li class="shrink-0">
+              <NuxtLink
+                to="https://sksswoolwich.cdn.prismic.io/sksswoolwich/e1d9742d-a7ff-4fbc-bfdb-d2913465066c_Complaints+Policy+and+Procedures.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block text-center text-gray-400 underline-offset-2 hover:text-white hover:underline sm:text-left"
+              >
+                Complaints Policy
+              </NuxtLink>
+            </li>
+            <li class="shrink-0">
+              <NuxtLink
+                to="https://sksswoolwich.cdn.prismic.io/sksswoolwich/9f87356c-dc03-4175-8355-840a3cb6b7fd_SKSSTW+Complaints+Form.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block text-center text-gray-400 underline-offset-2 hover:text-white hover:underline sm:text-left"
+              >
+                Complaints Form
+              </NuxtLink>
+            </li>
+            <li class="max-w-xs shrink-0 sm:max-w-none">
+              <NuxtLink
+                to="https://sksswoolwich.cdn.prismic.io/sksswoolwich/4c041e32-62d7-440c-87eb-870b028bf3f9_Photography+and+Video+Policy.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block text-center text-gray-400 underline-offset-2 hover:text-white hover:underline sm:text-left"
+              >
+                Photography and Video Policy
+              </NuxtLink>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   </footer>

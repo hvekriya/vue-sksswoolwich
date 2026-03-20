@@ -1,28 +1,30 @@
 <template>
   <div class="registration-page pb-24">
-    <!-- Immersive Header -->
-    <section class="relative h-[60vh] flex flex-col justify-end pb-20 overflow-hidden">
-      <div class="absolute inset-0 z-0">
+    <CommonPageHero layout="wide-left">
+      <template #media>
         <img
           src="https://images.prismic.io/sksswoolwich/db3411ef-046c-42be-90a0-e9e21e5d0613_sksswoolwich-tv-bg.png?auto=compress,format"
-          class="w-full h-full object-cover grayscale opacity-20 scale-105" />
+          alt=""
+          class="absolute inset-0 h-full w-full scale-105 object-cover opacity-30 grayscale"
+        />
         <div
-          class="absolute inset-0 bg-gradient-to-t from-gray-50 dark:from-black via-gray-50/80 dark:via-black/80 to-transparent">
-        </div>
-      </div>
-
-      <UContainer class="relative z-10">
-        <div class="max-w-4xl">
-          <UBadge color="temple-red" variant="soft" label="Join Our Community" class="mb-4 rounded-full px-4" />
-          <h1 class="text-5xl lg:text-8xl font-serif font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-            Donor <span class="text-golden-500">Registration</span>
-          </h1>
-          <p class="text-xl text-gray-600 dark:text-gray-900 max-w-2xl leading-relaxed">
-            Register as a regular donor to help us maintain the Mandir and support our community initiatives.
-          </p>
-        </div>
-      </UContainer>
-    </section>
+          class="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-900/90 to-gray-900"
+        />
+      </template>
+      <UBadge
+        color="temple-red"
+        variant="soft"
+        label="Join Our Community"
+        class="mb-4 rounded-full px-4"
+      />
+      <h1 class="text-5xl lg:text-7xl font-serif font-bold text-white mb-6 leading-tight">
+        Donor <span class="text-golden-500">Registration</span>
+      </h1>
+      <p class="text-lg text-gray-400 max-w-2xl leading-relaxed font-light">
+        Register as a regular donor to help us maintain the Mandir and support our
+        community initiatives.
+      </p>
+    </CommonPageHero>
 
     <!-- Form Section -->
     <UContainer class="-mt-12 relative z-20">

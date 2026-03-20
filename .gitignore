@@ -26,3 +26,6 @@ service-account.json
 
 # Prerendered/cached output (contains serialized config with API keys)
 homepage_source.html
+
+# Skills
+.cursor

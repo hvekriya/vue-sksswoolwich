@@ -1,5 +1,5 @@
 <template>
-  <div class="relative h-[60vh] lg:h-[80vh] w-full overflow-hidden">
+  <div class="hero-under-nav relative h-[60vh] lg:h-[80vh] w-full overflow-hidden">
     <Swiper
       :modules="[SwiperAutoplay, SwiperEffectFade, SwiperPagination]"
       :slides-per-view="1"
@@ -24,16 +24,18 @@
           />
           <div v-else class="absolute inset-0 bg-gray-900" />
 
-          <!-- Overlay Gradient -->
+          <!-- Overlay Gradient: stronger on the left only so centre portrait stays visible -->
           <div
-            class="absolute inset-0 bg-gradient-to-r from-black/20 via-black/10 to-transparent"
+            class="absolute inset-0 bg-gradient-to-r from-black/35 via-black/10 to-transparent lg:from-black/25"
           ></div>
 
-          <!-- Content Overlay -->
-          <div class="absolute inset-0 flex items-center">
-            <div class="container mx-auto px-4 lg:px-8">
+          <!-- Same vertical offset as CommonPageHero (pt-64 / lg:pt-72) so copy clears floating nav + notch -->
+          <div
+            class="absolute inset-0 flex items-start justify-start pb-10 pt-[max(16rem,calc(env(safe-area-inset-top,0px)+12rem))] lg:pb-16 lg:pt-[max(18rem,calc(env(safe-area-inset-top,0px)+13.5rem))]"
+          >
+            <div class="container mx-auto w-full px-4 lg:px-8">
               <div
-                class="max-w-2xl glass-effect p-8 lg:p-12 rounded-3xl animate-fade-in-up"
+                class="max-w-2xl rounded-3xl border border-white/25 bg-white/25 p-8 shadow-2xl backdrop-blur-md animate-fade-in-up dark:border-white/10 dark:bg-black/35 lg:p-12"
               >
                 <span
                   class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider rounded-full bg-white/20 px-4 py-1.5 text-white backdrop-blur-md shadow-lg border border-white/20 mb-6"

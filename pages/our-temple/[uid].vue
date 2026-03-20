@@ -1,35 +1,23 @@
 <template>
   <div class="static-page">
     <template v-if="doc">
-      <!-- Immersive Header Section -->
-      <section
-        class="relative bg-gray-950 min-h-[50vh] flex flex-col justify-end py-24 lg:py-32 overflow-hidden"
-      >
-        <div class="absolute inset-0 z-0">
+      <CommonPageHero layout="wide-left" tone="950">
+        <template #media>
           <img
             v-if="doc.data.cover_image?.url"
             :src="doc.data.cover_image.url"
-            class="w-full h-full object-cover opacity-30 scale-105"
+            :alt="doc.data.title[0]?.text || ''"
+            class="absolute inset-0 h-full w-full scale-105 object-cover opacity-40"
           />
           <div
-            class="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/60 to-transparent"
-          ></div>
-          <div
-            class="absolute -top-32 -left-32 w-[40rem] h-[40rem] bg-golden-500/10 rounded-full blur-[160px]"
-          ></div>
-        </div>
-
-        <UContainer class="relative z-10">
-          <div class="max-w-4xl">
-            <h1
-              class="text-5xl lg:text-8xl font-serif font-bold text-white mb-6 leading-tight"
-            >
-              {{ doc.data.title[0]?.text }}
-            </h1>
-            <div class="w-24 h-2 bg-golden-500 rounded-full"></div>
-          </div>
-        </UContainer>
-      </section>
+            class="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/70 to-gray-950/90"
+          />
+        </template>
+        <h1 class="text-5xl lg:text-7xl font-serif font-bold text-white mb-6 leading-tight">
+          {{ doc.data.title[0]?.text }}
+        </h1>
+        <div class="w-24 h-2 bg-golden-500 rounded-full"></div>
+      </CommonPageHero>
 
       <!-- Main Content -->
       <UContainer class="py-20 lg:py-32">

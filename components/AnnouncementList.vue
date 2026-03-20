@@ -10,9 +10,7 @@
         class="glass-effect p-5 rounded-2xl border-golden-500/10 hover:border-golden-500/30 transition-all duration-300 hover:shadow-lg group"
       >
         <div class="flex items-start justify-between mb-2">
-          <h4
-            class="font-serif font-bold text-gray-400 group-hover:text-temple-red-500 transition-colors"
-          >
+          <h4 class="font-serif font-bold text-gray-400 transition-colors">
             {{ (announcement as any).title }}
           </h4>
         </div>

@@ -1,28 +1,14 @@
 <template>
   <div class="donate-page">
-    <section class="relative bg-gray-900 overflow-hidden py-24 lg:py-32">
-      <div class="absolute inset-0 opacity-30">
-        <div
-          class="absolute -top-24 -left-24 w-[40rem] h-[40rem] bg-golden-500/10 rounded-full blur-[160px]"
-        ></div>
-        <div
-          class="absolute -bottom-24 -right-24 w-[40rem] h-[40rem] bg-temple-red-500/10 rounded-full blur-[160px]"
-        ></div>
-      </div>
-
-      <UContainer>
-        <div class="relative z-10 text-center max-w-3xl mx-auto">
-          <h1 class="text-5xl lg:text-7xl font-serif font-bold text-white mb-8">
-            Ways to <span class="text-golden-500">Donate</span>
-          </h1>
-          <p class="text-gray-400 text-lg font-light leading-relaxed">
-            Your generous contributions help us maintain the Mandir, support our diverse
-            community services, and preserve our spiritual heritage for future
-            generations.
-          </p>
-        </div>
-      </UContainer>
-    </section>
+    <CommonPageHero>
+      <h1 class="text-5xl lg:text-7xl font-serif font-bold text-white mb-8">
+        Ways to <span class="text-golden-500">Donate</span>
+      </h1>
+      <p class="text-gray-400 text-lg font-light leading-relaxed">
+        Your generous contributions help us maintain the Mandir, support our diverse
+        community services, and preserve our spiritual heritage for future generations.
+      </p>
+    </CommonPageHero>
 
     <UContainer class="py-20">
       <UTabs :items="tabItems" class="w-full">
