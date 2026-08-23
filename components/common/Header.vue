@@ -270,11 +270,11 @@ watch(isMobileMenuOpen, (open: boolean) => {
 
 const navLinks = [
   { label: "HOME", to: "/", icon: "i-heroicons-home" },
-  {
-    label: "BHAKTIRAS",
-    to: "https://www.bhaktiras.sksswoolwich.org",
-    icon: "i-heroicons-information-circle",
-  },
+  // {
+  //   label: "BHAKTIRAS",
+  //   to: "https://www.bhaktiras.sksswoolwich.org",
+  //   icon: "i-heroicons-information-circle",
+  // },
   {
     label: "OUR TEMPLE",
     icon: "i-heroicons-information-circle",
