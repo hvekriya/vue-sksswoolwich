@@ -272,7 +272,7 @@ const navLinks = [
   { label: "HOME", to: "/", icon: "i-heroicons-home" },
   {
     label: "BHAKTIRAS",
-    to: "https://www.bhaktiras.sksswoolwich.org",
+    to: "https://bhaktiras.sksswoolwich.org",
     icon: "i-heroicons-information-circle",
   },
   {
