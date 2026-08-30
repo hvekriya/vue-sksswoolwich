@@ -5,6 +5,12 @@ export default defineNuxtRouteMiddleware(async (to) => {
   // Non-admin routes: skip so we never load Firebase Auth (avoids auth/iframe.js on homepage LCP)
   if (!isAdmin) return
 
+  // Admin UI has its own chrome. Do not wrap it in the public site header/footer
+  // (that header is position:fixed and intercepts clicks on Edit buttons).
+  if (!isAuthPage) {
+    setPageLayout('admin')
+  }
+
   // Server: no Firebase auth state; require login for any admin route except auth page
   if (import.meta.server) {
     if (!isAuthPage) return navigateTo('/admin/auth')

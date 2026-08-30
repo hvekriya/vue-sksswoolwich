@@ -84,7 +84,8 @@
 import { getAuth } from 'firebase/auth'
 
 definePageMeta({
-    middleware: 'auth'
+    middleware: 'auth',
+    layout: 'admin'
 })
 
 const isBuilding = ref(false)

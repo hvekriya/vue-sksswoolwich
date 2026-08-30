@@ -93,7 +93,7 @@ import type { OurTempleDataFlat } from '~/types/cms'
 import { ourTempleDataToFlat } from '~/lib/cms-flatten'
 import { titleToSlug } from '~/lib/slug'
 
-definePageMeta({ middleware: 'auth' })
+definePageMeta({ middleware: 'auth', layout: 'admin' })
 
 const route = useRoute()
 const router = useRouter()

@@ -70,14 +70,13 @@
 
 <script setup lang="ts">
 const cms = useCms();
-const { isSameOrAfter } = useFilters();
+const { isUpcomingEventDate } = useFilters();
 const { upcomingActive, pastActive } = useEventsSubnav();
 
 const { data: upcomingEvents } = await useAsyncData("upcoming-events-list", async () => {
   const eventsFromCms = await cms.getAllEvents();
-  const today = new Date().toISOString().split("T")[0];
   const upcoming = eventsFromCms.filter((event: any) =>
-    isSameOrAfter(event.data.event_date, today)
+    isUpcomingEventDate(event.data.event_date)
   );
   // Show soonest first for upcoming events
   upcoming.sort(

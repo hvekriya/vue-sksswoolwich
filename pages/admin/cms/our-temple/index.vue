@@ -61,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({ middleware: 'auth' })
+definePageMeta({ middleware: 'auth', layout: 'admin' })
 
 const cms = useCms()
 const { data: pages, pending } = await useAsyncData('admin-cms-our-temple', () => cms.getAllOurTemple())

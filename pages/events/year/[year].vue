@@ -70,6 +70,7 @@
 const cms = useCms();
 const route = useRoute();
 const { upcomingActive, pastActive } = useEventsSubnav();
+const { isPastEventDate } = useFilters();
 
 const year = route.params.year as string;
 
@@ -80,7 +81,8 @@ const { data: pastEvents } = await useAsyncData(`events-${year}`, async () => {
   const all = await cms.getAllEvents();
   const inYear = all.filter((e: any) => {
     const d = e.data.event_date;
-    return d >= startOfYear && d <= endOfYear;
+    // Current-year archive is linked from Past Events — never include upcoming dates.
+    return d >= startOfYear && d <= endOfYear && isPastEventDate(d);
   });
   inYear.sort(
     (a: any, b: any) =>

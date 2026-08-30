@@ -72,6 +72,7 @@
 <script setup lang="ts">
 const cms = useCms();
 const route = useRoute();
+const { isPastEventDate } = useFilters();
 
 /** Default “Past events” opens current year archive; ?all=1 shows every past year */
 if (route.path === "/events/past" && route.query.all !== "1") {
@@ -84,9 +85,8 @@ const { upcomingActive, pastActive } = useEventsSubnav();
 const { data: pastEvents } = await useAsyncData(
   "past-events-all-years",
   async () => {
-    const today = new Date().toISOString().split("T")[0];
     const all = await cms.getAllEvents();
-    const past = all.filter((e: any) => e.data.event_date < today);
+    const past = all.filter((e: any) => isPastEventDate(e.data.event_date));
     past.sort(
       (a: any, b: any) =>
         new Date(b.data.event_date).getTime() - new Date(a.data.event_date).getTime()

@@ -72,6 +72,9 @@
               storage-folder="events"
               :storage-doc-id="isNew ? '' : uidParam"
               field-name="poster"
+              enable-library
+              :library-folders="posterLibraryFolders"
+              :library-urls="eventPosterUrls"
             />
           </UFormGroup>
           <UFormGroup label="Poster alt text">
@@ -84,6 +87,9 @@
               storage-folder="events"
               :storage-doc-id="isNew ? '' : uidParam"
               field-name="poster_2"
+              enable-library
+              :library-folders="posterLibraryFolders"
+              :library-urls="eventPosterUrls"
             />
           </UFormGroup>
 
@@ -122,7 +128,7 @@ import type { EventDataFlat } from '~/types/cms'
 import { eventDataToFlat } from '~/lib/cms-flatten'
 import { titleToSlug } from '~/lib/slug'
 
-definePageMeta({ middleware: 'auth' })
+definePageMeta({ middleware: 'auth', layout: 'admin' })
 
 const route = useRoute()
 const router = useRouter()
@@ -132,6 +138,29 @@ const isNew = computed(() => uidParam.value === 'new')
 
 const cms = useCms()
 const cmsAdmin = useCmsAdmin()
+
+const posterLibraryFolders = ['cms/events', 'slideshow', 'pinned-posters']
+const eventPosterUrls = ref<string[]>([])
+
+onMounted(async () => {
+  try {
+    const all = await cms.getAllEvents()
+    const urls: string[] = []
+    const seen = new Set<string>()
+    for (const event of all) {
+      for (const url of [event.data.poster?.url, event.data.poster_2?.url]) {
+        if (!url || seen.has(url)) continue
+        seen.add(url)
+        urls.push(url)
+        if (urls.length >= 5) break
+      }
+      if (urls.length >= 5) break
+    }
+    eventPosterUrls.value = urls
+  } catch (err) {
+    if (import.meta.dev) console.warn('[edit event] poster library', err)
+  }
+})
 
 const form = reactive<EventDataFlat>({
   uid: '',

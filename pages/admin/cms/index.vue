@@ -82,6 +82,6 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({ middleware: 'auth' })
+definePageMeta({ middleware: 'auth', layout: 'admin' })
 useHead({ title: 'CMS | Admin' })
 </script>

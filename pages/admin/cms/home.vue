@@ -95,7 +95,7 @@ import { homeDataToFlat } from '~/lib/cms-flatten'
 import { htmlToBlocks } from '~/lib/cms-normalize'
 import { normalizeEmbeddableVideoUrl } from '~/lib/youtube'
 
-definePageMeta({ middleware: 'auth' })
+definePageMeta({ middleware: 'auth', layout: 'admin' })
 
 const toast = useToast()
 const cms = useCms()

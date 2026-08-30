@@ -135,7 +135,8 @@
 import { ref as storageRef, uploadBytes, listAll, getDownloadURL, deleteObject } from 'firebase/storage'
 
 definePageMeta({
-    middleware: 'auth'
+    middleware: 'auth',
+    layout: 'admin'
 })
 
 type StorageItem = { url: string; fullPath: string }

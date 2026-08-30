@@ -87,7 +87,7 @@ const props = defineProps<{
 const formatDate = (date: string | null) => {
   if (!date) return "Past Event";
   try {
-    return format(new Date(date), "MMMM yyyy");
+    return format(new Date(date), "d MMMM yyyy");
   } catch (e) {
     return date;
   }

@@ -146,7 +146,7 @@ function fallbackPayload() {
 
 const { data, refresh } = await useAsyncData('home-page-data', async () => {
   const cms = useCms()
-  const { isSameOrAfter } = useFilters()
+  const { isUpcomingEventDate } = useFilters()
   try {
     // If the page already fetched home slices for the hero, reuse them to avoid a second Firestore call.
     const existingSlices = payloadState.value?.fields?.slices
@@ -158,9 +158,8 @@ const { data, refresh } = await useAsyncData('home-page-data', async () => {
       cms.getAllEvents().catch(() => []),
     ])
 
-    const today = new Date().toISOString().split('T')[0]
     const upcomingEvents = eventsFromCms
-      .filter((e: any) => isSameOrAfter(e.data.event_date, today))
+      .filter((e: any) => isUpcomingEventDate(e.data.event_date))
       .sort((a: any, b: any) => new Date(a.data.event_date).getTime() - new Date(b.data.event_date).getTime())
       .slice(0, 6)
     let recentUploads: any[] = []

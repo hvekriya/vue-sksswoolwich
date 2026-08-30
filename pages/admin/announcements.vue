@@ -116,7 +116,8 @@
 import { ref as dbRef, push, set, remove } from 'firebase/database'
 
 definePageMeta({
-    middleware: 'auth'
+    middleware: 'auth',
+    layout: 'admin'
 })
 
 const db = useDatabase()
