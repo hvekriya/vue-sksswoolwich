@@ -1,77 +1,17 @@
 <template>
   <div class="hero-under-nav relative h-[60vh] lg:h-[80vh] w-full overflow-hidden">
-    <Swiper
-      :modules="[SwiperAutoplay, SwiperEffectFade, SwiperPagination]"
-      :slides-per-view="1"
-      :loop="slides.length >= 2"
-      :effect="'fade'"
-      :autoplay="
-        slides.length >= 2 ? { delay: 5000, disableOnInteraction: false } : false
-      "
-      :pagination="slides.length > 1 ? { clickable: true } : false"
-      class="h-full w-full"
-    >
-      <SwiperSlide v-for="(slide, index) in slides" :key="index">
-        <div class="relative h-full w-full">
-          <!-- Slide Image: first slide is LCP candidate so high priority, no lazy load -->
-          <img
-            v-if="slide.image?.url"
-            :src="slide.image.url"
-            :alt="slide.image.alt || 'Temple Image'"
-            :fetchpriority="index === 0 ? 'high' : undefined"
-            :loading="index === 0 ? 'eager' : 'lazy'"
-            class="absolute inset-0 h-full w-full object-cover"
-          />
-          <div v-else class="absolute inset-0 bg-gray-900" />
+    <LazyImageSliderCarousel
+      v-if="slides.length >= 2"
+      :slides="slides"
+      :greeting="greeting"
+    />
+    <ImageSliderSlide
+      v-else
+      :slide="slides[0]"
+      :greeting="greeting"
+      is-lcp
+    />
 
-          <!-- Overlay Gradient: stronger on the left only so centre portrait stays visible -->
-          <div
-            class="absolute inset-0 bg-gradient-to-r from-black/35 via-black/10 to-transparent lg:from-black/25"
-          ></div>
-
-          <!-- Same vertical offset as CommonPageHero (pt-64 / lg:pt-72) so copy clears floating nav + notch -->
-          <div
-            class="absolute inset-0 flex items-start justify-start pb-10 pt-[max(16rem,calc(env(safe-area-inset-top,0px)+12rem))] lg:pb-16 lg:pt-[max(18rem,calc(env(safe-area-inset-top,0px)+13.5rem))]"
-          >
-            <div class="container mx-auto w-full px-4 lg:px-8">
-              <div
-                class="max-w-2xl rounded-3xl border border-white/25 bg-white/25 p-8 shadow-2xl backdrop-blur-md animate-fade-in-up dark:border-white/10 dark:bg-black/35 lg:p-12"
-              >
-                <span
-                  class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider rounded-full bg-white/20 px-4 py-1.5 text-white backdrop-blur-md shadow-lg border border-white/20 mb-6"
-                >
-                  <UIcon name="i-heroicons-sparkles" class="w-4 h-4" />
-                  {{ greeting }}
-                </span>
-                <!-- Wrapper div only: let PrismicRichText render block type (h1/p/etc) so SSR and client match -->
-                <div
-                  class="text-white text-2xl lg:text-4xl font-serif font-bold mb-6 leading-tight"
-                >
-                  <CmsRichText :field="slide.title" />
-                </div>
-                <div class="flex flex-wrap gap-4">
-                  <UButton
-                    size="xl"
-                    color="primary"
-                    label="Bhaktiras"
-                    to="https://www.bhaktiras.sksswoolwich.org"
-                  />
-                  <UButton
-                    size="xl"
-                    variant="outline"
-                    color="white"
-                    label="Upcoming Events"
-                    to="/events"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </SwiperSlide>
-    </Swiper>
-
-    <!-- Scroll Indicator -->
     <div
       class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 animate-bounce hidden lg:block"
     >
@@ -81,34 +21,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from "vue";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import {
-  Autoplay as SwiperAutoplay,
-  EffectFade as SwiperEffectFade,
-  Pagination as SwiperPagination,
-} from "swiper/modules";
-
-// Import Swiper styles in Nuxt are usually handled via build/css but can be manual
-import "swiper/css";
-import "swiper/css/effect-fade";
-import "swiper/css/pagination";
-
 const props = defineProps<{
   fields: any;
 }>();
 
-// Default single slide when CMS has no slides (avoids empty hero + Swiper loop warning)
 const defaultSlide = () => ({
   image: {
-    // Fallback hero image from Firebase Storage
     url:
       "https://firebasestorage.googleapis.com/v0/b/sksswoolwich.appspot.com/o/cms%2Fcms_home%2Fhome%2Fhero.jpg?alt=media&token=fcee1582-c55c-4a20-86b3-fae87e6fbb06",
     alt: "Welcome to SKSS Temple Woolwich",
   },
-  title: [
-    { type: "heading1", text: "Jay Swaminarayan", spans: [] },
-  ],
+  title: [{ type: "heading1", text: "Jay Swaminarayan", spans: [] }],
   description: [
     {
       type: "paragraph",
@@ -118,7 +41,6 @@ const defaultSlide = () => ({
   ],
 });
 
-// Normalize Prismic image (supports various field names and shapes)
 const normalizeImage = (obj: any): { url: string; alt: string } => {
   const img =
     obj?.image ||
@@ -133,10 +55,8 @@ const normalizeImage = (obj: any): { url: string; alt: string } => {
   return url ? { url, alt: img?.alt || "Temple" } : { url: "", alt: "" };
 };
 
-// Extract slides from Prismic: hero_slider/image_slider items, or single hero_section primary, or one default
 const slides = computed(() => {
   const slices = props.fields?.slices || [];
-  // Multi-slide: hero_slider or image_slider
   const sliderSlice = slices.find(
     (s: any) => s.slice_type === "hero_slider" || s.slice_type === "image_slider"
   );
@@ -147,7 +67,6 @@ const slides = computed(() => {
       description: item.description || [],
     }));
   }
-  // Single slide: hero_section (primary = one slide)
   const heroSection = slices.find((s: any) => s.slice_type === "hero_section");
   if (heroSection?.primary) {
     const p = heroSection.primary;
@@ -159,7 +78,6 @@ const slides = computed(() => {
       },
     ];
   }
-  // Fallback: image_gallery slice (use gallery images as slides)
   const gallerySlice = slices.find(
     (s: any) => s.slice_type === "image_gallery" || s.slice_type === "image-gallery"
   );
@@ -171,7 +89,6 @@ const slides = computed(() => {
       description: item.description || [],
     }));
   }
-  // No hard-coded image fallback: show a blank hero until Firebase CMS loads.
   return [defaultSlide()];
 });
 
@@ -198,29 +115,11 @@ const greeting = computed(() => {
   if (hour < 21) return "Good Evening – Satsang Awaits";
   return "Night Reflections – Jay Swaminarayan";
 });
+
+const lcpUrl = computed(() => slides.value[0]?.image?.url || "");
+useHead(() => ({
+  link: lcpUrl.value
+    ? [{ rel: "preload", as: "image", href: lcpUrl.value, fetchpriority: "high" }]
+    : [],
+}));
 </script>
-
-<style scoped>
-.animate-fade-in-up {
-  animation: fadeInUp 1s ease-out forwards;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-:deep(.swiper-pagination-bullet) {
-  @apply bg-white/50 w-3 h-3 transition-all duration-300;
-}
-
-:deep(.swiper-pagination-bullet-active) {
-  @apply bg-golden-500 w-8 rounded-full;
-}
-</style>

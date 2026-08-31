@@ -15,8 +15,10 @@ import {
   doc,
   getDoc,
   getDocs,
+  limit,
   orderBy,
   query,
+  where,
   type DocumentData,
 } from 'firebase/firestore'
 import type {
@@ -58,19 +60,48 @@ export function useCms() {
     return toCmsDoc<HomeData>(snap.id, d)
   }
 
+  function eventFromSnap(d: { id: string; data: () => DocumentData }): CmsDocument<EventData> {
+    const raw = { ...d.data(), uid: d.id } as Record<string, unknown> & { uid: string }
+    const data = normalizeEventData(raw)
+    return toCmsDoc<EventData>(d.id, { ...data, uid: d.id }, '/events')
+  }
+
+  function londonToday(): string {
+    return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London' }).format(new Date())
+  }
+
   /** All events: latest edited first, then by event_date desc */
   async function getAllEvents(): Promise<CmsDocument<EventData>[]> {
     const ref = collection(db, 'events')
     const q = query(ref, orderBy('event_date', 'desc'))
     const snap = await getDocs(q)
     const withMeta = snap.docs.map((d) => {
-      const raw = { ...d.data(), uid: d.id } as Record<string, unknown> & { uid: string }
-      const data = normalizeEventData(raw)
       const updatedAt = (d as { updateTime?: { toMillis?: () => number } }).updateTime?.toMillis?.() ?? 0
-      return { doc: toCmsDoc<EventData>(d.id, { ...data, uid: d.id }, '/events'), updatedAt }
+      return { doc: eventFromSnap(d), updatedAt }
     })
     withMeta.sort((a, b) => b.updatedAt - a.updatedAt)
     return withMeta.map((x) => x.doc)
+  }
+
+  /** Upcoming events only (today onward), soonest first. Used on home / upcoming pages. */
+  async function getUpcomingEvents(max = 6): Promise<CmsDocument<EventData>[]> {
+    const today = londonToday()
+    try {
+      const constraints = [
+        where('event_date', '>=', today),
+        orderBy('event_date', 'asc'),
+        ...(max > 0 ? [limit(max)] : []),
+      ]
+      const q = query(collection(db, 'events'), ...constraints)
+      const snap = await getDocs(q)
+      return snap.docs.map((d) => eventFromSnap(d))
+    } catch {
+      const all = await getAllEvents()
+      return all
+        .filter((e) => (e.data.event_date || '') >= today)
+        .sort((a, b) => (a.data.event_date || '').localeCompare(b.data.event_date || ''))
+        .slice(0, max > 0 ? max : undefined)
+    }
   }
 
   /** Single event by uid */
@@ -128,6 +159,7 @@ export function useCms() {
   return {
     getHome,
     getAllEvents,
+    getUpcomingEvents,
     getEventByUid,
     getAllOurTemple,
     getOurTempleByUid,

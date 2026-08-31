@@ -17,6 +17,10 @@
         <img
           src="/img/WoolwichMandirLogo.png"
           alt="Woolwich Temple"
+          width="48"
+          height="48"
+          decoding="async"
+          fetchpriority="low"
           class="h-12 w-auto transition-transform group-hover:scale-110"
         />
         <div class="hidden sm:block min-w-0">

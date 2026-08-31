@@ -9,6 +9,15 @@ export default defineNuxtConfig({
     preset: 'netlify',
   },
 
+  routeRules: {
+    '/': { swr: 180 },
+    '/events': { swr: 180 },
+    '/events/past': { swr: 300 },
+    '/events/year/**': { swr: 300 },
+    '/our-temple/**': { swr: 600 },
+    '/admin/**': { ssr: false },
+  },
+
   // App configuration
   app: {
     head: {
@@ -49,10 +58,12 @@ export default defineNuxtConfig({
   // Google Fonts configuration
   googleFonts: {
     families: {
-      'Inter': [400, 500, 600, 700],
+      'Inter': [400, 600, 700],
       'Playfair Display': [400, 700]
     },
-    download: false
+    display: 'swap',
+    download: true,
+    inject: true,
   },
 
   // Firebase configuration (auth disabled here so Auth SDK/iframe loads only on /admin)

@@ -70,21 +70,11 @@
 
 <script setup lang="ts">
 const cms = useCms();
-const { isUpcomingEventDate } = useFilters();
 const { upcomingActive, pastActive } = useEventsSubnav();
 
-const { data: upcomingEvents } = await useAsyncData("upcoming-events-list", async () => {
-  const eventsFromCms = await cms.getAllEvents();
-  const upcoming = eventsFromCms.filter((event: any) =>
-    isUpcomingEventDate(event.data.event_date)
-  );
-  // Show soonest first for upcoming events
-  upcoming.sort(
-    (a: any, b: any) =>
-      new Date(a.data.event_date).getTime() - new Date(b.data.event_date).getTime()
-  );
-  return upcoming;
-});
+const { data: upcomingEvents } = await useAsyncData("upcoming-events-list", () =>
+  cms.getUpcomingEvents(0)
+);
 
 useHead({
   title: "Upcoming Events | Woolwich Temple",

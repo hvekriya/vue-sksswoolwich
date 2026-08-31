@@ -116,7 +116,6 @@
 </template>
 
 <script setup lang="ts">
-import { useFilters } from '~/composables/useFilters'
 import { normalizeEmbeddableVideoUrl } from '~/lib/youtube'
 
 const payloadState = useState<ReturnType<typeof fallbackPayload> | null>('home-page-payload', () => null)
@@ -146,27 +145,17 @@ function fallbackPayload() {
 
 const { data, refresh } = await useAsyncData('home-page-data', async () => {
   const cms = useCms()
-  const { isUpcomingEventDate } = useFilters()
   try {
     // If the page already fetched home slices for the hero, reuse them to avoid a second Firestore call.
     const existingSlices = payloadState.value?.fields?.slices
     const hasRealHero = !!existingSlices?.some(
       (s: any) => s?.slice_type === 'hero_section' && s?.primary?.image?.url
     )
-    const [document, eventsFromCms] = await Promise.all([
+    const [document, upcomingEvents] = await Promise.all([
       hasRealHero ? Promise.resolve(null) : cms.getHome().catch(() => null),
-      cms.getAllEvents().catch(() => []),
+      cms.getUpcomingEvents(6).catch(() => []),
     ])
-
-    const upcomingEvents = eventsFromCms
-      .filter((e: any) => isUpcomingEventDate(e.data.event_date))
-      .sort((a: any, b: any) => new Date(a.data.event_date).getTime() - new Date(b.data.event_date).getTime())
-      .slice(0, 6)
-    let recentUploads: any[] = []
-    try {
-      const { fetchRecentPhotos } = useFlickr()
-      recentUploads = await fetchRecentPhotos(14)
-    } catch {}
+    const recentUploads: any[] = []
     // If we don't have a fresh home document (e.g. we reused hero slices), still return events and recent uploads.
     if (!document) {
       const liveFromState = payloadState.value?.liveStreamUrl ?? null
@@ -219,21 +208,24 @@ const flickrPhotoList = ref<any[]>([])
 const recentUploads = computed(() => payload.value.recentUploads?.length ? payload.value.recentUploads : flickrPhotoList.value)
 
 onMounted(async () => {
-  // If SSR returned fallback data, refresh on client to get Firebase CMS data.
   const heroUrl =
     payloadState.value?.fields?.slices?.find((s: any) => s?.slice_type === 'hero_section')?.primary
       ?.image?.url || ''
+  const jobs: Promise<unknown>[] = []
   if (!heroUrl) {
-    try {
-      await refresh()
-    } catch {}
+    jobs.push(refresh().catch(() => {}))
   }
   if (!payload.value.recentUploads?.length) {
-    try {
-      const { fetchRecentPhotos } = useFlickr()
-      flickrPhotoList.value = await fetchRecentPhotos(14)
-    } catch {}
+    jobs.push(
+      (async () => {
+        try {
+          const { fetchRecentPhotos } = useFlickr()
+          flickrPhotoList.value = await fetchRecentPhotos(14)
+        } catch {}
+      })()
+    )
   }
+  await Promise.all(jobs)
 })
 </script>
 
