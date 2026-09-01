@@ -9,7 +9,7 @@
     class="h-full w-full"
   >
     <SwiperSlide v-for="(slide, index) in slides" :key="index">
-      <ImageSliderSlide :slide="slide" :greeting="greeting" :is-lcp="index === 0" />
+      <ImageSliderSlide :slide="slide" :greeting="greeting" :is-lcp="index === 0" contained />
     </SwiperSlide>
   </Swiper>
 </template>
