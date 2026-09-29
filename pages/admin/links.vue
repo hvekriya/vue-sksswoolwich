@@ -19,7 +19,33 @@
                 <UTable :rows="sortedLinks" :columns="columns" class="w-full"
                     :ui="{ th: { base: 'text-[10px] uppercase tracking-widest text-gray-900 font-bold bg-gray-50 dark:bg-gray-800/50' }, td: { base: 'py-6' } }">
                     <template #order-data="{ row }">
-                        <span class="font-mono font-bold text-golden-600">{{ row.order }}</span>
+                        <div class="flex items-center gap-1">
+                            <span class="w-6 text-center font-mono font-bold text-golden-600 tabular-nums">
+                                {{ positionOf(row) }}
+                            </span>
+                            <div class="flex flex-col">
+                                <UButton
+                                    variant="ghost"
+                                    color="gray"
+                                    size="xs"
+                                    square
+                                    icon="i-heroicons-chevron-up"
+                                    aria-label="Move link up"
+                                    :disabled="positionOf(row) <= 1 || isReordering"
+                                    @click="moveLink(positionOf(row) - 1, -1)"
+                                />
+                                <UButton
+                                    variant="ghost"
+                                    color="gray"
+                                    size="xs"
+                                    square
+                                    icon="i-heroicons-chevron-down"
+                                    aria-label="Move link down"
+                                    :disabled="positionOf(row) === 0 || positionOf(row) >= sortedLinks.length || isReordering"
+                                    @click="moveLink(positionOf(row) - 1, 1)"
+                                />
+                            </div>
+                        </div>
                     </template>
 
                     <template #icon-data="{ row }">
@@ -64,14 +90,9 @@
                 </h3>
 
                 <UForm :state="formState" class="space-y-6" @submit="saveLink">
-                    <div class="grid grid-cols-4 gap-6">
-                        <UFormGroup label="Order" class="col-span-1">
-                            <UInput v-model="formState.order" type="number" size="xl" />
-                        </UFormGroup>
-                        <UFormGroup label="Title" class="col-span-3">
-                            <UInput v-model="formState.title" placeholder="e.g. Daily Live Darshan" size="xl" />
-                        </UFormGroup>
-                    </div>
+                    <UFormGroup label="Title">
+                        <UInput v-model="formState.title" placeholder="e.g. Daily Live Darshan" size="xl" />
+                    </UFormGroup>
 
                     <UFormGroup label="Destination URL (Leave blank for an info card)">
                         <UInput v-model="formState.link" placeholder="https://..." size="xl" icon="i-heroicons-link" />
@@ -127,7 +148,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref as dbRef, push, set, remove } from 'firebase/database'
+import { ref as dbRef, push, set, remove, update } from 'firebase/database'
 
 definePageMeta({
     middleware: 'auth',
@@ -144,9 +165,55 @@ const columns = [
     { key: 'actions', label: '' }
 ]
 
+function linkId(item: { id?: string; key?: string } | null | undefined) {
+    return item?.id ?? item?.key ?? ''
+}
+
+function numericOrder(value: unknown, fallback: number) {
+    const order = Number(value)
+    return Number.isFinite(order) ? order : fallback
+}
+
 const sortedLinks = computed(() => {
-    return [...links.value].sort((a: any, b: any) => (a.order ?? 99) - (b.order ?? 99))
+    return [...links.value].sort((a: any, b: any) => numericOrder(a.order, 99) - numericOrder(b.order, 99))
 })
+
+function positionOf(row: { id?: string; key?: string }) {
+    const index = sortedLinks.value.findIndex((item: any) => linkId(item) === linkId(row))
+    return index === -1 ? 0 : index + 1
+}
+
+function nextOrder() {
+    const orders = links.value
+        .map((item: any) => Number(item.order))
+        .filter((order: number) => Number.isFinite(order))
+    return orders.length ? Math.max(...orders) + 1 : 1
+}
+
+const isReordering = ref(false)
+
+async function moveLink(index: number, direction: -1 | 1) {
+    const list = [...sortedLinks.value]
+    const target = index + direction
+    if (isReordering.value || target < 0 || target >= list.length) return
+
+    const [moved] = list.splice(index, 1)
+    list.splice(target, 0, moved)
+
+    isReordering.value = true
+    try {
+        await Promise.all(list.map((item: any, i: number) => {
+            const id = linkId(item)
+            const order = i + 1
+            if (!id || numericOrder(item.order, -1) === order) return Promise.resolve()
+            return update(dbRef(db, `/link-tree/${id}`), { order })
+        }))
+    } catch (err) {
+        console.error('Reorder error:', err)
+    } finally {
+        isReordering.value = false
+    }
+}
 
 const defaultIcon = 'i-heroicons-link'
 
@@ -196,14 +263,14 @@ function openEditor(item?: any) {
         formState.link = item.link ?? ''
         formState.icon = (item.icon && String(item.icon).trim()) ? String(item.icon).trim() : defaultIcon
         formState.description = item.description ?? ''
-        formState.order = item.order ?? 1
+        formState.order = numericOrder(item.order, positionOf(item) || 1)
     } else {
         editingItem.value = null
         formState.title = ''
         formState.link = ''
         formState.icon = defaultIcon
         formState.description = ''
-        formState.order = (links.value.length + 1)
+        formState.order = nextOrder()
     }
     isModalOpen.value = true
 }
@@ -211,12 +278,18 @@ function openEditor(item?: any) {
 async function saveLink() {
     isSaving.value = true
     try {
+        const payload = {
+            ...formState,
+            order: numericOrder(formState.order, nextOrder())
+        }
         if (editingItem.value) {
-            const itemRef = dbRef(db, `/link-tree/${editingItem.value.key}`)
-            await set(itemRef, { ...formState })
+            const id = linkId(editingItem.value)
+            if (!id) throw new Error('Link id not found')
+            const itemRef = dbRef(db, `/link-tree/${id}`)
+            await set(itemRef, payload)
         } else {
             const listRef = dbRef(db, '/link-tree')
-            await push(listRef, { ...formState })
+            await push(listRef, payload)
         }
         isModalOpen.value = false
     } catch (err) {
@@ -233,8 +306,13 @@ function confirmDelete(item: any) {
 
 async function doDelete() {
     if (!itemToDelete.value) return
+    const id = linkId(itemToDelete.value)
+    if (!id) {
+        console.error('Delete error: link id not found')
+        return
+    }
     try {
-        const itemRef = dbRef(db, `/link-tree/${itemToDelete.value.key}`)
+        const itemRef = dbRef(db, `/link-tree/${id}`)
         await remove(itemRef)
         isDeleteModalOpen.value = false
     } catch (err) {
