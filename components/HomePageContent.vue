@@ -1,8 +1,6 @@
 <template>
-  <UContainer class="py-12">
-    <div class="mb-8">
-      <LazyCommonAlert :fields="fields" />
-    </div>
+  <UContainer class="pb-12 pt-4 lg:py-12">
+    <LazyCommonAlert :fields="fields" />
 
     <section
       class="grid grid-cols-1 gap-8 mb-16 items-stretch transition-all duration-500"

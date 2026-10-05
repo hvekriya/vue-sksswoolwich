@@ -1,5 +1,5 @@
 <template>
-  <div class="hero-under-nav relative h-[60vh] lg:h-[80vh] w-full overflow-hidden">
+  <div class="hero-under-nav relative min-h-[70svh] w-full overflow-hidden bg-gray-950 lg:h-[80vh] lg:min-h-0">
     <LazyImageSliderCarousel
       v-if="slides.length >= 2"
       :slides="slides"

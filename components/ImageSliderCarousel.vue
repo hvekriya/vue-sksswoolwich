@@ -6,7 +6,7 @@
     effect="fade"
     :autoplay="slides.length >= 2 ? { delay: 5000, disableOnInteraction: false } : false"
     :pagination="slides.length > 1 ? { clickable: true } : false"
-    class="h-full w-full"
+    class="h-auto min-h-[70svh] w-full lg:h-full lg:min-h-0"
   >
     <SwiperSlide v-for="(slide, index) in slides" :key="index">
       <ImageSliderSlide :slide="slide" :greeting="greeting" :is-lcp="index === 0" />
@@ -32,6 +32,20 @@ defineProps<{
 </script>
 
 <style scoped>
+:deep(.swiper-wrapper),
+:deep(.swiper-slide) {
+  height: auto;
+  min-height: 70svh;
+}
+
+@media (min-width: 1024px) {
+  :deep(.swiper-wrapper),
+  :deep(.swiper-slide) {
+    height: 100%;
+    min-height: 0;
+  }
+}
+
 :deep(.swiper-pagination-bullet) {
   @apply bg-white/50 w-3 h-3 transition-all duration-300;
 }
