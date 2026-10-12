@@ -7,13 +7,19 @@
                     <h1 class="text-3xl font-serif font-bold text-gray-900 dark:text-white">TV Display Management</h1>
                     <p class="text-gray-500 mt-2 flex items-center gap-2">
                         <UIcon name="i-heroicons-tv" class="text-golden-500" />
-                        Upload and manage posters displayed on the Mandir TV screens.
+                        Arrange the mandir TV, then manage the posters that fill the slideshow panels.
                     </p>
                 </div>
                 <UButton to="/display" target="_blank" variant="soft" color="golden"
                     icon="i-heroicons-presentation-chart-bar" size="xl" label="Launch TV Display"
                     class="rounded-full px-8 shadow-lg shadow-golden-500/10" />
             </div>
+
+            <UCard class="rounded-[2.5rem] border-golden-500/10 shadow-xl overflow-hidden">
+                <div class="p-6 sm:p-8">
+                    <AdminTvBoardEditor />
+                </div>
+            </UCard>
 
             <!-- Upload Section -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">

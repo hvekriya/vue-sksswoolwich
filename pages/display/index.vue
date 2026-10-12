@@ -1,92 +1,16 @@
 <template>
-  <div class="tv-display-portal fixed inset-0 bg-gray-950 overflow-hidden">
+  <div class="tv-display-portal fixed inset-0 overflow-hidden bg-gray-950">
     <ClientOnly>
-      <div class="grid grid-cols-12 h-screen">
-        <!-- Left Column: Two slides stacked (top + bottom) -->
-        <div
-          class="col-span-6 flex flex-col bg-black border-r border-white/5 shadow-2xl z-10"
-        >
-          <div class="h-1/2 w-full overflow-hidden border-b border-white/5">
-            <Swiper
-              :modules="[SwiperAutoplay, SwiperEffectFade]"
-              :slides-per-view="1"
-              :loop="slideshow.length > 1"
-              effect="fade"
-              :autoplay="{ delay: 10000, disableOnInteraction: false }"
-              class="h-full w-full"
-            >
-              <SwiperSlide v-for="(url, idx) in slideshow" :key="'top-' + idx">
-                <img :src="url" class="h-full w-full object-contain" alt="" />
-              </SwiperSlide>
-              <SwiperSlide v-if="!slideshow.length">
-                <div class="flex h-full w-full items-center justify-center bg-gray-900">
-                  <img
-                    src="https://www.sksswoolwich.org/img/WoolwichMandirLogo.png"
-                    class="w-48 opacity-20"
-                    alt=""
-                  />
-                </div>
-              </SwiperSlide>
-            </Swiper>
-          </div>
-          <div class="h-1/2 w-full overflow-hidden">
-            <Swiper
-              :modules="[SwiperAutoplay, SwiperEffectFade]"
-              :slides-per-view="1"
-              :loop="pinnedPosters.length > 1"
-              effect="fade"
-              :autoplay="{ delay: 10000, disableOnInteraction: false }"
-              class="h-full w-full"
-            >
-              <SwiperSlide v-for="(url, idx) in pinnedPosters" :key="'bot-' + idx">
-                <img :src="url" class="h-full w-full object-contain" alt="" />
-              </SwiperSlide>
-              <SwiperSlide v-if="!pinnedPosters.length">
-                <div class="flex h-full w-full items-center justify-center bg-gray-900">
-                  <img
-                    src="https://www.sksswoolwich.org/img/WoolwichMandirLogo.png"
-                    class="w-48 opacity-20"
-                    alt=""
-                  />
-                </div>
-              </SwiperSlide>
-            </Swiper>
-          </div>
-        </div>
-
-        <!-- Right Column: announcements with auto-scroll (same data as home page) -->
-        <div class="col-span-6 bg-gray-900 flex flex-col min-h-0">
-          <header class="p-6 sm:p-8 pb-4 shrink-0">
-            <h3 class="text-xl sm:text-2xl font-serif font-bold text-golden-500">
-              Announcements
-            </h3>
-          </header>
-          <div class="flex-1 min-h-0 overflow-hidden px-6 sm:p-8">
-            <DisplayAnnouncements />
-          </div>
-        </div>
-      </div>
-
+      <TvBoard :widgets="screenWidgets" />
+      <p
+        v-if="isPreview"
+        class="pointer-events-none absolute left-4 top-4 z-50 rounded-full bg-golden-500 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gray-950"
+      >
+        Preview — save the layout to update the mandir TVs
+      </p>
       <template #fallback>
-        <div class="grid grid-cols-12 h-screen">
-          <div class="col-span-6 flex flex-col bg-black border-r border-white/5">
-            <div class="h-1/2 flex items-center justify-center bg-gray-900">
-              <div
-                class="h-24 w-24 animate-spin rounded-full border-2 border-golden-500/30 border-t-golden-500"
-              />
-            </div>
-            <div class="h-1/2 flex items-center justify-center bg-gray-900" />
-          </div>
-          <div class="col-span-6 bg-gray-900 flex flex-col min-h-0">
-            <header class="p-6 sm:p-8 pb-4 shrink-0">
-              <h3 class="text-xl sm:text-2xl font-serif font-bold text-golden-500">
-                Announcements
-              </h3>
-            </header>
-            <div class="flex flex-1 items-center justify-center px-6 sm:p-8">
-              <p class="text-gray-500">Loading…</p>
-            </div>
-          </div>
+        <div class="flex h-full items-center justify-center">
+          <div class="h-16 w-16 animate-spin rounded-full border-2 border-golden-500/30 border-t-golden-500" />
         </div>
       </template>
     </ClientOnly>
@@ -94,26 +18,45 @@
 </template>
 
 <script setup lang="ts">
-import { Swiper, SwiperSlide } from "swiper/vue";
-import {
-  Autoplay as SwiperAutoplay,
-  EffectFade as SwiperEffectFade,
-} from "swiper/modules";
-
-import "swiper/css";
-import "swiper/css/effect-fade";
+import { normalizeWidgets, type TvWidget } from "~/lib/tv-board";
 
 definePageMeta({
   layout: false,
-  ssr: false, // Client-only to avoid hydration mismatch (Swiper, Firebase)
+  ssr: false,
 });
 
-const { urls: slideshow } = useStorageFolderSlideUrls("slideshow/", {
-  imageOnly: false,
+const PREVIEW_KEY = "tv-board-preview";
+const route = useRoute();
+const isPreview = computed(() => route.query.preview === "1");
+const { widgets } = useTvBoard();
+const previewWidgets = ref<TvWidget[] | null>(null);
+
+function readPreview() {
+  try {
+    const raw = localStorage.getItem(PREVIEW_KEY);
+    previewWidgets.value = raw ? normalizeWidgets(JSON.parse(raw)) : null;
+  } catch {
+    previewWidgets.value = null;
+  }
+}
+
+function onStorage(event: StorageEvent) {
+  if (event.key === PREVIEW_KEY) readPreview();
+}
+
+onMounted(() => {
+  if (!isPreview.value) return;
+  readPreview();
+  window.addEventListener("storage", onStorage);
 });
-const { urls: pinnedPosters } = useStorageFolderSlideUrls("pinned-posters/", {
-  imageOnly: false,
+
+onUnmounted(() => {
+  window.removeEventListener("storage", onStorage);
 });
+
+const screenWidgets = computed(() =>
+  isPreview.value && previewWidgets.value?.length ? previewWidgets.value : widgets.value
+);
 
 useHead({
   title: "Digital Signage | Woolwich Temple",
