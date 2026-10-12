@@ -1,6 +1,6 @@
 <template>
   <div class="countdown-widget flex h-full w-full items-center justify-center overflow-hidden bg-gray-950 text-white">
-    <div class="countdown-layout flex h-full w-full items-center gap-[4cqw] px-[5cqw] py-[4cqh]">
+    <div class="countdown-layout flex h-full w-full items-center">
       <img
         v-if="logoUrl"
         :src="logoUrl"
@@ -94,43 +94,52 @@ const clock = computed(() => {
   container-type: size;
 }
 
+.countdown-layout {
+  padding: 5cqh 4cqw;
+  gap: 4cqw;
+}
+
 .countdown-logo {
-  width: 28%;
-  max-width: 34cqmin;
+  height: 82cqh;
+  width: auto;
+  max-width: 36%;
   aspect-ratio: 1;
 }
 
 .countdown-title {
-  font-size: 1.25rem;
-  font-size: clamp(1rem, 8cqh, 2.75rem);
+  font-size: 1.35rem;
+  font-size: clamp(1.25rem, min(18cqh, 6.5cqw), 5rem);
+  line-height: 1.05;
 }
 
 .countdown-subtitle {
-  font-size: 0.85rem;
-  font-size: clamp(0.7rem, 3.5cqh, 1.25rem);
+  font-size: 0.9rem;
+  font-size: clamp(0.8rem, min(7cqh, 2.4cqw), 2rem);
 }
 
 .countdown-days-block {
-  margin-top: 0.7em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.14em;
+  margin-top: 0.12em;
+  font-size: clamp(2.5rem, min(38cqh, 14cqw), 9rem);
 }
 
 .countdown-days {
-  font-size: 2.5rem;
-  font-size: clamp(1.8rem, 16cqh, 5.5rem);
+  font-size: 1em;
   line-height: 1;
 }
 
 .countdown-unit {
-  margin-top: 0.55em;
-  font-size: 0.85rem;
-  font-size: clamp(0.7rem, 3.2cqh, 1.15rem);
+  font-size: 0.32em;
   line-height: 1.2;
 }
 
 .countdown-clock {
-  font-size: 1.75rem;
-  font-size: clamp(1.2rem, 12cqh, 4rem);
-  line-height: 0.9;
+  margin-top: 2cqh;
+  font-size: 2rem;
+  font-size: clamp(1.5rem, min(28cqh, 10cqw), 7rem);
+  line-height: 1;
 }
 
 @container (max-width: 280px) {

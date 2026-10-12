@@ -16,21 +16,21 @@
     <div v-else-if="error && !rows.length" class="flex flex-1 items-center justify-center px-6 text-center">
       <p class="board-note text-white/60">Niyams could not be loaded.</p>
     </div>
-    <ul v-else class="flex min-h-0 flex-1 flex-col justify-center gap-[1.2cqh] px-[4cqw] pb-[3cqh]">
-      <li v-for="row in rows" :key="row.id" class="min-h-0">
-        <div class="flex items-end justify-between gap-3">
+    <ul v-else class="flex min-h-0 flex-1 flex-col px-[4.5cqw] pb-[4cqh]">
+      <li v-for="row in rows" :key="row.id" class="flex min-h-0 flex-1 flex-col justify-center">
+        <div class="flex items-end justify-between gap-[3cqw]">
           <div class="min-w-0">
-            <p class="niyam-title truncate font-serif font-bold leading-tight">{{ row.title }}</p>
+            <p class="niyam-title truncate font-serif font-bold">{{ row.title }}</p>
             <p class="niyam-unit text-white/45">{{ row.unit }}</p>
           </div>
-          <p class="niyam-count shrink-0 text-right font-serif font-bold tabular-nums leading-none text-golden-400">
+          <p class="niyam-count shrink-0 text-right font-serif font-bold tabular-nums text-golden-400">
             {{ formatNiyamCount(row.approvedTotal) }}
             <span class="niyam-target block font-sans font-medium text-white/45">
               of {{ formatNiyamTarget(row.target) }}
             </span>
           </p>
         </div>
-        <div class="mt-[0.45em] h-[0.45em] overflow-hidden rounded-full bg-white/10">
+        <div class="niyam-bar mt-[1cqh] overflow-hidden rounded-full bg-white/10">
           <div
             class="h-full rounded-full bg-gradient-to-r from-golden-500 to-golden-300"
             :style="{ width: `${progress(row)}%` }"
@@ -64,29 +64,43 @@ function progress(row: NiyamRow) {
   background: #34d399;
   box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
   animation: live-pulse 1.8s ease-out infinite;
-  font-size: clamp(0.7rem, 2.2cqh, 0.95rem);
+  font-size: clamp(0.85rem, 3cqh, 1.4rem);
 }
 
 .board-title {
-  font-size: 0.95rem;
-  font-size: clamp(0.8rem, 3.6cqh, 1.45rem);
+  font-size: 1.15rem;
+  font-size: clamp(1.05rem, 5.5cqh, 2.6rem);
+  line-height: 1.05;
 }
 
 .board-note,
 .niyam-unit,
 .niyam-target {
-  font-size: 0.68rem;
-  font-size: clamp(0.58rem, 1.8cqh, 0.8rem);
+  font-size: 0.8rem;
+  font-size: clamp(0.72rem, 2.6cqh, 1.25rem);
+  line-height: 1.2;
+}
+
+.niyam-unit,
+.niyam-target {
+  margin-top: 0.2em;
 }
 
 .niyam-title {
-  font-size: 0.8rem;
-  font-size: clamp(0.68rem, 2.4cqh, 1.05rem);
+  font-size: 1rem;
+  font-size: clamp(0.95rem, 4.4cqh, 2.1rem);
+  line-height: 1.05;
 }
 
 .niyam-count {
-  font-size: 0.9rem;
-  font-size: clamp(0.75rem, 2.8cqh, 1.25rem);
+  font-size: 1.15rem;
+  font-size: clamp(1.05rem, 5.2cqh, 2.5rem);
+  line-height: 1;
+}
+
+.niyam-bar {
+  height: 1.15cqh;
+  min-height: 6px;
 }
 
 @keyframes live-pulse {
